@@ -1,0 +1,43 @@
+State machine:
+ 
+- STATE_IDLE
+  - Lights off, bell off
+  - If island, go to STATE_ACTIVE_UNK
+  - If east approach, set approach_timer and go to STATE_APPROACH_EASTBOUND
+  - If west approach, set approach_timer and go to STATE_APPROACH_WESTBOUND  
+
+- STATE_ACTIVE_UNK
+  - Lights on, bell on
+  - If island, go to STATE_ACTIVE_UNK
+
+  
+- STATE_APPROACH_EASTBOUND
+  - Lights on, bell on
+  - If island, go to STATE_ACTIVE_EASTBOUND
+  - If approach_timer expired, goto STATE_APPROACH_EAST_LOCKOUT
+  
+- STATE_APPROACH_EAST_LOCKOUT
+  - Lights off, bell off
+  - If island, go to STATE_ACTIVE_EASTBOUND
+  - If !east approach, goto STATE_IDLE
+  - If west approach, goto STATE_APPROACH_WESTBOUND
+  
+
+
+- STATE_ACTIVE_EASTBOUND
+  - Lights on, bell on
+  - If island, go to STATE_ACTIVE_EASTBOUND
+  - If !island, go to STATE_SHUTDOWN_EASTBOUND
+  
+- STATE_SHUTDOWN_EASTBOUND
+  - Lights on, bell on
+  - If island, go to STATE_ACTIVE_EASTBOUND
+  - If !island and shutdown_timer expired, set lockout_timer and go to STATE_LOCKOUT_EASTBOUND
+  
+- STATE_LOCKOUT_EASTBOUND
+  - Lights off, bell off
+  - If island, go to STATE_ACTIVE_EASTBOUND
+  - If lockout_timer expired, go to STATE_IDLE
+
+
+
