@@ -636,6 +636,93 @@ int main(void)
 				activateCrossing = false;
 				break;
 
+
+
+			case STATE_APPROACH_WESTBOUND:
+				// PURPOSE: Activates crossing when the east approach sensor is triggered
+				//  and starts a timer, by which point the train must have hit the island
+				// Lights on, bell on
+				// If island, go to STATE_ACTIVE_EASTBOUND
+				// If approach_timer expired, goto STATE_APPROACH_EAST_LOCKOUT
+				if (detectors & (DETECTOR_ISLAND_EAST | DETECTOR_ISLAND_WEST))
+					crossingState = STATE_ACTIVE_WESTBOUND;
+
+				if (0 == stateTimer)
+				{
+					crossingState = STATE_APPROACH_WEST_LOCKOUT;
+				}
+				activateCrossing = true;
+
+				break;  
+
+			case STATE_APPROACH_WEST_LOCKOUT:
+				// PURPOSE: Waits for the east approach detector to drop out after we've 
+				//    timed out on eastbound approach
+				// Lights off, bell off
+				// If island, go to STATE_ACTIVE_EASTBOUND
+				// If !east approach, goto STATE_IDLE
+				// If west approach, goto STATE_APPROACH_WESTBOUND
+				if (detectors & (DETECTOR_ISLAND_EAST | DETECTOR_ISLAND_WEST))
+					crossingState = STATE_ACTIVE_WESTBOUND;
+
+				if (!(detectors & (DETECTOR_APPRCH_WEST)))
+					crossingState = STATE_IDLE;
+
+				if (detectors & (DETECTOR_APPRCH_EAST))
+				{
+					crossingState = STATE_APPROACH_EASTBOUND;
+					stateTimer = EAST_APPROACH_TIMEOUT;
+				}
+				activateCrossing = false;
+
+				break;
+
+			case STATE_ACTIVE_WESTBOUND:
+				// Lights on, bell on
+				// If !island, go to STATE_SHUTDOWN_EASTBOUND
+				activateCrossing = true;
+				if (!(detectors & (DETECTOR_ISLAND_EAST | DETECTOR_ISLAND_WEST)))
+				{
+					crossingState = STATE_SHUTDOWN_WESTBOUND;
+					stateTimer = WEST_DEPARTURE_TIMEOUT;
+				}
+  				break;
+
+			case STATE_SHUTDOWN_WESTBOUND:
+				// Lights on, bell on
+				// If island, go to STATE_ACTIVE_EASTBOUND
+				// If !island and shutdown_timer expired, set lockout_timer and go to STATE_LOCKOUT_EASTBOUND
+				if (detectors & (DETECTOR_ISLAND_EAST | DETECTOR_ISLAND_EAST))
+					crossingState = STATE_ACTIVE_WESTBOUND;
+				else if (0 == stateTimer)
+				{
+					crossingState = STATE_LOCKOUT_WESTBOUND;
+					stateTimer = WEST_LOCKOUT_TIMER;
+				}
+
+				activateCrossing = true;
+
+  				break;
+
+			case STATE_LOCKOUT_WESTBOUND:
+				// This state prevents retriggering on the west approach sensor for an eastbound
+				// Lights off, bell off
+				// If island, go to STATE_ACTIVE_EASTBOUND
+				// If lockout_timer expired, go to STATE_IDLE
+				if (detectors & (DETECTOR_ISLAND_EAST | DETECTOR_ISLAND_EAST))
+					crossingState = STATE_ACTIVE_WESTBOUND;
+				else if (0 == stateTimer && !(detectors & DETECTOR_APPRCH_EAST))
+				{
+					crossingState = STATE_IDLE;
+				}
+				activateCrossing = false;
+				break;
+
+
+
+
+
+
 			default:
 				crossingState = STATE_IDLE;
 				break;
