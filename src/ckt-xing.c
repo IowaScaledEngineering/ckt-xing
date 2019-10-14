@@ -36,6 +36,9 @@ LICENSE:
 // 16kHz 8 bit unsigned PCM data
 #include "tinybell.h"
 
+
+
+
 // playBell acts as an indicator between the main loop and 
 // the ISR to tell it to shut down playback once it hits the end
 // of the bell sound sample
@@ -70,16 +73,21 @@ volatile uint8_t decisecs = 0;
 
 volatile uint8_t readSensors = 0;
 
+volatile uint8_t adcVal0 = 0;
+volatile uint8_t adcVal1 = 0;
+
 // 16kHz interrupt to load high speed PWMs
 ISR(TIMER0_COMPA_vect) 
 {
 	static uint16_t wavIdx = 0;
-	static uint8_t counter = 0;
+	static uint8_t counter = 0, adcCounter = 0;
 	static uint8_t lightPWM = 0;
 	static uint8_t leftLightPWMSetting = 0;
 	static uint8_t rightLightPWMSetting = 0;
 	static uint8_t constLightPWMSetting = 0;
 	static uint8_t ticks = 0;
+
+	static uint16_t adcAccumulator = 0;
 
 	uint8_t tmp = 0;
 
@@ -107,16 +115,40 @@ ISR(TIMER0_COMPA_vect)
 	
 	lightPWM = ((lightPWM + 1) & 0x3F);
 
-	if (lightPWM > leftLightPWMSetting)
+	if (lightPWM >= leftLightPWMSetting)
 		tmp |= _BV(PB4);
-	if (lightPWM > rightLightPWMSetting)
+	if (lightPWM >= rightLightPWMSetting)
 		tmp |= _BV(PB5);
-	if (lightPWM > constLightPWMSetting)
+	if (lightPWM >= constLightPWMSetting)
 		tmp |= _BV(PB6);
 
 	PORTB = (PORTB & ~(_BV(PB4) | _BV(PB5) | _BV(PB6))) | tmp;
 
+	adcCounter++;
+	adcAccumulator += ADCH;
+
+	if (128 == adcCounter)
+	{
+		adcCounter = 0;
+		if (0 == (ADMUX & 0x1F))
+		{
+			adcVal0 = (uint8_t)(adcAccumulator >> 7);
+			ADMUX |= 0x1F;
+		}
+		else
+		{
+			adcVal1 = (uint8_t)(adcAccumulator >> 7);
+			ADMUX &= ~(0x1F);
+		}
+		adcAccumulator = 0;
+		adcCounter = 0;
+	}
+
+	ADCSRA |= _BV(ADSC);
+
+
 	counter++;
+
 	if (159 == counter) // Roughly 100Hz counter
 	{
 		counter = 0;
@@ -132,7 +164,7 @@ ISR(TIMER0_COMPA_vect)
 		// Do light things
 		if (lights & LIGHT_LEFT_ON)
 		{
-			if (leftLightPWMSetting < 0x3F)
+			if (leftLightPWMSetting <= 0x3F)
 				leftLightPWMSetting += LIGHT_RATE;
 
 		} else {
@@ -143,7 +175,7 @@ ISR(TIMER0_COMPA_vect)
 		// Do light things
 		if (lights & LIGHT_RIGHT_ON)
 		{
-			if (rightLightPWMSetting < 0x3F)
+			if (rightLightPWMSetting <= 0x3F)
 				rightLightPWMSetting += LIGHT_RATE;
 
 		} else {
@@ -154,32 +186,29 @@ ISR(TIMER0_COMPA_vect)
 		// Do light things
 		if (lights & LIGHT_CONST_ON)
 		{
-			if (constLightPWMSetting < 0x3F)
+			if (constLightPWMSetting <= 0x3F)
 				constLightPWMSetting += LIGHT_RATE;
 
 		} else {
 			if (constLightPWMSetting > 0)
 				constLightPWMSetting -= LIGHT_RATE;
 		}
-
 	}
 }
 
 
 #define STATE_IDLE                   0x00
-#define STATE_ACTIVE_UNK             0x08
-
-#define STATE_APPROACH_EASTBOUND     0x10
-#define STATE_APPROACH_EAST_LOCKOUT  0x11
-#define STATE_ACTIVE_EASTBOUND       0x12
-#define STATE_SHUTDOWN_EASTBOUND     0x13
-#define STATE_LOCKOUT_EASTBOUND      0x14
-
-#define STATE_APPROACH_WESTBOUND     0x20
-#define STATE_APPROACH_WEST_LOCKOUT  0x21
-#define STATE_ACTIVE_WESTBOUND       0x22
-#define STATE_SHUTDOWN_WESTBOUND     0x23
-#define STATE_LOCKOUT_WESTBOUND      0x24
+#define STATE_ACTIVE_UNK             0x01
+#define STATE_APPROACH_EASTBOUND     0x02
+#define STATE_APPROACH_EAST_LOCKOUT  0x03
+#define STATE_ACTIVE_EASTBOUND       0x04
+#define STATE_SHUTDOWN_EASTBOUND     0x05
+#define STATE_LOCKOUT_EASTBOUND      0x06
+#define STATE_APPROACH_WESTBOUND     0x07
+#define STATE_APPROACH_WEST_LOCKOUT  0x08
+#define STATE_ACTIVE_WESTBOUND       0x09
+#define STATE_SHUTDOWN_WESTBOUND     0x0A
+#define STATE_LOCKOUT_WESTBOUND      0x0B
 
 #define DETECTOR_APPRCH_EAST         0x01
 #define DETECTOR_ISLAND_EAST         0x02
@@ -381,7 +410,7 @@ void initializeTMD26711()
 	writeByte(TMD26711_ADDR, 0x80|0x00, 0x27);   // Power ON, Enable proximity, Enable proximity interrupt (not used currently)
 }
 
-uint8_t readTMD26711s()
+inline static uint8_t readTMD26711s()
 {
 	static uint8_t sensorError[4] = {0,0,0,0};
 	static bool detect[4] = {false, false, false, false};
@@ -452,7 +481,6 @@ uint8_t readTMD26711s()
 	return retval;
 }
 
-
 int main(void)
 {
 	uint8_t crossingState = STATE_IDLE;
@@ -479,7 +507,6 @@ int main(void)
 	// Set up Timer/Counter1 for PWM output on PB1 (OCR1A)
 	TCCR1A = _BV(PWM1A) | _BV(COM1A1);            // PWM A, clear on match
 	TCCR1B = _BV(CS10);									 // Run Timer1 at 1:1 prescale off 64MHz PCLK
-//	TCCR1D = _BV(WGM10);  // This puts it in phase/freq correct PWM mode - probably don't want
 	OCR1A = 0x80;                                 // 50% duty at start
 
 	// Set up Timer/Counter0 for 16kHz interrupt to output samples.
@@ -499,6 +526,10 @@ int main(void)
 
 	initializeTMD26711();
 
+	ADCSRA = _BV(ADEN) | _BV(ADPS2) | _BV(ADPS1); // Enable ADC, set div/64 clock (125kHz)
+	DIDR0 = _BV(ADC1D) | _BV(ADC0D);
+	ADMUX = 0x00;
+
 	sei();
 
 	while(1)
@@ -509,12 +540,15 @@ int main(void)
 
 		if (readSensors >= 1)
 		{
-			PORTA |= _BV(PA3);
 			detectors = readTMD26711s();
-			PORTA &= ~(_BV(PA3));
+			// Read ADCs
+
+
+
 			readSensors = 0;
 		}
 
+		PORTA &= ~_BV(PA3);
 
 		switch(crossingState)
 		{
@@ -562,6 +596,7 @@ int main(void)
 				// Lights on, bell on
 				// If island, go to STATE_ACTIVE_EASTBOUND
 				// If approach_timer expired, goto STATE_APPROACH_EAST_LOCKOUT
+
 				if (detectors & (DETECTOR_ISLAND_EAST | DETECTOR_ISLAND_WEST))
 					crossingState = STATE_ACTIVE_EASTBOUND;
 
@@ -610,6 +645,7 @@ int main(void)
 				// Lights on, bell on
 				// If island, go to STATE_ACTIVE_EASTBOUND
 				// If !island and shutdown_timer expired, set lockout_timer and go to STATE_LOCKOUT_EASTBOUND
+
 				if (detectors & (DETECTOR_ISLAND_EAST | DETECTOR_ISLAND_WEST))
 					crossingState = STATE_ACTIVE_EASTBOUND;
 				else if (0 == stateTimer)
@@ -627,6 +663,7 @@ int main(void)
 				// Lights off, bell off
 				// If island, go to STATE_ACTIVE_EASTBOUND
 				// If lockout_timer expired, go to STATE_IDLE
+
 				if (detectors & (DETECTOR_ISLAND_EAST | DETECTOR_ISLAND_WEST))
 					crossingState = STATE_ACTIVE_EASTBOUND;
 				else if (0 == stateTimer && !(detectors & DETECTOR_APPRCH_WEST))
@@ -644,13 +681,14 @@ int main(void)
 				// Lights on, bell on
 				// If island, go to STATE_ACTIVE_EASTBOUND
 				// If approach_timer expired, goto STATE_APPROACH_EAST_LOCKOUT
+				PORTA |= _BV(PA3);
+
 				if (detectors & (DETECTOR_ISLAND_EAST | DETECTOR_ISLAND_WEST))
 					crossingState = STATE_ACTIVE_WESTBOUND;
 
 				if (0 == stateTimer)
-				{
 					crossingState = STATE_APPROACH_WEST_LOCKOUT;
-				}
+
 				activateCrossing = true;
 
 				break;  
@@ -744,6 +782,7 @@ int main(void)
 		} else {
 			playBell = 0;
 			lights = 0;
+			decisecs = 0;
 		}
 	}
 	
