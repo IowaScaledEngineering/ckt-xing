@@ -1569,7 +1569,7 @@ Element["" "0805" "C13" "0.1uF" 1329.00mil 1410.50mil 78.93mil -14.50mil 0 100 "
 
 	)
 
-Element["found,selected" "JTAG-SWD-50mil" "J13" "unknown" 1150.00mil 1615.00mil -332.99mil -71.96mil 0 100 ""]
+Element["found" "JTAG-SWD-50mil" "J13" "unknown" 1150.00mil 1615.00mil -332.99mil -71.96mil 0 100 ""]
 (
 	Pad[-100.00mil 45.00mil -100.00mil 100.00mil 30.00mil 20.00mil 38.00mil "1" "1" "square,edge2"]
 	Pad[-100.00mil -100.00mil -100.00mil -45.00mil 30.00mil 20.00mil 38.00mil "2" "2" "square"]
@@ -1581,12 +1581,12 @@ Element["found,selected" "JTAG-SWD-50mil" "J13" "unknown" 1150.00mil 1615.00mil 
 	Pad[50.00mil -100.00mil 50.00mil -45.00mil 30.00mil 20.00mil 38.00mil "8" "8" "square"]
 	Pad[100.00mil 45.00mil 100.00mil 100.00mil 30.00mil 20.00mil 38.00mil "9" "9" "square,edge2"]
 	Pad[100.00mil -100.00mil 100.00mil -45.00mil 30.00mil 20.00mil 38.00mil "10" "10" "square"]
-	ElementLine [-216.00mil -68.00mil -127.00mil -68.00mil 5.00mil]
-	ElementLine [127.00mil -68.00mil 216.00mil -68.00mil 5.00mil]
-	ElementLine [216.00mil -68.00mil 216.00mil 68.00mil 5.00mil]
-	ElementLine [127.00mil 68.00mil 216.00mil 68.00mil 5.00mil]
-	ElementLine [-216.00mil 68.00mil -127.00mil 68.00mil 5.00mil]
-	ElementLine [-216.00mil -68.00mil -216.00mil 68.00mil 5.00mil]
+	ElementLine [-216.00mil -68.00mil -127.00mil -68.00mil 8.00mil]
+	ElementLine [127.00mil -68.00mil 216.00mil -68.00mil 8.00mil]
+	ElementLine [216.00mil -68.00mil 216.00mil 68.00mil 8.00mil]
+	ElementLine [127.00mil 68.00mil 216.00mil 68.00mil 8.00mil]
+	ElementLine [-216.00mil 68.00mil -127.00mil 68.00mil 8.00mil]
+	ElementLine [-216.00mil -68.00mil -216.00mil 68.00mil 8.00mil]
 	ElementArc [-199.00mil 50.00mil 11.00mil 11.00mil 0 360 10.00mil]
 
 	)
@@ -1984,8 +1984,8 @@ Layer(1 "component" "copper")
 	Line[1730.00mil 840.00mil 1730.00mil 880.00mil 10.00mil 20.00mil "clearline"]
 	Line[1730.00mil 880.00mil 1605.00mil 1005.00mil 10.00mil 20.00mil "clearline"]
 	Line[1605.00mil 1005.00mil 1575.00mil 1005.00mil 10.00mil 20.00mil "clearline"]
-	Line[1805.00mil 1020.00mil 1849.51mil 1020.00mil 10.00mil 20.00mil "clearline"]
-	Line[1849.51mil 1020.00mil 1850.50mil 1021.00mil 10.00mil 20.00mil "clearline"]
+	Line[1805.00mil 1020.00mil 46.9776mm 1020.00mil 10.00mil 20.00mil "clearline"]
+	Line[46.9776mm 1020.00mil 1850.50mil 1021.00mil 10.00mil 20.00mil "clearline"]
 	Line[1575.00mil 30.5186mm 39.9687mm 30.5549mm 10.00mil 20.00mil "clearline"]
 	Line[1850.00mil 940.00mil 1850.00mil 22.3394mm 10.00mil 20.00mil "clearline"]
 	Line[1850.00mil 22.3394mm 1850.50mil 22.3267mm 10.00mil 20.00mil "clearline"]
@@ -1994,9 +1994,9 @@ Layer(1 "component" "copper")
 	Line[1890.00mil 975.00mil 1890.00mil 1090.00mil 10.00mil 20.00mil "clearline"]
 	Line[1890.00mil 1090.00mil 1880.00mil 1100.00mil 10.00mil 20.00mil "clearline"]
 	Line[1880.00mil 1100.00mil 47.0280mm 1100.00mil 10.00mil 20.00mil "clearline"]
-	Line[47.0280mm 1100.00mil 1850.50mil 27.9147mm 10.00mil 20.00mil "clearline"]
-	Line[1805.00mil 800.00mil 1849.51mil 800.00mil 10.00mil 20.00mil "clearline"]
-	Line[1849.51mil 800.00mil 1850.50mil 20.3453mm 10.00mil 20.00mil "clearline"]
+	Line[47.0280mm 1100.00mil 1850.50mil 1099.00mil 10.00mil 20.00mil "clearline"]
+	Line[1805.00mil 800.00mil 46.9776mm 800.00mil 10.00mil 20.00mil "clearline"]
+	Line[46.9776mm 800.00mil 1850.50mil 20.3453mm 10.00mil 20.00mil "clearline"]
 	Line[1850.00mil 960.00mil 1850.00mil 930.00mil 10.00mil 20.00mil "clearline"]
 	Line[37.3344mm 26.6482mm 40.5348mm 26.6482mm 10.00mil 20.00mil "clearline"]
 	Line[40.5348mm 26.6482mm 1685.00mil 960.00mil 10.00mil 20.00mil "clearline"]
@@ -2465,6 +2465,7 @@ Layer(5 "top silk" "silk")
 	Text[1300.00mil 3115.00mil 0 100 "/EAPR" "clearline"]
 	Text[845.00mil 2225.00mil 0 100 "*" "clearline"]
 	Text[925.00mil 2300.00mil 0 100 "*" "clearline"]
+	Text[1040.00mil 1730.00mil 0 100 "*" "clearline"]
 )
 NetList()
 (
