@@ -107,7 +107,7 @@ pinseq=14
 T 1500 450 5 8 0 1 90 0 1
 pintype=io
 T 1450 305 5 8 1 1 90 6 1
-pinnumber=EP
+pinnumber=17
 T 1500 455 9 8 1 1 90 0 1
 pinlabel=GND
 }

@@ -107,7 +107,7 @@ pinseq=14
 T 1200 650 5 8 0 1 90 0 1
 pintype=io
 T 1150 505 5 8 1 1 90 6 1
-pinnumber=A2
+pinnumber=C2
 T 1200 655 9 8 1 1 90 0 1
 pinlabel=GND
 }
