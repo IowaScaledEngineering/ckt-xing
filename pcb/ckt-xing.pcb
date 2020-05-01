@@ -2460,12 +2460,12 @@ Layer(5 "top silk" "silk")
 	Text[1655.00mil 2455.00mil 1 100 "ISLAND" "clearline"]
 	Text[925.00mil 3115.00mil 0 100 "GND" "clearline"]
 	Text[485.00mil 3115.00mil 0 100 "/ACTV" "clearline"]
-	Text[695.00mil 3115.00mil 0 100 "/AOUT" "clearline"]
 	Text[1085.00mil 3115.00mil 0 100 "/WAPR" "clearline"]
 	Text[1300.00mil 3115.00mil 0 100 "/EAPR" "clearline"]
 	Text[845.00mil 2225.00mil 0 100 "*" "clearline"]
 	Text[925.00mil 2300.00mil 0 100 "*" "clearline"]
 	Text[1040.00mil 1730.00mil 0 100 "*" "clearline"]
+	Text[710.00mil 3115.00mil 0 100 "/XIN" "clearline"]
 )
 NetList()
 (
