@@ -33,8 +33,19 @@ LICENSE:
 #include <avr/pgmspace.h>
 #include <stdbool.h>
 
-// 16kHz 8 bit unsigned PCM data
+#define USE_8K  1
+
+#ifdef USE_8K
+#include "tinybell-8k.h"
+#define tinybell_wav tinybell_8k_wav
+#define tinybell_wav_len tinybell_8k_wav_len
+#define OCR0A_VAL  63
+#else
 #include "tinybell.h"
+#define tinybell_wav tinybell_16k_wav
+#define tinybell_wav_len tinybell_16k_wav_len
+#define OCR0A_VAL 63
+#endif
 
 
 
@@ -86,16 +97,22 @@ ISR(TIMER0_COMPA_vect)
 	static uint8_t rightLightPWMSetting = 0;
 	static uint8_t constLightPWMSetting = 0;
 	static uint8_t ticks = 0;
-
 	static uint16_t adcAccumulator = 0;
 
 	uint8_t tmp = 0;
 
-	if (isAmplifierEnabled())
+#ifdef USE_8K
+	static uint8_t wavTicks = 0;
+	wavTicks++; // 8kHz means only update every other time through the ISR
+#else
+	const uint8_t wavTicks = 0x01;
+#endif
+
+	if (isAmplifierEnabled() && (wavTicks & 0x01))
 	{
-		OCR1A = pgm_read_byte(&tinybell_16k_wav[wavIdx++]);
+		OCR1A = pgm_read_byte(&tinybell_wav[wavIdx++]);
 	
-		if (wavIdx == tinybell_16k_wav_len)
+		if (wavIdx == tinybell_wav_len)
 		{
 			wavIdx = 0;
 			// Make sure we only stop at the end of the bell sound, otherwise it may cut off
@@ -513,7 +530,7 @@ int main(void)
 	TIMSK = _BV(OCIE0A);                          // Timer interrupts OFF
 	TCCR0A = _BV(CTC0);                           // Set Timer 0 to Clear Timer on Compare Match mode
 	TCCR0B = _BV(CS01);                           // 1/8 prescale
-	OCR0A = 63;                                   // Get as close to a 16kHz rate as we can
+	OCR0A = OCR0A_VAL;                                   // Get as close to a 16kHz rate as we can
 
 
 	DDRB |= _BV(PB0) | _BV(PB1) | _BV(PA4) | _BV(PA5) | _BV(PA6);        // Left, Right, Constant outputs
