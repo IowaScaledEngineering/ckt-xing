@@ -6,10 +6,10 @@
 #define PORTA     (0ul)
 #define PORTB     (1ul)
 
-// LED0 IO Pin definition
-/*#define LED_RED_PORT            PORTA
-#define LED_RED_PIN_NUMBER      (17ul)
-#define LED_RED_PIN_MASK        PORT_PA17*/
+#define PB10 10
+#define PB11 11
+#define PB22 22
+#define PB23 23
 
 #define PA15 15
 #define PA16 16
@@ -17,11 +17,6 @@
 #define PA18 18
 #define PA19 19
 #define PA20 20
-
-
-#define LED_GRN_PORT            PORTA
-#define LED_GRN_PIN_NUMBER      (6ul)
-#define LED_GRN_PIN_MASK        PORT_PA06
 
 // Constants for Clock Generators
 #define GENERIC_CLOCK_GENERATOR_MAIN      (0u)
@@ -40,7 +35,7 @@ volatile uint32_t runFlags = 0;
 #define RUN_SENSOR_READ 0x00000001
 
 #define ON_DEBOUNCE_DEFAULT     1
-#define OFF_DEBOUNCE_DEFAULT    20
+#define OFF_DEBOUNCE_DEFAULT    4
 #define   TMD26711_ADDR   0x39
 #define   INFO_ADDR       0x20
 
@@ -58,7 +53,6 @@ void delay_ms(uint32_t milliseconds);
 #define LIGHT_LEFT_ON   0x01
 #define LIGHT_RIGHT_ON  0x02
 #define LIGHT_CONST_ON  0x04
-
 #define LIGHT_RATE  0x800
 
 volatile bool lightsOn = false;
@@ -116,12 +110,15 @@ void LightPWM(bool phase)
 			constLightPWMSetting = 0;
 	}
 	TCC0->CCB[0].reg = leftLightPWMSetting;
-	TCC0->CCB[1].reg = rightLightPWMSetting;
-	TCC0->CCB[2].reg = constLightPWMSetting;
+	while(TCC0->SYNCBUSY.bit.CC0);
+	TCC0->CCB[1].reg = constLightPWMSetting;
+	while(TCC0->SYNCBUSY.bit.CC1);
+	TCC0->CCB[2].reg = rightLightPWMSetting;
+	while(TCC0->SYNCBUSY.bit.CC2);
 
 }
 
-
+// Should be a 1ms ISR
 void SysTick_Handler(void)
 {
 	static uint32_t ul_tickcount=0 ;	// Global state variable for tick count
@@ -130,18 +127,16 @@ void SysTick_Handler(void)
 
 	ul_tickcount++ ;
 
-	// Toggle LEDs every second (i.e. 1000ms)
-	/*if(ul_tickcount % 1000 == 0)
-	{
-		// Toggle LED pin output level.
-		PORT->Group[LED_RED_PORT].OUTTGL.reg = LED_RED_PIN_MASK;
-	}*/
-
-	if (phaseTick++ % 800 == 0)
-		phase = !phase;
-
 	if (ul_tickcount % 10 == 0)
 	{
+		if (!lightsOn)
+		{
+			phaseTick = 0;
+			phase = false;
+		} else if (phaseTick++ % 80 == 0) {
+			phase = !phase;
+		}
+
 		LightPWM(phase);
 	}
 
@@ -149,11 +144,39 @@ void SysTick_Handler(void)
 	{
 		runFlags |= RUN_SENSOR_READ;
 	}
-
 }
 
 
 void ClocksInit(void);
+
+typedef struct
+{
+	uint32_t clock_A;
+	uint32_t clock_B;
+	uint32_t debounced_state;
+} DebounceState;
+
+void initDebounceState(DebounceState* d, uint32_t initialState)
+{
+	d->clock_A = d->clock_B = 0;
+	d->debounced_state = initialState;
+}
+
+uint32_t debounce(uint32_t raw_inputs, DebounceState* d)
+{
+	uint32_t delta = raw_inputs ^ d->debounced_state;   //Find all of the changes
+	uint32_t changes;
+
+	d->clock_A ^= d->clock_B;                     //Increment the counters
+	d->clock_B  = ~d->clock_B;
+
+	d->clock_A &= delta;                       //Reset the counters if no changes
+	d->clock_B &= delta;                       //were detected.
+
+	changes = ~((~delta) | d->clock_A | d->clock_B);
+	d->debounced_state ^= changes;
+	return(changes & ~(d->debounced_state));
+}
 
 
 /*
@@ -187,12 +210,11 @@ void I2S_Setup()
 	GCLK->CLKCTRL.reg = gclk1_clkctrl.reg;
 	while (GCLK->STATUS.bit.SYNCBUSY);
 
-	PM->APBCMASK.reg |= PM_APBCMASK_I2S;
+	PM->APBCMASK.bit.I2S_ = 1;
 
 	// Configure I2S shutdown line
 	PORT->Group[PORTA].DIRSET.reg = PORT_PA06;
-	PORT->Group[PORTA].OUTCLR.reg = PORT_PA06;	// Made SCK an output and high
-
+	PORT->Group[PORTA].OUTCLR.reg = PORT_PA06;	// Turn amplifier off
 
 	// Reconfigure pins for I2S
 	PORT->Group[PORTA].PINCFG[7].bit.PMUXEN = 1;  // SD
@@ -206,14 +228,16 @@ void I2S_Setup()
 	// f(SCK0) = (GCLK_I2S_0) / (MCKDIV+1)
 	// Thus, MCKDIV = 16 for 44.1kHz signal at 32 bits/channel, 2 channels (2822400 Hz bit clock)
 
-	I2S->CTRLA.reg = 0;
+
+	// Full reset
 	I2S->CTRLA.bit.ENABLE = 0;
 	while(I2S->SYNCBUSY.bit.ENABLE);
 
-	I2S->CTRLA.bit.CKEN0 = 0;
-	while(I2S->SYNCBUSY.bit.CKEN0);
+	I2S->CTRLA.bit.SWRST = 1;
+	while(I2S->SYNCBUSY.bit.SWRST);
 
 	I2S_CLKCTRL_Type clk0;
+	clk0.reg = 0;
 	clk0.bit.MCKDIV = 16; // See math above
 	clk0.bit.MCKEN = 1;
 	clk0.bit.BITDELAY = 1; // I2S delay
@@ -223,20 +247,26 @@ void I2S_Setup()
 	I2S->CLKCTRL[0].reg = clk0.reg;
 
 
-	I2S->CTRLA.bit.SEREN0 = 0;
-	while(I2S->SYNCBUSY.bit.SEREN0);
-
 	I2S_SERCTRL_Type ser0;
+	ser0.reg = 0;
 	ser0.bit.DATASIZE = I2S_SERCTRL_DATASIZE_32_Val;
 	ser0.bit.SERMODE = I2S_SERCTRL_SERMODE_TX_Val;
 	ser0.bit.MONO = 1;
 	I2S->SERCTRL[0].reg = ser0.reg;
 
-/*	I2S->CTRLA.bit.CKEN0 = 1;
-	I2S->CTRLA.bit.SEREN0 = 1;
-	I2S->CTRLA.bit.ENABLE = 1;
-	while(I2S->SYNCBUSY.bit.CKEN0 || I2S->SYNCBUSY.bit.SEREN0);*/
 
+	I2S_CTRLA_Type ctrla;
+	ctrla.reg = 0;
+	ctrla.bit.CKEN0 = 1;
+	ctrla.bit.SEREN0 = 1;
+	ctrla.bit.ENABLE = 1;
+	I2S->CTRLA.reg = ctrla.reg;
+	while(I2S->SYNCBUSY.bit.ENABLE);
+
+	// Attach the interrupt = wont' actually fire until 
+	I2S->INTENCLR.bit.TXRDY0 = 1;
+	NVIC_SetPriority(I2S_IRQn, 2);	// Set interrupt priority to 1
+	NVIC_EnableIRQ(I2S_IRQn);		// Enable I2S Interrupt
 }
 
 volatile uint32_t bellOffset = 0;
@@ -260,8 +290,8 @@ void I2S_Handler(void)
 			bellOffset = 0;
 			if (!bellOn)
 			{
-				I2S->INTENCLR.bit.TXRDY0 = 1;
 				PORT->Group[PORTA].OUTCLR.reg = PORT_PA06;	// Disable amplifier
+				I2S->INTENCLR.bit.TXRDY0 = 1; // Disable interrupt firing
 			}
 		}
 
@@ -277,15 +307,8 @@ void StartBell()
 {
 	bellOn = true;
 	bellOffset = 0;
-	I2S->INTENSET.bit.TXRDY0 = 1;
-
-	NVIC_SetPriority(I2S_IRQn, 1);	// Set interrupt priority to 1
-	NVIC_EnableIRQ(I2S_IRQn);		// Enable I2S Interrupt
-
 	PORT->Group[PORTA].OUTSET.reg = PORT_PA06;	// Enable amplifier
-
-	I2S->CTRLA.reg = I2S_CTRLA_ENABLE | I2S_CTRLA_CKEN0 | I2S_CTRLA_SEREN0;
-	while(I2S->SYNCBUSY.reg & (I2S_SYNCBUSY_CKEN0 | I2S_SYNCBUSY_ENABLE | I2S_SYNCBUSY_SEREN0)); // Wait for domains to synchronize
+	I2S->INTENSET.bit.TXRDY0 = 1;
 }
 
 void StopBell()
@@ -579,7 +602,7 @@ void initializePWM()
 	// Write these settings
 	GCLK->CLKCTRL.reg = gclk_clkctrl.reg;
 
-	PM->APBCMASK.reg |= PM_APBCMASK_TCC0;
+	PM->APBCMASK.bit.TCC0_ = 1;
 
 	// Disable
 	TCC0->CTRLA.bit.ENABLE = 0;
@@ -602,15 +625,15 @@ void initializePWM()
 
 
 	TCC0->PERB.reg = 0x8000;
-//	while(TCC0->SYNCBUSY.bit.PER);
+	while(TCC0->SYNCBUSY.bit.PER);
 	TCC0->CCB[0].reg = 0;
-//	while(TCC0->SYNCBUSY.bit.CC0);
+	while(TCC0->SYNCBUSY.bit.CC0);
 	TCC0->CCB[1].reg = 0;
-//	while(TCC0->SYNCBUSY.bit.CC1);
+	while(TCC0->SYNCBUSY.bit.CC1);
 	TCC0->CCB[2].reg = 0;
-//	while(TCC0->SYNCBUSY.bit.CC2);
+	while(TCC0->SYNCBUSY.bit.CC2);
 	TCC0->CCB[3].reg = 0;
-//	while(TCC0->SYNCBUSY.bit.CC3);
+	while(TCC0->SYNCBUSY.bit.CC3);
 
 	TCC0->CTRLA.bit.ENABLE = 1;
 	while(TCC0->SYNCBUSY.bit.ENABLE);
@@ -629,7 +652,7 @@ void delayInit()
 	// Write these settings
 	GCLK->CLKCTRL.reg = gclk_clkctrl.reg;
 
-	PM->APBCMASK.reg |= PM_APBCMASK_TC3;
+	PM->APBCMASK.bit.TC3_ = 1;
 
 	TC3->COUNT16.CTRLA.bit.ENABLE = 0;
 	while(TC3->COUNT16.STATUS.bit.SYNCBUSY);
@@ -692,20 +715,96 @@ void init()
 	NVIC_EnableIRQ(SysTick_IRQn);		// Enable SysTick Interrupt
 }
 
+void StartLights()
+{
+	lightsOn = true;
+
+}
+
+void StopLights()
+{
+	lightsOn = false;
+	
+}
+#define IO_INPUT_AUX_IN_MASK     PORT_PB10
+#define IO_INPUT_ACTV_MASK       PORT_PB11
+#define IO_INPUT_WOCC_MASK       PORT_PB22
+#define IO_INPUT_EOCC_MASK       PORT_PB23
+
+
+#define IO_OUTPUT_AUX_OUT_MASK   PORT_PA21
+#define IO_OUTPUT_GATE_A_MASK    PORT_PA21
+#define IO_OUTPUT_GATE_B_MASK    PORT_PA22
+
+
+
+void initializeIOLines()
+{
+	// Configure input logic lines
+	PORT->Group[PORTB].DIRCLR.reg = (IO_INPUT_AUX_IN_MASK | IO_INPUT_ACTV_MASK | IO_INPUT_WOCC_MASK | IO_INPUT_EOCC_MASK);
+
+	//Enable pullups on logic level inputs
+	PORT->Group[PORTB].PINCFG[PB10].bit.PULLEN = 0;
+	PORT->Group[PORTB].PINCFG[PB11].bit.PULLEN = 0;
+	PORT->Group[PORTB].PINCFG[PB22].bit.PULLEN = 0;
+	PORT->Group[PORTB].PINCFG[PB23].bit.PULLEN = 0;
+	PORT->Group[PORTB].PINCFG[PB10].bit.INEN = 1;
+	PORT->Group[PORTB].PINCFG[PB11].bit.INEN = 1;
+	PORT->Group[PORTB].PINCFG[PB22].bit.INEN = 1;
+	PORT->Group[PORTB].PINCFG[PB23].bit.INEN = 1;
+
+	// Configure output logic lines, and set all low
+	PORT->Group[PORTA].DIRSET.reg = (IO_OUTPUT_AUX_OUT_MASK | IO_OUTPUT_GATE_A_MASK | IO_OUTPUT_GATE_B_MASK);
+	PORT->Group[PORTA].OUTCLR.reg = (IO_OUTPUT_AUX_OUT_MASK | IO_OUTPUT_GATE_A_MASK | IO_OUTPUT_GATE_B_MASK);
+}
+
+
+
+#define INPUT_IR_EAST_APPR   0x00000001
+#define INPUT_IR_EAST_ISLD   0x00000002
+#define INPUT_IR_WEST_ISLD   0x00000004
+#define INPUT_IR_WEST_APPR   0x00000008
+#define INPUT_FORCE_ACTIVE   0x00000010
+#define INPUT_AUX            0x00000020
+#define INPUT_WEST_APPR_OCC  0x00000040
+#define INPUT_EAST_APPR_OCC  0x00000080
+
+uint32_t getIOInputs(DebounceState* ioState)
+{
+	uint32_t retval = 0;
+	uint32_t portVal = PORT->Group[PORTB].IN.reg;
+	debounce(portVal, ioState);
+
+	if (ioState->debounced_state & IO_INPUT_ACTV_MASK)
+		retval |= INPUT_FORCE_ACTIVE;
+
+	if (ioState->debounced_state & IO_INPUT_AUX_IN_MASK)
+		retval |= INPUT_AUX;
+
+	if (ioState->debounced_state & IO_INPUT_WOCC_MASK)
+		retval |= INPUT_WEST_APPR_OCC;
+
+	if (ioState->debounced_state & IO_INPUT_EOCC_MASK)
+		retval |= INPUT_EAST_APPR_OCC;
+
+	return retval;
+}
+
 
 int main()
 {
-	uint8_t sensorState = 0;
+	uint32_t sensorState = 0;
+	DebounceState ioState;
+	
 	init();
 	delayInit();
 	initializePWM();
+	initializeIOLines();
 	i2cInit();
 	I2S_Setup();
 
 	initializeTMD26711();
-
-//	PORT->Group[LED_GRN_PORT].DIRSET.reg = LED_GRN_PIN_MASK;
-
+	initDebounceState(&ioState, 0);
 
 	while(1)
 	{
@@ -713,39 +812,20 @@ int main()
 		{
 			runFlags &= ~(RUN_SENSOR_READ);
 			sensorState = readTMD26711s();
+			sensorState |= getIOInputs(&ioState);
 		}
 
-		if (sensorState != 0 && !bellOn)
+		if ((sensorState & INPUT_FORCE_ACTIVE) && !bellOn)
 		{
-			lightsOn = true;
+			StartLights();
 			StartBell();
 		}
-		else if (sensorState == 0 && bellOn)
+		else if ((!(sensorState & INPUT_FORCE_ACTIVE)) && bellOn)
 		{
 			StopBell();
-			lightsOn = false;
+			StopLights();
 		}
-/*
-
-			PORT->Group[LED_GRN_PORT].OUTSET.reg = LED_GRN_PIN_MASK;
-		else
-			PORT->Group[LED_GRN_PORT].OUTCLR.reg = LED_GRN_PIN_MASK;*/
-
-/*		StartBell();
-		delay_ms(5000);
-		StopBell();
-		delay_ms(5000);*/
-
-
-/*		PORT->Group[LED_GRN_PORT].OUTCLR.reg = LED_GRN_PIN_MASK;
-		delay_ms(200);
-		PORT->Group[LED_GRN_PORT].OUTSET.reg = LED_GRN_PIN_MASK;
-		delay_ms(100);
-		PORT->Group[LED_GRN_PORT].OUTCLR.reg = LED_GRN_PIN_MASK;
-		delay_ms(200);
-		PORT->Group[LED_GRN_PORT].OUTSET.reg = LED_GRN_PIN_MASK;
-      delay_ms(1000);*/
-    }
+	}
 }
 
 
@@ -953,6 +1033,7 @@ void ClocksInit(void)
 	PM->APBASEL.reg = PM_APBASEL_APBADIV_DIV1_Val ;
 	PM->APBBSEL.reg = PM_APBBSEL_APBBDIV_DIV1_Val ;
 	PM->APBCSEL.reg = PM_APBCSEL_APBCDIV_DIV1_Val ;
-	
+	PM->APBCMASK.bit.PAC2_ = 1;
+	PM->APBCMASK.bit.I2S_ = 1;
 }
 
