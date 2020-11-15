@@ -2,21 +2,46 @@
 #include <stdbool.h>
 #include "bell.h"
 
+// Various state machine timeouts
+
+#define EAST_APPROACH_TIMEOUT             100
+#define EAST_DEPARTURE_TIMEOUT             10
+#define EAST_LOCKOUT_TIMER                100
+
+#define WEST_APPROACH_TIMEOUT             100
+#define WEST_DEPARTURE_TIMEOUT             10
+#define WEST_LOCKOUT_TIMER                100
+
+#define ISLAND_TIMER                       20
+
+
 // I/O Ports definitions
 #define PORTA     (0ul)
 #define PORTB     (1ul)
 
+#define PB08  8
 #define PB10 10
 #define PB11 11
 #define PB22 22
 #define PB23 23
 
+#define PA02  2
 #define PA15 15
 #define PA16 16
 #define PA17 17
 #define PA18 18
 #define PA19 19
 #define PA20 20
+
+#define IO_INPUT_AUX_IN_MASK     PORT_PB10
+#define IO_INPUT_ACTV_MASK       PORT_PB11
+#define IO_INPUT_WOCC_MASK       PORT_PB22
+#define IO_INPUT_EOCC_MASK       PORT_PB23
+
+#define IO_OUTPUT_AUX_OUT_MASK   PORT_PA13
+#define IO_OUTPUT_GATE_A_MASK    PORT_PA21
+#define IO_OUTPUT_GATE_B_MASK    PORT_PA22
+
 
 // Constants for Clock Generators
 #define GENERIC_CLOCK_GENERATOR_MAIN      (0u)
@@ -179,12 +204,151 @@ uint32_t debounce(uint32_t raw_inputs, DebounceState* d)
 }
 
 
+volatile int32_t volume = 0x2000;
+
+void ADC_Setup()
+{
+	// Enable the peripheral bus interface clock
+	PM->APBCMASK.bit.ADC_ = 1;
+
+	// Send the ADC module 8MHz, which we'll cut down to 2MHz for operations
+	GCLK_CLKCTRL_Type gclk_clkctrl = {
+		.bit.WRTLOCK = 0,		/* Generic Clock is not locked from subsequent writes */
+		.bit.CLKEN = 1,			/* Enable the Generic Clock */
+		.bit.GEN = GENERIC_CLOCK_GENERATOR_OSC8M, 	/* Generic Clock Generator 3 (8MHz) is the source */
+		.bit.ID = ADC_GCLK_ID			/* Generic Clock Multiplexer for ADC  */
+	};
+	// Write these settings
+	GCLK->CLKCTRL.reg = gclk_clkctrl.reg;
+	while (GCLK->STATUS.bit.SYNCBUSY);
+
+	// Change ADC0 and ADC2 to analog inputs
+	PORT->Group[PORTA].DIRCLR.reg = PORT_PA02;
+	PORT->Group[PORTB].DIRCLR.reg = PORT_PB08;
+	
+	PORT->Group[PORTA].PINCFG[2].bit.PMUXEN = 1;  // Analog 0
+	PORT->Group[PORTB].PINCFG[8].bit.PMUXEN = 1;  // Analog 1
+	
+	PORT->Group[PORTA].PMUX[1].bit.PMUXE = 1; // Analog is peripheral function B = 1
+	PORT->Group[PORTB].PMUX[4].bit.PMUXE = 1; // Analog is peripheral function B = 1
+
+	// Software reset
+	ADC->CTRLA.bit.SWRST = 1;
+	while (ADC->STATUS.bit.SYNCBUSY);
+	
+	// Load calibration constants
+	uint32_t bias = (*((uint32_t *) ADC_FUSES_BIASCAL_ADDR) & ADC_FUSES_BIASCAL_Msk) >> ADC_FUSES_BIASCAL_Pos;
+	uint32_t linearity = (*((uint32_t *) ADC_FUSES_LINEARITY_0_ADDR) & ADC_FUSES_LINEARITY_0_Msk) >> ADC_FUSES_LINEARITY_0_Pos;
+	linearity |= ((*((uint32_t *) ADC_FUSES_LINEARITY_1_ADDR) & ADC_FUSES_LINEARITY_1_Msk) >> ADC_FUSES_LINEARITY_1_Pos) << 5;
+
+	// Wait for bus synchronization.
+	while (ADC->STATUS.bit.SYNCBUSY);
+	ADC->CALIB.reg = ADC_CALIB_BIAS_CAL(bias) | ADC_CALIB_LINEARITY_CAL(linearity);
+
+	// Set reference to 1/2 VCCANA
+	ADC_REFCTRL_Type adc_refctrl = {
+		.bit.REFCOMP = 1,
+		.bit.REFSEL = ADC_REFCTRL_REFSEL_INTVCC1_Val
+	};
+	ADC->REFCTRL.reg = adc_refctrl.reg;
+
+	ADC_AVGCTRL_Type adc_avgctrl = {
+		.bit.SAMPLENUM = ADC_AVGCTRL_SAMPLENUM_1024,
+		.bit.ADJRES = 0x04 // keep the output as 12 bit
+	};
+	ADC->AVGCTRL.reg = adc_avgctrl.reg;
+
+	ADC_CTRLB_Type adc_ctrlb = {
+		.bit.DIFFMODE = 0,
+		.bit.LEFTADJ = 0,
+		.bit.FREERUN = 0,
+		.bit.CORREN = 0,
+		.bit.RESSEL = ADC_CTRLB_RESSEL_12BIT_Val,
+		.bit.PRESCALER = ADC_CTRLB_PRESCALER_DIV4_Val
+	};
+	ADC->CTRLB.reg = adc_ctrlb.reg;
+	while (ADC->STATUS.bit.SYNCBUSY);
+	
+	ADC_INPUTCTRL_Type adc_inputctrl = {
+		.bit.MUXPOS = ADC_INPUTCTRL_MUXPOS_SCALEDIOVCC_Val,
+		.bit.MUXNEG = ADC_INPUTCTRL_MUXNEG_GND_Val,
+		.bit.INPUTSCAN = 0,
+		.bit.INPUTOFFSET = 0,
+		.bit.GAIN = ADC_INPUTCTRL_GAIN_DIV2_Val
+	};
+	ADC->INPUTCTRL.reg = adc_inputctrl.reg;
+	while (ADC->STATUS.bit.SYNCBUSY);
+
+
+	ADC->DBGCTRL.bit.DBGRUN = 1;
+
+	ADC_CTRLA_Type adc_ctrla = {
+		.bit.RUNSTDBY = 0,
+		.bit.ENABLE = 1,
+	};
+	ADC->CTRLA.reg = adc_ctrla.reg;
+	while (ADC->STATUS.bit.SYNCBUSY);
+
+	NVIC_SetPriority(ADC_IRQn, 3);	// Set interrupt priority to 3
+	NVIC_EnableIRQ(ADC_IRQn);		// Enable ADC interrupt
+
+	// Enable result ready interrupt
+	ADC->INTENSET.bit.RESRDY = 1;
+
+	// Start analog conversion
+	ADC->SWTRIG.bit.START = 1;
+	while (ADC->STATUS.bit.SYNCBUSY);
+}
+
+volatile uint32_t timeoutVal = 0;
+
+void ADC_Handler()
+{
+	while (ADC->STATUS.bit.SYNCBUSY);
+	uint32_t val = ADC->RESULT.reg;
+
+	// Clear the interrupt flag
+	ADC->INTFLAG.reg = ADC_INTFLAG_RESRDY;
+
+	// alternate between channel 0 and 2
+	uint32_t channel = ADC->INPUTCTRL.bit.MUXPOS;
+	
+	switch(channel)
+	{
+		case 0:
+			// FIXME: volume stuff here
+			volume = (int32_t)val * 2;
+			ADC->INPUTCTRL.bit.MUXPOS = ADC_INPUTCTRL_MUXPOS_PIN2_Val;
+			while (ADC->STATUS.bit.SYNCBUSY);
+			break;
+			
+		case 2:
+			timeoutVal = val;
+			// FIXME: set timeout stuff here
+			ADC->INPUTCTRL.bit.MUXPOS = ADC_INPUTCTRL_MUXPOS_PIN0_Val;
+			while (ADC->STATUS.bit.SYNCBUSY);
+			break;
+			
+		default:
+			// Probably the first result, toss it.
+			ADC->INPUTCTRL.bit.MUXPOS = ADC_INPUTCTRL_MUXPOS_PIN0_Val;
+			while (ADC->STATUS.bit.SYNCBUSY);
+			break;
+	}
+
+	ADC->SWTRIG.bit.START = 1;
+	while (ADC->STATUS.bit.SYNCBUSY);
+
+
+}
+
 /*
 PA07 - I2S0 /Shutdown 
 PA07 - I2S0 DATA  (D9)
 PA10 - I2S0 BCLK  (D1)
 PA11 - I2S0 LRCLK (D0)
 */
+
 
 void I2S_Setup()
 {
@@ -271,8 +435,6 @@ void I2S_Setup()
 
 volatile uint32_t bellOffset = 0;
 volatile bool bellOn = false;
-
-volatile int32_t volume = 0x2000;
 
 void I2S_Handler(void)
 {
@@ -699,7 +861,6 @@ void delay_ms(uint32_t milliseconds)
 
 void init()
 {
-
 	ClocksInit();
 	// Assign the LED0 pin as OUTPUT
 	//PORT->Group[LED_RED_PORT].DIRSET.reg = LED_RED_PIN_MASK;
@@ -715,28 +876,48 @@ void init()
 	NVIC_EnableIRQ(SysTick_IRQn);		// Enable SysTick Interrupt
 }
 
+void AuxOutputSet()
+{
+	PORT->Group[PORTA].DIRSET.reg = IO_OUTPUT_AUX_OUT_MASK;
+}
+
+void AuxOutputClear()
+{
+	PORT->Group[PORTA].DIRCLR.reg = IO_OUTPUT_AUX_OUT_MASK;
+}
+
+void MainGateDown()
+{
+	PORT->Group[PORTA].DIRSET.reg = IO_OUTPUT_GATE_A_MASK;
+}
+
+void MainGateUp()
+{
+	PORT->Group[PORTA].DIRCLR.reg = IO_OUTPUT_GATE_A_MASK;
+}
+
+void SecondGateDown()
+{
+	PORT->Group[PORTA].DIRSET.reg = IO_OUTPUT_GATE_B_MASK;
+}
+
+void SecondGateUp()
+{
+	PORT->Group[PORTA].DIRCLR.reg = IO_OUTPUT_GATE_B_MASK;
+}
+
+
 void StartLights()
 {
 	lightsOn = true;
-
+	AuxOutputSet();
 }
 
 void StopLights()
 {
 	lightsOn = false;
-	
+	AuxOutputClear();
 }
-#define IO_INPUT_AUX_IN_MASK     PORT_PB10
-#define IO_INPUT_ACTV_MASK       PORT_PB11
-#define IO_INPUT_WOCC_MASK       PORT_PB22
-#define IO_INPUT_EOCC_MASK       PORT_PB23
-
-
-#define IO_OUTPUT_AUX_OUT_MASK   PORT_PA21
-#define IO_OUTPUT_GATE_A_MASK    PORT_PA21
-#define IO_OUTPUT_GATE_B_MASK    PORT_PA22
-
-
 
 void initializeIOLines()
 {
@@ -757,8 +938,6 @@ void initializeIOLines()
 	PORT->Group[PORTA].DIRSET.reg = (IO_OUTPUT_AUX_OUT_MASK | IO_OUTPUT_GATE_A_MASK | IO_OUTPUT_GATE_B_MASK);
 	PORT->Group[PORTA].OUTCLR.reg = (IO_OUTPUT_AUX_OUT_MASK | IO_OUTPUT_GATE_A_MASK | IO_OUTPUT_GATE_B_MASK);
 }
-
-
 
 #define INPUT_IR_EAST_APPR   0x00000001
 #define INPUT_IR_EAST_ISLD   0x00000002
@@ -790,24 +969,83 @@ uint32_t getIOInputs(DebounceState* ioState)
 	return retval;
 }
 
+typedef enum
+{
+	STATE_IDLE                  = 0x00,
+	STATE_ACTIVE_UNK            = 0x01,
+
+	STATE_APPROACH_EASTBOUND    = 0x02,
+	STATE_APPROACH_EAST_LOCKOUT = 0x03,
+	STATE_ACTIVE_EASTBOUND      = 0x04,
+	STATE_SHUTDOWN_EASTBOUND    = 0x05,
+	STATE_LOCKOUT_EASTBOUND     = 0x06,
+
+	STATE_APPROACH_WESTBOUND    = 0x07,
+	STATE_APPROACH_WEST_LOCKOUT = 0x08,
+	STATE_ACTIVE_WESTBOUND      = 0x09,
+	STATE_SHUTDOWN_WESTBOUND    = 0x0A,
+	STATE_LOCKOUT_WESTBOUND     = 0x0B
+
+} CrossingState;
+
+bool isIslandorForceActive(uint32_t detectors)
+{
+	if (detectors & (INPUT_IR_EAST_ISLD | INPUT_IR_WEST_ISLD | INPUT_FORCE_ACTIVE))
+		return true;
+	return false;
+}
+
+bool isIslandActive(uint32_t detectors)
+{
+	if (detectors & (INPUT_IR_EAST_ISLD | INPUT_IR_WEST_ISLD))
+		return true;
+	return false;
+}
+
+bool isForceActive(uint32_t detectors)
+{
+	if (detectors & INPUT_FORCE_ACTIVE)
+		return true;
+	return false;
+}
+
+bool isEastApproachActive(uint32_t detectors)
+{
+	if (detectors & (INPUT_IR_EAST_APPR | INPUT_EAST_APPR_OCC))
+		return true;
+	return false;
+}
+
+bool isWestApproachActive(uint32_t detectors)
+{
+	if (detectors & (INPUT_IR_WEST_APPR | INPUT_WEST_APPR_OCC))
+		return true;
+	return false;
+}
 
 int main()
 {
 	uint32_t sensorState = 0;
 	DebounceState ioState;
+	CrossingState crossingState = STATE_IDLE;
+	bool activateCrossing = false;
 	
+	volatile uint32_t stateTimer = 0;
+
 	init();
 	delayInit();
-	initializePWM();
 	initializeIOLines();
+	initializePWM();
 	i2cInit();
 	I2S_Setup();
-
+	ADC_Setup();
+	
 	initializeTMD26711();
 	initDebounceState(&ioState, 0);
 
 	while(1)
 	{
+		// Get sensors
 		if (runFlags & RUN_SENSOR_READ)
 		{
 			runFlags &= ~(RUN_SENSOR_READ);
@@ -815,12 +1053,237 @@ int main()
 			sensorState |= getIOInputs(&ioState);
 		}
 
-		if ((sensorState & INPUT_FORCE_ACTIVE) && !bellOn)
+		// Re-evaluate state
+		switch(crossingState)
+		{
+			
+/*#define INPUT_IR_EAST_APPR   0x00000001
+#define INPUT_IR_EAST_ISLD   0x00000002
+#define INPUT_IR_WEST_ISLD   0x00000004
+#define INPUT_IR_WEST_APPR   0x00000008
+#define INPUT_FORCE_ACTIVE   0x00000010
+#define INPUT_AUX            0x00000020
+#define INPUT_WEST_APPR_OCC  0x00000040
+#define INPUT_EAST_APPR_OCC  0x00000080*/
+			
+			case STATE_IDLE:
+				//  Lights off, bell off
+  				//  If island, go to STATE_ACTIVE_UNK
+				//  If east approach, set approach_timer and go to STATE_APPROACH_EASTBOUND
+				//  If west approach, set approach_timer and go to STATE_APPROACH_WESTBOUND
+				if (isIslandorForceActive(sensorState))
+				{
+					crossingState = STATE_ACTIVE_UNK;
+					stateTimer = ISLAND_TIMER;
+				}
+				else if (isEastApproachActive(sensorState))
+				{
+					crossingState = STATE_APPROACH_EASTBOUND;
+					stateTimer = EAST_APPROACH_TIMEOUT;
+				}
+				else if (isWestApproachActive(sensorState))
+				{
+					crossingState = STATE_APPROACH_WESTBOUND;
+					stateTimer = WEST_APPROACH_TIMEOUT;
+				}
+				else
+				{
+					activateCrossing = false;
+				}
+				break;
+
+			case STATE_ACTIVE_UNK:
+				// PURPOSE: Turns on the grade crossing if the island sensors suddenly get hit
+				// Lights on, bell on
+				// If island, go to STATE_ACTIVE_UNK
+				// If !island, goto STATE_IDLE
+				if (!isIslandorForceActive(sensorState) && 0 == stateTimer)
+					crossingState = STATE_IDLE;
+				activateCrossing = true;
+				break;
+
+
+			case STATE_APPROACH_EASTBOUND:
+				// PURPOSE: Activates crossing when the east approach sensor is triggered
+				//  and starts a timer, by which point the train must have hit the island
+				// Lights on, bell on
+				// If island, go to STATE_ACTIVE_EASTBOUND
+				// If approach_timer expired, goto STATE_APPROACH_EAST_LOCKOUT
+
+				if (isForceActive(sensorState))
+					crossingState = STATE_ACTIVE_UNK;
+				else if (isIslandActive(sensorState))
+					crossingState = STATE_ACTIVE_EASTBOUND;
+
+				if (0 == stateTimer)
+				{
+					crossingState = STATE_APPROACH_EAST_LOCKOUT;
+				}
+				activateCrossing = true;
+				break;  
+
+			case STATE_APPROACH_EAST_LOCKOUT:
+				// PURPOSE: Waits for the east approach detector to drop out after we've 
+				//    timed out on eastbound approach
+				// Lights off, bell off
+				// If island, go to STATE_ACTIVE_EASTBOUND
+				// If !east approach, goto STATE_IDLE
+				// If west approach, goto STATE_APPROACH_WESTBOUND
+				
+				if (isForceActive(sensorState))
+					crossingState = STATE_ACTIVE_UNK;
+				else if (isIslandActive(sensorState))
+					crossingState = STATE_ACTIVE_EASTBOUND;
+				
+				if (!isEastApproachActive(sensorState))
+					crossingState = STATE_IDLE;
+
+				if (isWestApproachActive(sensorState))
+				{
+					crossingState = STATE_APPROACH_WESTBOUND;
+					stateTimer = WEST_APPROACH_TIMEOUT;
+				}
+				activateCrossing = false;
+				break;
+
+			case STATE_SHUTDOWN_EASTBOUND:
+				// Lights on, bell on
+				// If island, go to STATE_ACTIVE_EASTBOUND
+				// If !island and shutdown_timer expired, set lockout_timer and go to STATE_LOCKOUT_EASTBOUND
+
+				if (isForceActive(sensorState))
+					crossingState = STATE_ACTIVE_UNK;
+				else if (isIslandActive(sensorState))
+					crossingState = STATE_ACTIVE_EASTBOUND;
+				else if (0 == stateTimer)
+				{
+					crossingState = STATE_LOCKOUT_EASTBOUND;
+					stateTimer = EAST_LOCKOUT_TIMER;
+				}
+
+				activateCrossing = true;
+  				break;
+
+			case STATE_LOCKOUT_EASTBOUND:
+				// This state prevents retriggering on the west approach sensor for an eastbound
+				// Lights off, bell off
+				// If island, go to STATE_ACTIVE_EASTBOUND
+				// If lockout_timer expired, go to STATE_IDLE
+				if (isForceActive(sensorState))
+					crossingState = STATE_ACTIVE_UNK;
+				else if (isIslandActive(sensorState))
+					crossingState = STATE_ACTIVE_EASTBOUND;
+				else if (0 == stateTimer && !isWestApproachActive(sensorState))
+				{
+					crossingState = STATE_IDLE;
+				}
+				activateCrossing = false;
+				break;
+
+
+
+			case STATE_APPROACH_WESTBOUND:
+				// PURPOSE: Activates crossing when the east approach sensor is triggered
+				//  and starts a timer, by which point the train must have hit the island
+				// Lights on, bell on
+				// If island, go to STATE_ACTIVE_EASTBOUND
+				// If approach_timer expired, goto STATE_APPROACH_EAST_LOCKOUT
+				if (isForceActive(sensorState))
+					crossingState = STATE_ACTIVE_UNK;
+				else if (isIslandActive(sensorState))
+					crossingState = STATE_ACTIVE_WESTBOUND;
+
+				if (0 == stateTimer)
+					crossingState = STATE_APPROACH_WEST_LOCKOUT;
+
+				activateCrossing = true;
+
+				break;  
+
+			case STATE_APPROACH_WEST_LOCKOUT:
+				// PURPOSE: Waits for the east approach detector to drop out after we've 
+				//    timed out on eastbound approach
+				// Lights off, bell off
+				// If island, go to STATE_ACTIVE_EASTBOUND
+				// If !east approach, goto STATE_IDLE
+				// If west approach, goto STATE_APPROACH_WESTBOUND
+				if (isForceActive(sensorState))
+					crossingState = STATE_ACTIVE_UNK;
+				else if (isIslandActive(sensorState))
+					crossingState = STATE_ACTIVE_WESTBOUND;
+				else if (!isWestApproachActive(sensorState))
+					crossingState = STATE_IDLE;
+				else if (isEastApproachActive(sensorState))
+				{
+					crossingState = STATE_APPROACH_EASTBOUND;
+					stateTimer = EAST_APPROACH_TIMEOUT;
+				}
+				activateCrossing = false;
+
+				break;
+
+			case STATE_ACTIVE_WESTBOUND:
+				// Lights on, bell on
+				// If !island, go to STATE_SHUTDOWN_EASTBOUND
+				activateCrossing = true;
+				if (isForceActive(sensorState))
+					crossingState = STATE_ACTIVE_UNK;
+				else if (!isIslandActive(sensorState))
+				{
+					crossingState = STATE_SHUTDOWN_WESTBOUND;
+					stateTimer = WEST_DEPARTURE_TIMEOUT;
+				}
+  				break;
+
+			case STATE_SHUTDOWN_WESTBOUND:
+				// Lights on, bell on
+				// If island, go to STATE_ACTIVE_EASTBOUND
+				// If !island and shutdown_timer expired, set lockout_timer and go to STATE_LOCKOUT_EASTBOUND
+				if (isForceActive(sensorState))
+					crossingState = STATE_ACTIVE_UNK;
+				else if (isIslandActive(sensorState))
+					crossingState = STATE_ACTIVE_WESTBOUND;
+				else if (0 == stateTimer)
+				{
+					crossingState = STATE_LOCKOUT_WESTBOUND;
+					stateTimer = WEST_LOCKOUT_TIMER;
+				}
+				activateCrossing = true;
+  				break;
+
+			case STATE_LOCKOUT_WESTBOUND:
+				// This state prevents retriggering on the west approach sensor for an eastbound
+				// Lights off, bell off
+				// If island, go to STATE_ACTIVE_EASTBOUND
+				// If lockout_timer expired, go to STATE_IDLE
+				if (isForceActive(sensorState))
+					crossingState = STATE_ACTIVE_UNK;
+				else if (isIslandActive(sensorState))
+					crossingState = STATE_ACTIVE_WESTBOUND;
+				else if (0 == stateTimer && !(isEastApproachActive(sensorState)))
+				{
+					crossingState = STATE_IDLE;
+				}
+				activateCrossing = false;
+				break;
+
+
+			default:
+				crossingState = STATE_IDLE;
+				break;
+		}
+		
+		if (isIslandorForceActive(sensorState))
+			activateCrossing = true;
+		else
+			activateCrossing = false;
+		
+		if (activateCrossing && !bellOn)
 		{
 			StartLights();
 			StartBell();
 		}
-		else if ((!(sensorState & INPUT_FORCE_ACTIVE)) && bellOn)
+		else if (!activateCrossing && bellOn)
 		{
 			StopBell();
 			StopLights();
