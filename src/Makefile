@@ -28,7 +28,7 @@
 BASE_NAME = ckt-xing
 
 # ATmega328P 20MHz @ 5.0V
-DEVICE  = atmega328p
+DEVICE  = atmega328
 F_CPU   = 8000000  # Hz
 FUSE_L  = 0xE2
 FUSE_H  = 0xC1
@@ -39,7 +39,7 @@ PROGRAMMER_TYPE=iseavrprog
 PROGRAMMER_PORT=usb
 
 DEFINES = 
-SRCS = $(BASE_NAME).c
+SRCS = $(BASE_NAME).c debouncer.c hardware.c
 
 AVRDUDE = avrdude -P $(PROGRAMMER_PORT) -c $(PROGRAMMER_TYPE) -p $(DEVICE) -B1 -F
 AVRDUDE_SLOW = avrdude -P $(PROGRAMMER_PORT) -c $(PROGRAMMER_TYPE) -p $(DEVICE) -B32
