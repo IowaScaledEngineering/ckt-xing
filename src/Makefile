@@ -1,5 +1,5 @@
 #*************************************************************************
-#Title:    CKT-TINYBELL Makefile
+#Title:    CKT-XING Makefile
 #Authors:  Michael Petersen <railfan@drgw.net>
 #          Nathan Holmes <maverick@drgw.net>
 #File:     CKT-TINYBELL Makefile
@@ -28,11 +28,11 @@
 BASE_NAME = ckt-xing
 
 # ATmega328P 20MHz @ 5.0V
-DEVICE  = attiny861
+DEVICE  = atmega328p
 F_CPU   = 8000000  # Hz
-FUSE_L  = 0x71
-FUSE_H  = 0xD5
-FUSE_E  = 0xFF
+FUSE_L  = 0xE2
+FUSE_H  = 0xC1
+FUSE_E  = 0xFD
 
 #PROGRAMMER_TYPE=avrispmkii
 PROGRAMMER_TYPE=iseavrprog
