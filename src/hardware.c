@@ -42,12 +42,42 @@ void init_gpio()
 }
 
 
+void activateRightLamp()
+{
+	PORTB |= _BV(PB1);
+}
+
+void deactivateRightLamp()
+{
+	PORTB &= ~_BV(PB1);
+}
+
+void activateLeftLamp()
+{
+	PORTB |= _BV(PB0);
+}
+
+void deactivateLeftLamp()
+{
+	PORTB &= ~_BV(PB0);
+}
+
+void activateConstLamp()
+{
+	PORTB |= _BV(PB2);
+}
+
+void deactivateConstLamp()
+{
+	PORTB &= ~_BV(PB2);
+}
+
 uint8_t getSwitchState()
 {
 	uint8_t retval = 0;
 	retval = (PIND>>5) & 0x07;
 	retval |= (PIND<< 4) & 0xF0;
-	retval |= (PINC & 0x20)?0x10:0x00; // Get SW4 from Port C
+	retval |= (PINC & 0x20)?0x08:0x00; // Get SW4 from Port C
 	return (~retval); // Invert since these are all negative logic (switch on = low)
 }
 
@@ -60,30 +90,30 @@ uint8_t getInputState()
 
 void activateMainGates()
 {
-	PORTB |= _BV(PB7);
+	PORTB |= _BV(PB6);
 }
 
 void deactivateMainGates()
 {
-	PORTB &= ~_BV(PB7);
+	PORTB &= ~_BV(PB6);
 }
 
 void activateSecondaryGates()
 {
-	PORTB |= _BV(PB6);
+	PORTB |= _BV(PB7);
 }
 
 void deactivateSecondaryGates()
 {
-	PORTB &= ~_BV(PB6);
+	PORTB &= ~_BV(PB7);
 }
 
-void setCrossingActive()
+void setDetectionActive()
 {
 	PORTC |= _BV(PC0);
 }
 
-void clearCrossingActive()
+void clearDetectionActive()
 {
 	PORTC &= ~_BV(PC0);
 }

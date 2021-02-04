@@ -4,14 +4,21 @@
 
 void init_gpio();
 
+void activateRightLamp();
+void deactivateRightLamp();
+void activateLeftLamp();
+void deactivateLeftLamp();
+void activateConstLamp();
+void deactivateConstLamp();
+
 void activateMainGates();
 void deactivateMainGates();
 
 void activateSecondaryGates();
 void deactivateSecondaryGates();
 
-void setCrossingActive();
-void clearCrossingActive();
+void setDetectionActive();
+void clearDetectionActive();
 
 void activateBell();
 void deactivateBell();
@@ -19,6 +26,8 @@ void deactivateBell();
 uint8_t getSwitchState();
 uint8_t getInputState();
 
+
+#define SWITCH_LED_MODE       0x80
 
 
 #define INPUT_XING_ACTIVE     0x01
