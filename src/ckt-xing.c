@@ -40,7 +40,7 @@ LICENSE:
 #define LIGHT_CONST_ON  0x04
 #define LIGHT_NOFADE    0x80
 
-#define LIGHT_RATE      6
+#define LIGHT_RATE      4
 
 #define min(a,b)  ((a<b)?(a):(b))
 
