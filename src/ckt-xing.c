@@ -242,7 +242,9 @@ typedef enum
 	DETECTION_STATE_WEST_LOCKOUT_SETUP,
 	DETECTION_STATE_WEST_LOCKOUT,
 	DETECTION_STATE_WEST_TIMEOUT,
-	
+
+	DETECTION_STATE_EAST_APPROACH_DELAY_SETUP,
+	DETECTION_STATE_EAST_APPROACH_DELAY,
 	DETECTION_STATE_EAST_APPROACH_SETUP,
 	DETECTION_STATE_EAST_APPROACH,
 	DETECTION_STATE_EAST_ACTIVE,
@@ -607,7 +609,7 @@ void runDetectionStateMachine(DebounceState8_t* xingInputs, DebounceState8_t* co
 			if (getWestApproachOccupied(xingInputs))
 				detState = DETECTION_STATE_WEST_APPROACH_SETUP;
 			else if (getEastApproachOccupied(xingInputs))
-				detState = DETECTION_STATE_EAST_APPROACH_SETUP;
+				detState = DETECTION_STATE_EAST_APPROACH_DELAY_SETUP;
 			else if (getIslandOccupied(xingInputs))
 				detState = DETECTION_STATE_ISLAND_SURPRISE; // Train showed up out of nowhere on the island
 			break;
@@ -705,6 +707,24 @@ void runDetectionStateMachine(DebounceState8_t* xingInputs, DebounceState8_t* co
 		// *********************************************************************************
 		// State Machine Cases for Approaching from the EAST APPROACH DETECTOR
 		// *********************************************************************************
+
+		case DETECTION_STATE_EAST_APPROACH_DELAY_SETUP:
+			stateTimer = 170;
+			detState = DETECTION_STATE_EAST_APPROACH_DELAY;
+			break;
+
+		case DETECTION_STATE_EAST_APPROACH_DELAY:
+			if (getIslandOccupied(xingInputs))
+			{
+				stateTimer = 0;
+				detState = DETECTION_STATE_EAST_ACTIVE;
+			}
+			else if (0 == stateTimer)
+			{
+				detState = DETECTION_STATE_EAST_APPROACH_SETUP;
+			}
+			break;
+
 
 		case DETECTION_STATE_EAST_APPROACH_SETUP:
 			// Train has appeared on the east approach circuit
