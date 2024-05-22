@@ -26,7 +26,7 @@ LICENSE:
 #include <stdint.h>
 #include <stdbool.h>
 #include "ispl.h"
-#include "audio.h"
+#include "audioAndLights.h"
 #include "spiflash.h"
 
 ISPLTable isplTable;
