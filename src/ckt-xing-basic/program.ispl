@@ -1,0 +1,10 @@
+AudioFile BELL0 PCM 26000 audio/bell0-default-26k.raw
+AudioFile BELL1 PCM 16000 audio/bell1-safetran-mechanical-16k.raw
+AudioFile BELL2 PCM 16000 audio/bell2-safetran-hybrid-16k.raw
+AudioFile BELL3 PCM 20000 audio/bell3-uss-teardrop-20k.raw
+AudioFile BELL4 PCM 25000 audio/bell4-wchayes-333-25k.raw
+AudioFile BELL5 PCM 21000 audio/bell5-wchayes-777-21k.raw
+AudioFile BELL6 PCM 26000 audio/bell6-wrs-222-26k.raw
+
+Firmware src/main.hex
+
