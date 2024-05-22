@@ -6,5 +6,5 @@ AudioFile BELL4 PCM 25000 audio/bell4-wchayes-333-25k.raw
 AudioFile BELL5 PCM 21000 audio/bell5-wchayes-777-21k.raw
 AudioFile BELL6 PCM 26000 audio/bell6-wrs-222-26k.raw
 
-Firmware src/main.hex
+Firmware src/ckt-xing-basic.hex
 
