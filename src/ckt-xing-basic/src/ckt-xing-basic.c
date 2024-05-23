@@ -116,13 +116,13 @@ uint32_t getTimeoutMillis(uint8_t switches)
 	{
 		case 0:
 		default:
-			return (2 * 1000);
-
-		case 1:
-			return (10 * 1000);
+			return (5 * 1000);
 
 		case 2:
-			return (20 * 1000);
+			return (10 * 1000);
+
+		case 1:
+			return (15 * 1000);
 
 		case 3:
 			return (30 * 1000);
