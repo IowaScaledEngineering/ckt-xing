@@ -1,6 +1,0 @@
-schematics ckt-xing.sch
-output-name ../pcb/ckt-xing
-skip-m4
-elements-dir ../../ise-footprints
-
-
