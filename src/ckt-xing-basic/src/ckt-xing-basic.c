@@ -49,7 +49,7 @@ void readInputs()
 	static uint32_t lastRead = 0;
 	uint8_t currentInputState = 0;
 	uint32_t currentMillis = getMillis();
-	if (currentMillis > lastRead + 10)
+	if (((uint32_t)currentMillis - lastRead) > 10)
 	{
 		lastRead = currentMillis;
 
@@ -171,7 +171,6 @@ int main(void)
 
 	CrossingState crossingState = CROSSING_OFF;
 	uint32_t crossingTimeoutStartMillis = 0, crossingTimeout = 0;
-	uint8_t playTrack = 0;
 	AudioAssetRecord r;
 
 	sei();
@@ -216,7 +215,7 @@ int main(void)
 				if (inputState & INPUT_ACTIVE)
 					crossingState = CROSSING_ACTIVE;
 
-				if (getMillis() - crossingTimeoutStartMillis > crossingTimeout)
+				if ((uint32_t)(getMillis() - crossingTimeoutStartMillis) > crossingTimeout)
 					crossingState = CROSSING_SHUTDOWN;
 				break;
 
