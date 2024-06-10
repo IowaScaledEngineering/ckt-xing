@@ -25,6 +25,7 @@ LICENSE:
 #include <string.h>
 #include "audioAndLights.h"
 #include "spiflash.h"
+#include "util/atomic.h"
 
 // Light Control Stuff
 volatile uint8_t lightControl = 0;
@@ -37,7 +38,7 @@ uint32_t audioDataLen = 0;
 bool audioLoop = false;
 
 // Audio playing ISR
-uint32_t millis = 0;
+volatile uint32_t millis = 0;
 
 void activateLights()
 {
@@ -140,7 +141,14 @@ ISR(TIMER0_COMPA_vect)
 
 uint32_t getMillis()
 {
-	return millis;
+	uint32_t retmillis;
+
+	ATOMIC_BLOCK(ATOMIC_RESTORESTATE) 
+	{
+		retmillis = millis;
+	}
+
+	return retmillis;
 }
 
 void audioAmplifierEnable(uint8_t enable)

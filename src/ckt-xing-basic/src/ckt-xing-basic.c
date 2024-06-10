@@ -48,10 +48,10 @@ void readInputs()
 {
 	static uint32_t lastRead = 0;
 	uint8_t currentInputState = 0;
-
-	if (millis > lastRead + 10)
+	uint32_t currentMillis = getMillis();
+	if (currentMillis > lastRead + 10)
 	{
-		lastRead = millis;
+		lastRead = currentMillis;
 
 		// Inputs (bit / io / name):  
 		//  0 - PA4 - Enable 1
@@ -207,7 +207,7 @@ int main(void)
 				if (!(inputState & INPUT_ACTIVE))
 				{
 					crossingState = CROSSING_WAIT;
-					crossingTimeoutStartMillis = millis;
+					crossingTimeoutStartMillis = getMillis();
 					crossingTimeout = getTimeoutMillis(inputState);
 				}
 				break;
@@ -216,7 +216,7 @@ int main(void)
 				if (inputState & INPUT_ACTIVE)
 					crossingState = CROSSING_ACTIVE;
 
-				if (millis - crossingTimeoutStartMillis > crossingTimeout)
+				if (getMillis() - crossingTimeoutStartMillis > crossingTimeout)
 					crossingState = CROSSING_SHUTDOWN;
 				break;
 
