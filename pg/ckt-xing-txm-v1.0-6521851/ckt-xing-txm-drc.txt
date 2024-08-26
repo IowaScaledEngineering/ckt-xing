@@ -1,0 +1,10 @@
+** Drc report for /home/ndholmes/data/projects/ckt-xing/kicad/ckt-xing-txm/ckt-xing-txm.kicad_pcb **
+** Created on 2024-08-26 13:47:23 **
+
+** Found 0 DRC violations **
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** End of Report **
