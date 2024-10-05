@@ -45,7 +45,7 @@ IndicatorLightState_t getStatusLEDState(CrossingTrack_t* t)
 	return t->ledState;
 }
 
-void setCrossingMinimumOn(CrossingTrack_t* t, uint16_t decisecs)
+void setIslandTimeout(CrossingTrack_t* t, uint16_t decisecs)
 {
 	t->timeIslandTimeout = decisecs;
 }

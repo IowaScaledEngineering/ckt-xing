@@ -83,7 +83,7 @@ typedef struct
 
 void initializeCrossingTrack(CrossingTrack_t* t);
 bool isCrossingTrackActive(CrossingTrack_t* t);
-void setCrossingMinimumOn(CrossingTrack_t* t, uint16_t decisecs);
+void setIslandTimeout(CrossingTrack_t* t, uint16_t decisecs);
 void setCrossingApproachTimeout(CrossingTrack_t* t, uint16_t decisecs);
 void setCrossingDetectionLockout(CrossingTrack_t* t, uint16_t decisecs);
 void runCrossingTrackStateMachine(CrossingTrack_t* t, uint8_t xingInputs, bool isDecisecTick);

@@ -64,6 +64,17 @@ void initializeTimer()
 	TIMSK = _BV(OCIE0A);
 }
 
+
+// Island timeouts
+
+// XY
+// 00  - 0.5s
+// 01  - 1s
+// 10  - 2s
+// 11  - 5s
+
+
+
 uint16_t getIslandTimeoutDecisecs(uint8_t switches)
 {
 	switch(0x03 & (switches))
@@ -83,41 +94,48 @@ uint16_t getIslandTimeoutDecisecs(uint8_t switches)
 	}
 }
 
+// Approach timeouts
+
+// ABC
+// 000  - 5s
+// 001  - 7.5s
+// 010  - 10s
+// 011  - 15s
+// 100  - 20s
+// 101  - 25s
+// 110  - 30s
+// 111  - Test Mode
+
+
+
 uint16_t getApproachTimeoutDecisecs(uint8_t switches)
 {
 	switch(0x07 & (switches>>2))
 	{
 		case 0:
-		default:
 			return 50;
 
 		case 1:
-			return 100;
+			return 75;
 
 		case 2:
-			return 150;
+			return 100;
 
 		case 3:
-			return 200;
-	}
-}
+			return 150;
 
-uint16_t getLockoutTimeoutDecisecs(uint8_t switches)
-{
-	switch(0x07 & (switches>>2))
-	{
-		case 0:
+		case 4:
+			return 200;
+
+		case 5:
+			return 250;
+
+		case 6:
+			return 300;
+			
+		case 7:  // This is really test mode
 		default:
-			return 100;
-
-		case 1:
-			return 100;
-
-		case 2:
-			return 150;
-
-		case 3:
-			return 200;
+			return 50;
 	}
 }
 
@@ -190,12 +208,23 @@ int main(void)
 			decisecTick = (decisecTick+1) % 4;
 
 			readOptions(&optionsDebouncer);
-			i = getDebouncedState(&optionsDebouncer);
+
+			i = getApproachTimeoutDecisecs(getDebouncedState(&optionsDebouncer));
+			setCrossingApproachTimeout(&trackA, i);
+			setCrossingApproachTimeout(&trackB, i);
+
+			// Make the back side lockout 5s longer than the front timeout
+			// Normally won't affect anything, given that both should be reset
+			//  by the train continuing through 
+			i += 50; 
+			setCrossingDetectionLockout(&trackA, i);
+			setCrossingDetectionLockout(&trackB, i);
 
 
+			i = getIslandTimeoutDecisecs(getDebouncedState(&optionsDebouncer));
+			setIslandTimeout(&trackA, i);
+			setIslandTimeout(&trackB, i);
 
-
-			// FIXME: Turn the option switches into the various timeout configurations
 			i = getTrackAInputs();
 			runCrossingTrackStateMachine(&trackA, i,  0 == decisecTick);
 
