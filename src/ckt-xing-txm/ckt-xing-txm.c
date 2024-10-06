@@ -77,6 +77,8 @@ void initializeTimer()
 
 uint16_t getIslandTimeoutDecisecs(uint8_t switches)
 {
+	// Switch X - bit 1
+	// Switch Y - bit 0
 	switch(0x03 & (switches))
 	{
 		case 0:
@@ -97,45 +99,47 @@ uint16_t getIslandTimeoutDecisecs(uint8_t switches)
 // Approach timeouts
 
 // ABC
-// 000  - 5s
-// 001  - 7.5s
-// 010  - 10s
-// 011  - 15s
-// 100  - 20s
-// 101  - 25s
-// 110  - 30s
+// 000  - 20s
+// 001  - 25s
+// 010  - 30s
+// 011  - 35s
+// 100  - 40s
+// 101  - 50s
+// 110  - 60s
 // 111  - Test Mode
-
-
 
 uint16_t getApproachTimeoutDecisecs(uint8_t switches)
 {
+	// Switch A - bit 4
+	// Switch B - bit 3
+	// Switch C - bit 2
+
 	switch(0x07 & (switches>>2))
 	{
 		case 0:
-			return 50;
-
-		case 1:
-			return 75;
-
-		case 2:
-			return 100;
-
-		case 3:
-			return 150;
-
-		case 4:
 			return 200;
 
-		case 5:
+		case 1:
 			return 250;
 
-		case 6:
+		case 2:
 			return 300;
+
+		case 3:
+			return 350;
+
+		case 4:
+			return 400;
+
+		case 5:
+			return 500;
+
+		case 6:
+			return 600;
 			
 		case 7:  // This is really test mode
 		default:
-			return 50;
+			return 300;
 	}
 }
 
