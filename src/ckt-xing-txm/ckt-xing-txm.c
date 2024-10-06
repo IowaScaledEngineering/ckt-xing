@@ -75,7 +75,7 @@ void initializeTimer()
 
 
 
-uint16_t getIslandTimeoutDecisecs(uint8_t switches)
+uint8_t getIslandTimeoutDecisecs(uint8_t switches)
 {
 	// Switch X - bit 1
 	// Switch Y - bit 0
@@ -208,21 +208,22 @@ int main(void)
 		if (((uint32_t)currentTime - lastReadTime) > 25)
 		{
 			uint8_t i = 0;
+			uint16_t j = 0;
 			lastReadTime = currentTime;
 			decisecTick = (decisecTick+1) % 4;
 
 			readOptions(&optionsDebouncer);
 
-			i = getApproachTimeoutDecisecs(getDebouncedState(&optionsDebouncer));
-			setCrossingApproachTimeout(&trackA, i);
-			setCrossingApproachTimeout(&trackB, i);
+			j = getApproachTimeoutDecisecs(getDebouncedState(&optionsDebouncer));
+			setCrossingApproachTimeout(&trackA, j);
+			setCrossingApproachTimeout(&trackB, j);
 
 			// Make the back side lockout 5s longer than the front timeout
 			// Normally won't affect anything, given that both should be reset
 			//  by the train continuing through 
-			i += 50; 
-			setCrossingDetectionLockout(&trackA, i);
-			setCrossingDetectionLockout(&trackB, i);
+			j += 50; 
+			setCrossingDetectionLockout(&trackA, j);
+			setCrossingDetectionLockout(&trackB, j);
 
 
 			i = getIslandTimeoutDecisecs(getDebouncedState(&optionsDebouncer));
