@@ -1,7 +1,7 @@
 #!/bin/bash
 ISPL_TOOLS=../../../ispltools/tools/
 PYTHON=python3
-FIRMWARE_IMG=release-firmware/ckt-xing-basic-49ce4400-1Jan2025.sbp
+FIRMWARE_IMG=release-firmware/ckt-xing-basic-11b05af5-1Jan2025.sbp
 
 # if less than two arguments supplied, display usage 
 if [  $# -ge 1 ] 
