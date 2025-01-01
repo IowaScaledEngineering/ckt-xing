@@ -23,26 +23,30 @@ do
 	if [ $? -eq 0 ]
 	then 
 		echo -e "\033[0;32mSuccess\033[0m\n"
-		espeak "Switch to flash"
 	else 
 		echo -e "\033[0;31mFailed\033[0m\n"
 		espeak "Failed"
 		continue
 	fi
 
-	read -p "Set switch to FLASH and press any key to program..."
-	echo -e "\n\033[1;33mProgramming Flash\033[0m\n"
-	espeak "Programming flash"
-	$PYTHON $ISPL_TOOLS/spiflash-pyprog/flash.py $FIRMWARE_IMG
-	if [ $? -eq 0 ]
-	then 
-		echo -e "\033[0;32mComplete\033[0m\n"
-		espeak "Complete"
-	else 
-		echo -e "\033[0;31mFailed\033[0m\n"
-		espeak "Failed"
-		continue
-	fi
+	while [ true ]
+	do
+		espeak "Switch to flash"
+		read -p "Set switch to FLASH and press any key to program..."
+		echo -e "\n\033[1;33mProgramming Flash\033[0m\n"
+		espeak "Programming flash"
+		$PYTHON $ISPL_TOOLS/spiflash-pyprog/flash.py $FIRMWARE_IMG
+		if [ $? -eq 0 ]
+		then 
+			echo -e "\033[0;32mComplete\033[0m\n"
+			espeak "Complete"
+			break
+		else 
+			echo -e "\033[0;31mFailed\033[0m\n"
+			espeak "Failed"
+			continue
+		fi
+	done
 
 
 	
