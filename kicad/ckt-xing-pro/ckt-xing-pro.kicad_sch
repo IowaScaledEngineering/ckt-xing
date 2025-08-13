@@ -3375,7 +3375,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 42f6f30a-86a0-41ad-8c71-c6637c6ccd29)
   )
-  (text "Switches\n--------------\nSW1 - Bell Select 0\nSW2 - Bell Select 1\nSW3 - Bell Select 2\nSW4 - Gates Select 0\nSW5 - Gates Select 1\n    Gates 00 - No Gates\n    Gates 01 - 2Q gates\n    Gates 10 - 4Q gates, simultaneous rise\n    Gates 11 - 4Q gates, delayed rise\nSW6 - Approach Timeout 0\nSW7 - Approach Timeout 1\n    AT 00 - 10 seconds\n    AT 01 - 20 seconds\n    AT 10 - 30 seconds\n    AT 11 - 40 seconds\nSW8 - Bell always vs. only on gates lowering\nSW9 - LED vs. Lamp\nSW10 - TBD"
+  (text "Switches\n--------------\nSW1 - Bell Select 0\nSW2 - Bell Select 1\nSW3 - Bell Select 2\nSW4 - Gates Select 0\nSW5 - Gates Select 1\n    Gates 00 - No Gates\n    Gates 01 - 2Q gates\n    Gates 10 - 4Q gates, simultaneous rise\n    Gates 11 - 4Q gates, delayed rise\nSW6 - Approach Timeout 0\nSW7 - Approach Timeout 1\nSW8 - Approach Timeout 2\n    AT 000 - 10 seconds\n    AT 001 - 20 seconds\n    AT 010 - 30 seconds\n    AT 011 - 40 seconds\nSW9 - LED vs. Lamp\nSW10 - Bell always vs. only on gates lowering"
     (at 203.2 113.03 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 44e53d3f-6ee1-473e-8a86-a2f2da20f9a1)
