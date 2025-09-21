@@ -313,10 +313,10 @@
       (net 2 "GND") (pinfunction "MountPin") (pintype "passive") (tstamp 4150f62a-c14c-4818-a345-ce296a589a0d))
     (pad "MP" smd roundrect (at -2.8 1.875 180) (size 1.2 1.8) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.208333)
       (net 2 "GND") (pinfunction "MountPin") (pintype "passive") (zone_connect 2) (tstamp ffbde6a4-4445-483e-bcc8-32ee74c5ccbf))
-    (model "${KICAD6_3DMODEL_DIR}/Connector_JST.3dshapes/JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal.wrl"
-      (offset (xyz 0 0 0))
+    (model ":ISE_3DModels:SM04B-SRSS-TB.STEP"
+      (offset (xyz 0 1.27 -0.381))
       (scale (xyz 1 1 1))
-      (rotate (xyz 0 0 0))
+      (rotate (xyz -90 0 0))
     )
   )
 
@@ -412,10 +412,10 @@
       (net 2 "GND") (pinfunction "MountPin") (pintype "passive") (zone_connect 2) (tstamp b82d08f4-0660-4cc6-804b-cd0a40c76e5c))
     (pad "MP" smd roundrect (at -2.8 1.875 270) (size 1.2 1.8) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.208333)
       (net 2 "GND") (pinfunction "MountPin") (pintype "passive") (zone_connect 2) (tstamp f7e542fb-bbde-4943-96f7-6923657eed62))
-    (model "${KICAD6_3DMODEL_DIR}/Connector_JST.3dshapes/JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal.wrl"
-      (offset (xyz 0 0 0))
+    (model ":ISE_3DModels:SM04B-SRSS-TB.STEP"
+      (offset (xyz 0 1.27 -0.381))
       (scale (xyz 1 1 1))
-      (rotate (xyz 0 0 0))
+      (rotate (xyz -90 0 0))
     )
   )
 
@@ -595,10 +595,10 @@
       (net 2 "GND") (pinfunction "MountPin") (pintype "passive") (zone_connect 2) (tstamp 0d27f876-66fb-4828-b3be-d26d926b70e3))
     (pad "MP" smd roundrect (at 2.8 1.875 180) (size 1.2 1.8) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.208333)
       (net 2 "GND") (pinfunction "MountPin") (pintype "passive") (zone_connect 2) (tstamp 73279c2c-0ad1-4ac0-b80e-5da12126d501))
-    (model "${KICAD6_3DMODEL_DIR}/Connector_JST.3dshapes/JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal.wrl"
-      (offset (xyz 0 0 0))
+    (model ":ISE_3DModels:SM04B-SRSS-TB.STEP"
+      (offset (xyz 0 1.27 -0.381))
       (scale (xyz 1 1 1))
-      (rotate (xyz 0 0 0))
+      (rotate (xyz -90 0 0))
     )
   )
 
@@ -878,10 +878,10 @@
       (net 2 "GND") (pinfunction "MountPin") (pintype "passive") (zone_connect 2) (tstamp 1122dce9-bfd8-47a2-85d8-5d31385d5c14))
     (pad "MP" smd roundrect (at 2.8 1.875 180) (size 1.2 1.8) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.208333)
       (net 2 "GND") (pinfunction "MountPin") (pintype "passive") (zone_connect 2) (tstamp 52c03dd3-1b83-44c9-a3a7-25a7820e72b7))
-    (model "${KICAD6_3DMODEL_DIR}/Connector_JST.3dshapes/JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal.wrl"
-      (offset (xyz 0 0 0))
+    (model ":ISE_3DModels:SM04B-SRSS-TB.STEP"
+      (offset (xyz 0 1.27 -0.381))
       (scale (xyz 1 1 1))
-      (rotate (xyz 0 0 0))
+      (rotate (xyz -90 0 0))
     )
   )
 
@@ -934,10 +934,10 @@
       (net 2 "GND") (pinfunction "MountPin") (pintype "passive") (zone_connect 2) (tstamp 05e0af29-5e3d-4ce0-8116-7287f2c6ba86))
     (pad "MP" smd roundrect (at 2.8 1.875 180) (size 1.2 1.8) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.208333)
       (net 2 "GND") (pinfunction "MountPin") (pintype "passive") (zone_connect 2) (tstamp 3a322665-f4d5-4eaa-a578-c7aef372d6e6))
-    (model "${KICAD6_3DMODEL_DIR}/Connector_JST.3dshapes/JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal.wrl"
-      (offset (xyz 0 0 0))
+    (model ":ISE_3DModels:SM04B-SRSS-TB.STEP"
+      (offset (xyz 0 1.27 -0.381))
       (scale (xyz 1 1 1))
-      (rotate (xyz 0 0 0))
+      (rotate (xyz -90 0 0))
     )
   )
 
@@ -1032,10 +1032,10 @@
       (net 2 "GND") (pinfunction "MountPin") (pintype "passive") (zone_connect 2) (tstamp 21a5d849-0888-4f64-a207-94623c6482c7))
     (pad "MP" smd roundrect (at -2.8 1.875) (size 1.2 1.8) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.208333)
       (net 2 "GND") (pinfunction "MountPin") (pintype "passive") (zone_connect 2) (tstamp ef52d7c7-2648-4996-8dbf-27a93e117381))
-    (model "${KICAD6_3DMODEL_DIR}/Connector_JST.3dshapes/JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal.wrl"
-      (offset (xyz 0 0 0))
+    (model ":ISE_3DModels:SM04B-SRSS-TB.STEP"
+      (offset (xyz 0 1.27 -0.381))
       (scale (xyz 1 1 1))
-      (rotate (xyz 0 0 0))
+      (rotate (xyz -90 0 0))
     )
   )
 
@@ -1174,10 +1174,10 @@
       (net 2 "GND") (pinfunction "MountPin") (pintype "passive") (zone_connect 2) (tstamp 3c13aa49-30e0-486b-a602-7ddecc322bca))
     (pad "MP" smd roundrect (at -2.8 1.875) (size 1.2 1.8) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.208333)
       (net 2 "GND") (pinfunction "MountPin") (pintype "passive") (zone_connect 2) (tstamp da53adb3-549a-4d5f-9c56-0b4efc842d1b))
-    (model "${KICAD6_3DMODEL_DIR}/Connector_JST.3dshapes/JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal.wrl"
-      (offset (xyz 0 0 0))
+    (model ":ISE_3DModels:SM04B-SRSS-TB.STEP"
+      (offset (xyz 0 1.27 -0.381))
       (scale (xyz 1 1 1))
-      (rotate (xyz 0 0 0))
+      (rotate (xyz -90 0 0))
     )
   )
 
@@ -1315,10 +1315,10 @@
       (net 2 "GND") (pinfunction "MountPin") (pintype "passive") (zone_connect 2) (tstamp 3fb141fc-b024-40a0-82ef-cc21650dc68f))
     (pad "MP" smd roundrect (at -2.8 1.875) (size 1.2 1.8) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.208333)
       (net 2 "GND") (pinfunction "MountPin") (pintype "passive") (zone_connect 2) (tstamp 6d0c1c48-9dff-4c60-93b2-f8c254b17211))
-    (model "${KICAD6_3DMODEL_DIR}/Connector_JST.3dshapes/JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal.wrl"
-      (offset (xyz 0 0 0))
+    (model ":ISE_3DModels:SM04B-SRSS-TB.STEP"
+      (offset (xyz 0 1.27 -0.381))
       (scale (xyz 1 1 1))
-      (rotate (xyz 0 0 0))
+      (rotate (xyz -90 0 0))
     )
   )
 
@@ -1614,6 +1614,11 @@
       (net 25 "/SW4") (pintype "passive") (tstamp 49d0d3c4-f660-42b0-88a5-89c377a9da6c))
     (pad "10" smd rect (at 4.3053 -5.08 180) (size 2.4384 1.1176) (layers "F.Cu" "F.Paste" "F.Mask")
       (net 26 "/SW5") (pintype "passive") (tstamp fb162145-690a-4b7f-807a-59c93400e49b))
+    (model ":ISE_3DModels:219-5MST.stp"
+      (offset (xyz 0 0 3.32))
+      (scale (xyz 1 1 1))
+      (rotate (xyz 90 180 -90))
+    )
   )
 
   (footprint "LED_SMD:LED_0805_2012Metric" (layer "F.Cu")
@@ -1796,10 +1801,10 @@
       (net 2 "GND") (pinfunction "MountPin") (pintype "passive") (zone_connect 2) (tstamp c9871181-b11a-42de-8f86-2463cc6b7e72))
     (pad "MP" smd roundrect (at 2.8 1.875 270) (size 1.2 1.8) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.208333)
       (net 2 "GND") (pinfunction "MountPin") (pintype "passive") (zone_connect 2) (tstamp fa5f1f9b-2619-4d89-90fb-5fd673cc09cc))
-    (model "${KICAD6_3DMODEL_DIR}/Connector_JST.3dshapes/JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal.wrl"
-      (offset (xyz 0 0 0))
+    (model ":ISE_3DModels:SM04B-SRSS-TB.STEP"
+      (offset (xyz 0 1.27 -0.381))
       (scale (xyz 1 1 1))
-      (rotate (xyz 0 0 0))
+      (rotate (xyz -90 0 0))
     )
   )
 
@@ -2213,10 +2218,10 @@
       (net 2 "GND") (pinfunction "MountPin") (pintype "passive") (zone_connect 2) (tstamp 3aba6a72-e2c8-4dbc-861d-1334efc68b12))
     (pad "MP" smd roundrect (at -2.8 1.875) (size 1.2 1.8) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.208333)
       (net 2 "GND") (pinfunction "MountPin") (pintype "passive") (zone_connect 2) (tstamp 3d536748-185f-40fe-bcc0-7cc69e0157bc))
-    (model "${KICAD6_3DMODEL_DIR}/Connector_JST.3dshapes/JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal.wrl"
-      (offset (xyz 0 0 0))
+    (model ":ISE_3DModels:SM04B-SRSS-TB.STEP"
+      (offset (xyz 0 1.27 0.381))
       (scale (xyz 1 1 1))
-      (rotate (xyz 0 0 0))
+      (rotate (xyz -90 0 0))
     )
   )
 
