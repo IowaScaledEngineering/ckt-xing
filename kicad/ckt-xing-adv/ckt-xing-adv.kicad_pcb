@@ -293,7 +293,7 @@
 		(path "/70a6e6fa-641f-46e9-a00b-28c0cd1218a1")
 		(sheetname "/")
 		(sheetfile "ckt-xing-adv.kicad_sch")
-		(attr through_hole)
+		(attr smd)
 		(fp_line
 			(start -0.948813 2.9337)
 			(end 0.948813 2.9337)
@@ -526,6 +526,17 @@
 			(uuid "d16ebfd9-b135-4bbb-bf0e-6df22484d2bf")
 		)
 		(embedded_fonts no)
+		(model "${ISE_3DMODELS}/Coilcraft-MSS6132.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 90 -180 -90)
+			)
+		)
 	)
 	(footprint "Connector_JST:JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal"
 		(layer "F.Cu")
@@ -4531,7 +4542,7 @@
 		(path "/78faf257-d163-44b7-8c88-a69612c23f81")
 		(sheetname "/")
 		(sheetfile "ckt-xing-adv.kicad_sch")
-		(attr through_hole)
+		(attr through_hole allow_missing_courtyard)
 		(fp_line
 			(start -2.62 3.62)
 			(end -2.62 -4.22)
@@ -4856,15 +4867,15 @@
 			(uuid "7ef196db-d98a-4fee-a8c7-071b15a90157")
 		)
 		(embedded_fonts no)
-		(model "${KICAD9_3DMODEL_DIR}/TerminalBlock_RND.3dshapes/TerminalBlock_RND_205-00012_1x02_P5.00mm_Horizontal.step"
+		(model "${ISE_3DMODELS}/Terminal_Block_2Pos_5mm.stp"
 			(offset
-				(xyz 0 0 0)
+				(xyz -2.54 -3.7338 0)
 			)
 			(scale
 				(xyz 1 1 1)
 			)
 			(rotate
-				(xyz 0 0 0)
+				(xyz -0 -0 -0)
 			)
 		)
 	)
@@ -6598,7 +6609,7 @@
 		(descr "TSOT, 6 Pin (https://www.jedec.org/sites/default/files/docs/MO-193D.pdf variant AA), generated with kicad-footprint-generator ipc_gullwing_generator.py")
 		(tags "TSOT TO_SOT_SMD")
 		(property "Reference" "U2"
-			(at -3.175 0 0)
+			(at -2.921 -2.286 0)
 			(layer "F.SilkS")
 			(uuid "056dc914-3adc-4c09-b7af-0c59b3b9d3ea")
 			(effects
@@ -10378,7 +10389,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "a7ff79fa-21ff-408b-9456-76c59b340328")
+			(uuid "b6152a24-2fd6-4f89-b154-9958ef495405")
 		)
 		(fp_line
 			(start 1.57226 -2.667)
@@ -10388,7 +10399,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "ad57e7bf-f68a-42e8-a74f-2ddbc30b7109")
+			(uuid "82152c48-edeb-43c5-9a33-3fa736a2af8d")
 		)
 		(fp_line
 			(start -0.96774 -2.667)
@@ -10398,7 +10409,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "b39efd15-4d62-4f2e-849e-9358cb7f8a1c")
+			(uuid "e728cd06-d390-485b-9fb8-4d74aa61a91a")
 		)
 		(fp_line
 			(start -3.50774 -2.667)
@@ -10408,7 +10419,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "67890a4c-6fd5-44b1-b423-9328ac6c1608")
+			(uuid "32f0ef78-fa1d-46f9-921e-bfb988eb6c6d")
 		)
 		(fp_line
 			(start -3.937 -2.667)
@@ -10418,7 +10429,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "3fd51c00-e1e3-499b-81e3-2e38d6523fe9")
+			(uuid "4399d23b-6b45-4edc-b82a-fba52424a18e")
 		)
 		(fp_line
 			(start 3.937 2.667)
@@ -10428,7 +10439,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "cc1e418c-a5ed-4cfe-96c4-9a32aef78a2e")
+			(uuid "ed3ca904-4d27-4ef2-b31a-5e63ac285b90")
 		)
 		(fp_line
 			(start 3.50774 2.667)
@@ -10438,7 +10449,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "5e9d0700-8c32-42e7-928d-d70543bf7359")
+			(uuid "049d09b5-6009-4d7d-8703-85b221bc0213")
 		)
 		(fp_line
 			(start 0.96774 2.667)
@@ -10448,7 +10459,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "b7a8e5ee-8818-4f10-a718-2a8692298d6c")
+			(uuid "97d5aae1-0ebe-401e-ae80-63013ab3d56b")
 		)
 		(fp_line
 			(start -1.57226 2.667)
@@ -10458,7 +10469,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "4f84b06a-c4dd-4001-bdf7-b9e1464b235a")
+			(uuid "616ccaf3-c427-46ef-943e-727c0b4097cf")
 		)
 		(fp_line
 			(start -3.937 2.667)
@@ -10468,7 +10479,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "167e8b2c-d06a-40e7-8cfa-04815772f6e2")
+			(uuid "f8841820-506e-4bf4-b284-43ebcb025798")
 		)
 		(fp_line
 			(start 4.064 -4.315501)
@@ -10478,7 +10489,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "5e260505-8bf7-478f-822d-e46fcc584a25")
+			(uuid "db87bd33-ba4b-42c0-9a7b-06764777814a")
 		)
 		(fp_line
 			(start -4.064 -4.315501)
@@ -10488,7 +10499,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "4ebfa7a2-10db-4925-8b67-dd2e0cf8aa18")
+			(uuid "d0f0f3ca-0343-4b3c-985f-54e4107cd2bd")
 		)
 		(fp_line
 			(start 4.064 4.315501)
@@ -10498,7 +10509,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "a8b04975-1493-48db-b0a5-3f4db803e30e")
+			(uuid "e0d56ff0-4d3f-46bd-8917-3c2223a63b3a")
 		)
 		(fp_line
 			(start -4.064 4.315501)
@@ -10508,7 +10519,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "f78823e6-6a9f-47ce-a380-f1b042d7c59e")
+			(uuid "63ac8d86-3afe-40ad-86be-fdeed75b7d7f")
 		)
 		(fp_line
 			(start 3.81 -2.54)
@@ -10518,7 +10529,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "3bfdea0b-a744-4685-a279-0c0d2dd780d1")
+			(uuid "ec50d21e-57b6-4e5d-b963-ec9f957b3be4")
 		)
 		(fp_line
 			(start -3.81 -2.54)
@@ -10528,7 +10539,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "165b4450-b944-49fa-a193-2cd7ffddc2e0")
+			(uuid "2c0d2b7a-a529-4913-9005-9545062ca9d6")
 		)
 		(fp_line
 			(start 3.81 2.54)
@@ -10538,7 +10549,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "893ed86a-7447-4ea8-8ec1-7f0d6b1562ba")
+			(uuid "5be752a0-96cf-4d8e-b790-4ad7941b5be2")
 		)
 		(fp_line
 			(start -3.81 2.54)
@@ -10548,7 +10559,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "61ed7d19-a412-420b-ab1a-914732051719")
+			(uuid "26a53d4a-6198-4705-a0ca-324175bc6a48")
 		)
 		(fp_circle
 			(center -2.54 -4.124999)
@@ -10559,7 +10570,7 @@
 			)
 			(fill no)
 			(layer "F.Fab")
-			(uuid "738efac2-3d35-4f7a-8a03-2f2678551c8f")
+			(uuid "46953c67-3f7c-4b8a-92af-765edb5e0db1")
 		)
 		(fp_text user "${REFERENCE}"
 			(at 0 0 90)
@@ -10628,6 +10639,17 @@
 			(uuid "c7e68801-9c37-483c-b57e-1387cc995add")
 		)
 		(embedded_fonts no)
+		(model "${ISE_3DMODELS}/MOLEX_015910060.step"
+			(offset
+				(xyz 0 0 2.54)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz -90 -0 -0)
+			)
+		)
 	)
 	(footprint "LED_SMD:LED_0805_2012Metric"
 		(layer "F.Cu")
@@ -12044,7 +12066,6 @@
 		(sheetname "/")
 		(sheetfile "ckt-xing-adv.kicad_sch")
 		(solder_mask_margin 0.07)
-		(attr smd)
 		(fp_line
 			(start -2.075 2.575)
 			(end 2.075 2.575)
@@ -12747,15 +12768,15 @@
 			(uuid "9f8cb1b8-6811-4bc3-8ce2-95143b7ac7a8")
 		)
 		(embedded_fonts no)
-		(model "${KICAD9_3DMODEL_DIR}/TerminalBlock_RND.3dshapes/TerminalBlock_RND_205-00012_1x02_P5.00mm_Horizontal.step"
+		(model "${ISE_3DMODELS}/Terminal_Block_2Pos_5mm.stp"
 			(offset
-				(xyz 0 0 0)
+				(xyz -2.54 -3.7338 0)
 			)
 			(scale
 				(xyz 1 1 1)
 			)
 			(rotate
-				(xyz 0 0 0)
+				(xyz -0 -0 -0)
 			)
 		)
 	)
@@ -13089,6 +13110,17 @@
 			(uuid "9e5d8c89-8fa9-4944-a3f9-cccb666f55f2")
 		)
 		(embedded_fonts no)
+		(model "${ISE_3DMODELS}/FSM4JSMA.step"
+			(offset
+				(xyz 0 0 3.81)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz -0 -0 -90)
+			)
+		)
 	)
 	(footprint "LED_SMD:LED_0805_2012Metric"
 		(layer "F.Cu")
@@ -14707,7 +14739,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "384c1221-7ece-4311-932c-551d730a21c5")
+			(uuid "0d19cb2e-cff9-42d8-87b2-ef99fbf33cfd")
 		)
 		(fp_line
 			(start 1.57226 -2.667)
@@ -14717,7 +14749,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "dd73531a-8737-4e97-b8b5-fd38a8d106dc")
+			(uuid "b9c195d6-2c90-4150-8101-f1c5dd4dbbae")
 		)
 		(fp_line
 			(start -0.96774 -2.667)
@@ -14727,7 +14759,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "53ed1c06-3f64-4ab9-a999-db2ae8d6031f")
+			(uuid "74c4308a-1970-42e1-8a0f-ca73d909ad22")
 		)
 		(fp_line
 			(start -3.50774 -2.667)
@@ -14737,7 +14769,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "bdd3a3f5-3feb-4218-b289-483506981d2a")
+			(uuid "95bee5df-584c-4827-a55c-967a0fb05ff0")
 		)
 		(fp_line
 			(start -3.937 -2.667)
@@ -14747,7 +14779,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "969e7e63-8d8f-4146-b752-004efd6f4e1b")
+			(uuid "7761fee8-fb05-478f-aab7-8288aa00bba5")
 		)
 		(fp_line
 			(start 3.937 2.667)
@@ -14757,7 +14789,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "b20fe72a-f9c0-427c-aed3-0f14a8705a95")
+			(uuid "662fd21d-82fd-4fef-91f6-b80410a8372d")
 		)
 		(fp_line
 			(start 3.50774 2.667)
@@ -14767,7 +14799,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "49203e6f-dff7-4e31-99b0-72f4aff803ea")
+			(uuid "db8f76ed-fba8-4615-b736-e92ea4c0c654")
 		)
 		(fp_line
 			(start 0.96774 2.667)
@@ -14777,7 +14809,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "26bd9005-2cb9-4185-9b61-b5a101041eb5")
+			(uuid "67489c66-5dbb-40cf-a4fd-8b328e048b0a")
 		)
 		(fp_line
 			(start -1.57226 2.667)
@@ -14787,7 +14819,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "7ce601c5-1c8e-4131-a665-e015bdcc7b5f")
+			(uuid "8fe9788b-60bf-4e98-90a1-fd22614cd063")
 		)
 		(fp_line
 			(start -3.937 2.667)
@@ -14797,7 +14829,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "173e6897-5994-48a5-bae4-bcfc695e248f")
+			(uuid "56131e5c-5c33-4331-9cec-b220c816a25f")
 		)
 		(fp_line
 			(start 4.064 -4.315501)
@@ -14807,7 +14839,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "8fc1e166-af1d-46ee-b3b2-68535650cacb")
+			(uuid "5ab3f104-b070-4433-9568-39dcac881fe3")
 		)
 		(fp_line
 			(start -4.064 -4.315501)
@@ -14817,7 +14849,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "c7bd7139-5309-469e-b9e7-9b7f3316d1a9")
+			(uuid "9b7a5fe9-a3cf-4db5-8cfc-3269224901e5")
 		)
 		(fp_line
 			(start 4.064 4.315501)
@@ -14827,7 +14859,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "b35d1855-691c-4fa6-ab5b-39cac860ade2")
+			(uuid "c49bb415-972f-4953-bac8-de26f26b4e10")
 		)
 		(fp_line
 			(start -4.064 4.315501)
@@ -14837,7 +14869,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "fdd234ed-3814-46de-b463-1c5ba744939a")
+			(uuid "92a1174e-6ce4-497f-9ce0-ac63e0aa438a")
 		)
 		(fp_line
 			(start 3.81 -2.54)
@@ -14847,7 +14879,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "a03dc339-83f9-4503-bf62-4379e6921a12")
+			(uuid "a652ffa7-bfdd-46aa-a978-6fadee86c9a5")
 		)
 		(fp_line
 			(start -3.81 -2.54)
@@ -14857,7 +14889,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "bdf95bba-4eae-4aa7-8a4c-5b7f4e6024df")
+			(uuid "17712522-ee5e-4d39-b471-22eb427d0366")
 		)
 		(fp_line
 			(start 3.81 2.54)
@@ -14867,7 +14899,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "99a40986-e790-42ac-8f56-35a2d0a5d623")
+			(uuid "cee7bbbc-3b14-4d04-9720-56f502a3706b")
 		)
 		(fp_line
 			(start -3.81 2.54)
@@ -14877,7 +14909,18 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "71f75ba6-2672-4adf-86c3-19479ca8d22c")
+			(uuid "1d713173-9049-4a13-bd68-1189b68aad27")
+		)
+		(fp_circle
+			(center -2.54 -4.124999)
+			(end -2.159 -4.124999)
+			(stroke
+				(width 0.508)
+				(type solid)
+			)
+			(fill no)
+			(layer "F.Fab")
+			(uuid "5ec77dcd-0937-4b69-82b6-0095edc28abd")
 		)
 		(fp_text user "${REFERENCE}"
 			(at 0 0 90)
@@ -14946,6 +14989,17 @@
 			(uuid "12a4cbd5-2e97-47a8-8dc0-5baa20bc2bf5")
 		)
 		(embedded_fonts no)
+		(model "${ISE_3DMODELS}/MOLEX_015910060.step"
+			(offset
+				(xyz 0 0 2.54)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz -90 -0 -0)
+			)
+		)
 	)
 	(footprint "LED_SMD:LED_0805_2012Metric"
 		(layer "F.Cu")
@@ -18027,7 +18081,7 @@
 		(descr "terminal block RND 205-00012, 2 pins, pitch 5mm, size 10x7.6mm, drill diameter 1.3mm, pad diameter 2.5mm, http://cdn-reichelt.de/documents/datenblatt/C151/RND_205-00012_DB_EN.pdf, script-generated using https://gitlab.com/kicad/libraries/kicad-footprint-generator/-/tree/master/scripts/TerminalBlock_RND")
 		(tags "THT terminal block RND 205-00012 pitch 5mm size 10x7.6mm drill 1.3mm pad 2.5mm")
 		(property "Reference" "J1"
-			(at -3.5284 -0.1316 180)
+			(at -3.5284 -0.1316 0)
 			(layer "F.SilkS")
 			(uuid "57193e7a-7219-41ad-b2bb-d3136e5d9217")
 			(effects
@@ -18076,7 +18130,7 @@
 		(path "/5bf45bc5-8930-4b8e-bc98-0d65e02a7161")
 		(sheetname "/")
 		(sheetfile "ckt-xing-adv.kicad_sch")
-		(attr through_hole)
+		(attr through_hole allow_missing_courtyard)
 		(fp_line
 			(start -2.62 3.62)
 			(end -2.62 -4.22)
@@ -18401,15 +18455,15 @@
 			(uuid "582303c3-600c-46ac-823a-14c7b797e43f")
 		)
 		(embedded_fonts no)
-		(model "${KICAD9_3DMODEL_DIR}/TerminalBlock_RND.3dshapes/TerminalBlock_RND_205-00012_1x02_P5.00mm_Horizontal.step"
+		(model "${ISE_3DMODELS}/Terminal_Block_2Pos_5mm.stp"
 			(offset
-				(xyz 0 0 0)
+				(xyz -2.54 -3.683 0)
 			)
 			(scale
 				(xyz 1 1 1)
 			)
 			(rotate
-				(xyz 0 0 0)
+				(xyz -0 -0 -0)
 			)
 		)
 	)
@@ -19407,15 +19461,15 @@
 			(uuid "0e27c249-2775-4b39-bf19-49fc5cb9b5bf")
 		)
 		(embedded_fonts no)
-		(model "${KICAD9_3DMODEL_DIR}/TerminalBlock_RND.3dshapes/TerminalBlock_RND_205-00012_1x02_P5.00mm_Horizontal.step"
+		(model "${ISE_3DMODELS}/Terminal_Block_2Pos_5mm.stp"
 			(offset
-				(xyz 0 0 0)
+				(xyz -2.54 -3.7338 0)
 			)
 			(scale
 				(xyz 1 1 1)
 			)
 			(rotate
-				(xyz 0 0 0)
+				(xyz -0 -0 -0)
 			)
 		)
 	)
@@ -23316,6 +23370,17 @@
 			(uuid "14498c62-50cf-48a6-9a77-4470931e4cd9")
 		)
 		(embedded_fonts no)
+		(model "${ISE_3DMODELS}/FSM4JSMA.step"
+			(offset
+				(xyz 0 0 3.81)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz -0 -0 -90)
+			)
+		)
 	)
 	(footprint "ISE_UltraLibrarian:POT_3361P_BRN"
 		(layer "F.Cu")
@@ -23970,6 +24035,17 @@
 			(uuid "02e08700-37a2-4a4d-a571-f897eed1726f")
 		)
 		(embedded_fonts no)
+		(model "${ISE_3DMODELS}/Bournes-3361P.step"
+			(offset
+				(xyz 1.905 -1.27 2.413)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz -0 -0 -180)
+			)
+		)
 	)
 	(footprint "Capacitor_SMD:C_0805_2012Metric"
 		(layer "F.Cu")
@@ -25017,6 +25093,17 @@
 			(uuid "dccb05a9-827e-4391-b992-d0015e8583b5")
 		)
 		(embedded_fonts no)
+		(model "${ISE_3DMODELS}/FSM4JSMA.step"
+			(offset
+				(xyz 0 0 3.81)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz -0 -0 -90)
+			)
+		)
 	)
 	(footprint "Package_SO:TSSOP-28_4.4x9.7mm_P0.65mm"
 		(layer "F.Cu")
@@ -27409,7 +27496,7 @@
 		(descr "terminal block RND 205-00012, 2 pins, pitch 5mm, size 10x7.6mm, drill diameter 1.3mm, pad diameter 2.5mm, http://cdn-reichelt.de/documents/datenblatt/C151/RND_205-00012_DB_EN.pdf, script-generated using https://gitlab.com/kicad/libraries/kicad-footprint-generator/-/tree/master/scripts/TerminalBlock_RND")
 		(tags "THT terminal block RND 205-00012 pitch 5mm size 10x7.6mm drill 1.3mm pad 2.5mm")
 		(property "Reference" "J2"
-			(at 7.453 -5.8825 180)
+			(at 7.453 -5.8825 0)
 			(layer "F.SilkS")
 			(uuid "5ced90b5-be1b-40d6-b52d-d8c18f3bd310")
 			(effects
@@ -27783,15 +27870,15 @@
 			(uuid "cee2b43c-b328-4fef-963c-5bc0b7f8914b")
 		)
 		(embedded_fonts no)
-		(model "${KICAD9_3DMODEL_DIR}/TerminalBlock_RND.3dshapes/TerminalBlock_RND_205-00012_1x02_P5.00mm_Horizontal.step"
+		(model "${ISE_3DMODELS}/Terminal_Block_2Pos_5mm.stp"
 			(offset
-				(xyz 0 0 0)
+				(xyz -2.54 -3.7338 0)
 			)
 			(scale
 				(xyz 1 1 1)
 			)
 			(rotate
-				(xyz 0 0 0)
+				(xyz -0 -0 -0)
 			)
 		)
 	)
@@ -27854,7 +27941,6 @@
 		(sheetname "/")
 		(sheetfile "ckt-xing-adv.kicad_sch")
 		(solder_mask_margin 0.07)
-		(attr smd)
 		(fp_line
 			(start -2.075 2.575)
 			(end 2.075 2.575)
@@ -31115,7 +31201,7 @@
 			)
 		)
 	)
-	(gr_text "(FUTURE USE)"
+	(gr_text "FUTURE OPT"
 		(at 134.493 70.231 0)
 		(layer "F.SilkS")
 		(uuid "a458342b-7483-4cb1-b10a-0be48a995fbe")
@@ -31411,6 +31497,14 @@
 		(uuid "15702463-03a6-4044-a755-1d05e6d73220")
 	)
 	(segment
+		(start 63.292 76.073)
+		(end 65.532 76.073)
+		(width 0.508)
+		(layer "F.Cu")
+		(net 5)
+		(uuid "1874fba7-4736-4988-a775-a706170c5e20")
+	)
+	(segment
 		(start 68.834 40.259)
 		(end 71.501 40.259)
 		(width 1.016)
@@ -31545,6 +31639,14 @@
 		(layer "F.Cu")
 		(net 5)
 		(uuid "382e7921-6708-49e8-8b34-123f0e0c0f08")
+	)
+	(segment
+		(start 65.532 76.073)
+		(end 66.167 75.438)
+		(width 0.508)
+		(layer "F.Cu")
+		(net 5)
+		(uuid "3972ba46-1f9f-429d-8d33-455e4f224f2a")
 	)
 	(segment
 		(start 50.4952 46.04375)
@@ -41949,7 +42051,7 @@
 		)
 		(polygon
 			(pts
-				(xy 58.166 65.659) (xy 58.166 67.564) (xy 61.087 67.564) (xy 61.087 59.309) (xy 58.166 59.309) (xy 58.166 65.659)
+				(xy 58.166 65.659) (xy 58.166 67.564) (xy 61.087 67.564) (xy 61.087 59.309) (xy 58.166 59.309)
 			)
 		)
 		(filled_polygon
@@ -42123,8 +42225,8 @@
 			(layer "F.Cu")
 			(pts
 				(xy 87.318121 66.441002) (xy 87.364614 66.494658) (xy 87.376 66.547) (xy 87.376 67.232386) (xy 87.3755 67.2349)
-				(xy 87.3755 67.3851) (xy 87.376 67.387613) (xy 87.376 68.073) (xy 87.355998 68.141121) (xy 87.302342 68.187614)
-				(xy 87.25 68.199) (xy 83.438 68.199) (xy 83.369879 68.178998) (xy 83.323386 68.125342) (xy 83.312 68.073)
+				(xy 87.3755 67.3851) (xy 87.376 67.387613) (xy 87.376 68.0675) (xy 87.355998 68.135621) (xy 87.302342 68.182114)
+				(xy 87.25 68.1935) (xy 83.438 68.1935) (xy 83.369879 68.173498) (xy 83.323386 68.119842) (xy 83.312 68.0675)
 				(xy 83.312 66.547) (xy 83.332002 66.478879) (xy 83.385658 66.432386) (xy 83.438 66.421) (xy 87.25 66.421)
 			)
 		)
