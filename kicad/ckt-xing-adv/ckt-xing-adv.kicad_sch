@@ -6326,7 +6326,7 @@
 	)
 	(text "Note: Locate\nnear main 5V\nswitcher"
 		(exclude_from_sim no)
-		(at 306.832 101.346 0)
+		(at 314.452 95.25 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6562,6 +6562,12 @@
 		(uuid "040b099e-058e-45b4-85cf-5d0f881af294")
 	)
 	(junction
+		(at 308.61 121.92)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "044a10da-ce74-4311-b3f6-916f5eecf05a")
+	)
+	(junction
 		(at 283.21 138.43)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6760,6 +6766,12 @@
 		(uuid "3832fe6f-824c-43f6-a7ca-743a0f9f1bfa")
 	)
 	(junction
+		(at 308.61 102.87)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3d0f15c7-c282-4222-94a3-c72dcbe74c4f")
+	)
+	(junction
 		(at 251.46 54.61)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6868,6 +6880,12 @@
 		(uuid "62e2040f-acd6-41a3-8b4f-885e8efb0857")
 	)
 	(junction
+		(at 308.61 132.08)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "633ab9b0-ae9a-480d-af8a-fee6225ba446")
+	)
+	(junction
 		(at 88.9 55.88)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6914,6 +6932,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "74e7e6cc-8201-426f-8861-fd9b948771de")
+	)
+	(junction
+		(at 308.61 113.03)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "75801a67-7e1a-446c-8d52-8e6c0e2683de")
 	)
 	(junction
 		(at 223.52 64.77)
@@ -7549,6 +7573,16 @@
 	)
 	(wire
 		(pts
+			(xy 308.61 102.87) (xy 316.23 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0848bfcd-1502-4782-a821-5c7d72cd9bf8")
+	)
+	(wire
+		(pts
 			(xy 30.48 154.94) (xy 36.83 154.94)
 		)
 		(stroke
@@ -8096,6 +8130,16 @@
 			(type default)
 		)
 		(uuid "1d262823-8e6b-4a22-acdb-91b92f8c07de")
+	)
+	(wire
+		(pts
+			(xy 308.61 113.03) (xy 331.47 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1d688dd2-ed1c-4d88-9f14-1daa99033e7c")
 	)
 	(wire
 		(pts
@@ -9289,7 +9333,7 @@
 	)
 	(wire
 		(pts
-			(xy 306.07 132.08) (xy 331.47 132.08)
+			(xy 306.07 132.08) (xy 308.61 132.08)
 		)
 		(stroke
 			(width 0)
@@ -9729,7 +9773,7 @@
 	)
 	(wire
 		(pts
-			(xy 306.07 113.03) (xy 331.47 113.03)
+			(xy 306.07 113.03) (xy 308.61 113.03)
 		)
 		(stroke
 			(width 0)
@@ -9796,6 +9840,16 @@
 			(type default)
 		)
 		(uuid "70819947-0927-4a5d-b70f-b2468fae9ea4")
+	)
+	(wire
+		(pts
+			(xy 308.61 121.92) (xy 316.23 121.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "70cd00f1-06d2-4a59-b48b-bb3d8ed810b3")
 	)
 	(wire
 		(pts
@@ -10809,7 +10863,7 @@
 	)
 	(wire
 		(pts
-			(xy 306.07 121.92) (xy 316.23 121.92)
+			(xy 306.07 121.92) (xy 308.61 121.92)
 		)
 		(stroke
 			(width 0)
@@ -11659,7 +11713,7 @@
 	)
 	(wire
 		(pts
-			(xy 307.34 102.87) (xy 316.23 102.87)
+			(xy 307.34 102.87) (xy 308.61 102.87)
 		)
 		(stroke
 			(width 0)
@@ -12306,6 +12360,16 @@
 			(type default)
 		)
 		(uuid "f00f289f-4c3a-44a8-8dcd-80e87a9b5b6b")
+	)
+	(wire
+		(pts
+			(xy 308.61 132.08) (xy 331.47 132.08)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f14742ef-ae4b-4aed-9f0c-9ff1471dee1a")
 	)
 	(wire
 		(pts
@@ -13622,6 +13686,73 @@
 			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR043")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 308.61 121.92 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "0739413c-97d0-4ee7-ba68-109990facde0")
+		(property "Reference" "TP8"
+			(at 308.356 120.396 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 306.705 119.8879 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
+			(at 303.53 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 303.53 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 308.61 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "1fbd47ac-00cd-4e68-ba2d-cd406d0fa14b")
+		)
+		(instances
+			(project "ckt-xing-adv"
+				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
+					(reference "TP8")
 					(unit 1)
 				)
 			)
@@ -15225,6 +15356,73 @@
 			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "C16")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 308.61 132.08 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "27524a66-8e7a-4007-9e21-ab723b8225f4")
+		(property "Reference" "TP9"
+			(at 308.356 130.556 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 306.705 130.0479 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
+			(at 303.53 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 303.53 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 308.61 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "31406ca2-d9a7-4421-be7d-be3e25f132f3")
+		)
+		(instances
+			(project "ckt-xing-adv"
+				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
+					(reference "TP9")
 					(unit 1)
 				)
 			)
@@ -23151,6 +23349,73 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 308.61 113.03 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "bb01d8a7-3f30-4b87-ad27-0190a79f30f9")
+		(property "Reference" "TP7"
+			(at 308.356 111.506 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 306.705 110.9979 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
+			(at 303.53 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 303.53 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 308.61 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "87042b0c-b5a7-4ad0-83d3-1e07e55ad148")
+		)
+		(instances
+			(project "ckt-xing-adv"
+				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
+					(reference "TP7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 226.06 57.15 0)
 		(mirror y)
@@ -26708,6 +26973,73 @@
 			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "D3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 308.61 102.87 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f3700162-d02d-4572-a9e3-33eeb2bdfe2c")
+		(property "Reference" "TP6"
+			(at 308.356 101.346 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 306.705 100.8379 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
+			(at 303.53 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 303.53 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 308.61 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "5dc8e102-713f-44ec-b8ab-15edd4e9914f")
+		)
+		(instances
+			(project "ckt-xing-adv"
+				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
+					(reference "TP6")
 					(unit 1)
 				)
 			)
