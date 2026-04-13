@@ -29,6 +29,7 @@ LICENSE:
 #include "i2c.h"
 #include "timings.h"
 #include "configuration.h"
+#include "crossingTrack.h"
 
 #define MIN(a,b) ((a)<(b)?(a):(b))
 #define MAX(a,b) ((a)>(b)?(a):(b))
@@ -138,6 +139,10 @@ LICENSE:
 #define PCA9685_REG_CH6_ON_L  0x1E
 #define PCA9685_REG_CH6_ON_H  0x1F
 
+#define PCA9685_REG_CH14_ON_H 0x3F
+
+#define PCA9685_REG_CH15_ON_H 0x43
+
 #define PCA9685_REG_ALL_ON_L  0xFA
 #define PCA9685_REG_ALL_ON_H  0xFB
 #define PCA9685_REG_ALL_OFF_L 0xFC
@@ -192,20 +197,12 @@ LICENSE:
 #define SERVO_STEP         52 
 // (((SERVO_180_DEGREES-SERVO_0_DEGREES)<<4)/60UL)
 
-typedef enum{
-	TRACK_STATUS_OFF = 0,
-	TRACK_STATUS_ON,
-	TRACK_STATUS_FAST_BLINK,
-	TRACK_STATUS_SLOW_BLINK
-} TrackStatusLED_t;
-
-
 typedef struct
 {
 	bool configModeLamp[CONFIG_LEDS];
 	uint8_t configValueLamp;
-	TrackStatusLED_t trkStatusA;
-	TrackStatusLED_t trkStatusB;
+	IndicatorLightState_t trkStatusA;
+	IndicatorLightState_t trkStatusB;
 	bool mainGatesActive;
 	bool auxGatesActive;
 	DebounceState8_t trackSensorDebouncer;

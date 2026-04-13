@@ -50,6 +50,6 @@ typedef struct
 } CrossingSignalState_t;
 
 void initCrossingSignals(CrossingSignalState_t* xingState, GateConfiguration_t gateConfig, bool bellOnGateDropOnly);
-void runCrossingSignalStateMachine(CrossingSignalState_t* xingState, bool active);
+void runCrossingSignalStateMachine(CrossingSignalState_t* xingState, bool active, bool isDecisec);
 
 #endif

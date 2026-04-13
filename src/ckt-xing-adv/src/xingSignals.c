@@ -36,14 +36,14 @@ void initCrossingSignals(CrossingSignalState_t* xingState, GateConfiguration_t g
     xingState->stateTimer = 0;    
 }
 
-void runCrossingSignalStateMachine(CrossingSignalState_t* xingState, bool active)
+void runCrossingSignalStateMachine(CrossingSignalState_t* xingState, bool active, bool isDecisec)
 {
 	static uint8_t stateTimer = 0;
 
 	bool gatesEnabled = (xingState->gateConfig != GATES_DISABLED)?true:false;
 
 	// stateTimer is in decisecs
-	if (xingState->stateTimer > 0)
+	if (isDecisec &&  xingState->stateTimer > 0)
 		xingState->stateTimer--;
 	
 	switch(xingState->signalState)

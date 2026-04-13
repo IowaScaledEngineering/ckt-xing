@@ -123,10 +123,51 @@ uint8_t getTrackBState(SystemHardwareState_t* state)
     return 0x0F & (getDebouncedState(&state->trackSensorDebouncer)>>4);
 }
 
+bool ledPulser(IndicatorLightState_t status, uint8_t phase)
+{
+    // The parent loop is running at 20Hz, not 10 like the original
+    phase /= 2;
+
+    switch (status)
+    {
+        case LIGHT_ON:
+            return true;
+
+        case LIGHT_OFF:
+            return false;
+
+        case LIGHT_SLOW_BLINK:
+            if (phase >=10)
+                return true;
+            else
+                return false;
+
+        case LIGHT_FAST_BLINK:
+            if (phase & 0x02)
+                return true;
+            else
+                return false;
+
+        case LIGHT_DOUBLE_SLOW_BLINK:
+            if (phase >= 16)
+                return true;
+            else if (phase >= 12)
+                return false;
+            else if (phase >= 8)
+                return true;
+            else
+                return false;
+
+    }
+
+	return false;  // Default to on
+}
+
 void setOutputs(SystemHardwareState_t* state, Configuration_t* config , bool driveGates)
 {
 	uint8_t i = 0;
-	static bool currentLEDs[8];
+	static bool currentLEDs[10];
+    static uint8_t ledPhase = 0;
 
     if (driveGates)
     {
@@ -158,6 +199,14 @@ void setOutputs(SystemHardwareState_t* state, Configuration_t* config , bool dri
     }
     audioPump();
 
+    // Track Status LEDs
+    // Slow Blink = toggle every 1s
+    // Fast Blink = toggle every 0.2s
+    // Slow Double blink = toggle every 0.4s, sleep 0.8s
+
+    // This loop runs every 50ms, so 
+
+
 	if (state->configValueLamp & 0x08)
 		i |= GPOUT1_CONFIG_VAL_A_LED_MASK;
 	if (state->configValueLamp & 0x04)
@@ -187,6 +236,21 @@ void setOutputs(SystemHardwareState_t* state, Configuration_t* config , bool dri
 
 		currentLEDs[i] = state->configModeLamp[i];
 	}
+
+    if (++ledPhase >=20)
+    ledPhase = 0;
+
+    if (currentLEDs[8] != ledPulser(state->trkStatusA, ledPhase))
+    {
+        currentLEDs[8] = !currentLEDs[8];
+        writeByte(PCA9685_ADR_0, PCA9685_REG_CH14_ON_H, currentLEDs[8]?0x07:0x10);
+    }
+
+    if (currentLEDs[9] != ledPulser(state->trkStatusB, ledPhase))
+    {
+        currentLEDs[9] = !currentLEDs[9];
+        writeByte(PCA9685_ADR_0, PCA9685_REG_CH15_ON_H, currentLEDs[9]?0x07:0x10);
+    }
 }
 
 bool isExtInActive(SystemHardwareState_t* state)

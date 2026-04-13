@@ -129,7 +129,6 @@ int main(void)
 	CrossingSignalState_t xingState;
 	AudioAssetRecord r;
 	uint8_t i=0;
-	uint8_t decisec = 0;
 	
 	// Deal with watchdog first thing
 	MCUSR = 0;              // Clear reset status
@@ -306,12 +305,15 @@ int main(void)
 
 		if (((uint32_t)currentTime - lastUpdateTime) > LOOP_UPDATE_TIME_MS)
 		{
+			static uint8_t ticks = 0;
 			lastUpdateTime = currentTime;
 
-			// Read inputs should run every 25mS
+			// Read inputs should run every 50mS
 			readInputs(&state);
 
-			decisec = (decisec + 1) % 4;
+			// Each run through the loop is 50mS apart, so a decisec is 2 runs
+
+			ticks = (ticks+1) % 2;
 
 			// The state machines should only run every 100mS, because all of the timeouts
 			//  internally are based around deciseconds.  Running the read routine 4x
@@ -320,13 +322,13 @@ int main(void)
 
 			if (MENU_OFF == menuState)
 			{
-				runCrossingTrackStateMachine(&trackA, getTrackAState(&state),  0 == decisec);
+				runCrossingTrackStateMachine(&trackA, getTrackAState(&state),  0 == ticks);
 
-				runCrossingTrackStateMachine(&trackB, getTrackBState(&state),  0 == decisec);
+				runCrossingTrackStateMachine(&trackB, getTrackBState(&state),  0 == ticks);
 
 				bool activeCrossing = isCrossingTrackActive(&trackA) || isCrossingTrackActive(&trackB) || isExtInActive(&state);
 
-				runCrossingSignalStateMachine(&xingState, activeCrossing);
+				runCrossingSignalStateMachine(&xingState, activeCrossing, 0 == ticks);
 			}
 
 			if(xingState.lightsActive && MENU_OFF == menuState)
@@ -346,7 +348,8 @@ int main(void)
 
 			state.mainGatesActive = xingState.mainGatesActive;
 			state.auxGatesActive = xingState.auxGatesActive;
-
+			state.trkStatusA = trackA.ledState;
+			state.trkStatusB = trackB.ledState;
 			// Run outputs every time.  
 			setOutputs(&state, &globalConfig, MENU_OFF == menuState);
 		}

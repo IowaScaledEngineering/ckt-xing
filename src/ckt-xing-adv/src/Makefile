@@ -49,7 +49,7 @@ AVRDUDE_SLOW = avrdude -P $(PROGRAMMER_PORT) -c $(PROGRAMMER_TYPE) -p $(DEVICE) 
 
 OBJS = ${FAST_SRCS:.c=.o} ${SRCS:.c=.o} ${ASM_SRC:.S=.o}
 INCLUDES = -I. 
-CFLAGS  = $(INCLUDES) -Wall -Os -std=gnu99
+CFLAGS  = $(INCLUDES) -Wall -Os -std=gnu99 -ffunction-sections -fdata-sections
 CFLAGS_FAST  = $(INCLUDES) -Wall -O2 -std=gnu99
 ASFLAGS = -ffunction-sections -fdata-sections
 LDFLAGS = -Wl,--gc-sections
@@ -100,18 +100,6 @@ firmware:
 clean:
 	rm -f $(BASE_NAME).hex $(BASE_NAME).lst $(BASE_NAME).obj $(BASE_NAME).cof $(BASE_NAME).list $(BASE_NAME).map $(BASE_NAME).eep.hex $(BASE_NAME).elf $(BASE_NAME).s $(OBJS) *.o *.tgz *~
 
-3spiflash.o: spiflash.c $(INCS)
-	$(COMPILE_FAST) -c $< -o $@
-
-3audioAndLights.o: audioAndLights.c $(INCS)
-	$(COMPILE_FAST) -c $< -o $@
-	
-i3spl.o: ispl.c $(INCS)
-	$(COMPILE_FAST) -c $< -o $@
-
-c3kt-xing-adv.o: ckt-xing-adv.c $(INCS)
-	$(COMPILE_FAST) -c $< -o $@
-
 # Generic rule for compiling C files:
 .c.o: $(INCS)
 	$(COMPILE) -c $< -o $@
@@ -131,7 +119,7 @@ c3kt-xing-adv.o: ckt-xing-adv.c $(INCS)
 # file targets:
 
 $(BASE_NAME).elf: $(OBJS)
-	$(COMPILE_FAST) -o $(BASE_NAME).elf $(OBJS)
+	$(COMPILE) -o $(BASE_NAME).elf $(OBJS)
 
 $(BASE_NAME).hex: $(BASE_NAME).elf
 	rm -f $(BASE_NAME).hex $(BASE_NAME).eep.hex
