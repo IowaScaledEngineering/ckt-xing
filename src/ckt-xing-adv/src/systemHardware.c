@@ -163,39 +163,60 @@ bool ledPulser(IndicatorLightState_t status, uint8_t phase)
 	return false;  // Default to on
 }
 
+void servoStep(SystemHardwareState_t* state, Configuration_t *config, uint8_t servoNum, bool down)
+{
+    uint16_t servoPosition = state->servoPosition[servoNum];
+    int16_t servoIncrement = config->servoRate[servoNum];
+    uint16_t servoUpLimit = config->servoLimit[servoNum];
+    uint16_t servoDownLimit = config->servoLimit[servoNum+4];
+
+    if (down)
+    {
+        // Lower gates
+        // If rate < 0, the up limit is < down limit
+        // Example - up is 1760, down is 6640, rate is -81
+
+        // If rate > 0, the up limit is > down limit
+        // Example - up is 6560, down is 3280, rate is 54
+        servoPosition -= servoIncrement;
+        if (servoIncrement < 0)
+            servoPosition = MIN(servoDownLimit, servoPosition);
+        else
+            servoPosition = MAX(servoDownLimit, servoPosition);
+    } else {
+        // Raise gates
+        // If rate < 0, the up limit is < down limit
+        servoPosition += servoIncrement;
+
+        if (servoIncrement < 0)
+            servoPosition = MAX(servoUpLimit, servoPosition);
+        else
+            servoPosition = MIN(servoUpLimit, servoPosition);
+    }
+
+    state->servoPosition[servoNum] = servoPosition;
+}
+
 void setOutputs(SystemHardwareState_t* state, Configuration_t* config , bool driveGates)
 {
 	uint8_t i = 0;
 	static bool currentLEDs[10];
     static uint8_t ledPhase = 0;
 
+
+    // If rate > 0, the up limit is > down limit
+
     if (driveGates)
     {
-        if (state->mainGatesActive)
-        {
-            i |= GPOUT1_MAIN_GATES_DOWN_MASK;
-            state->servoPosition[0] = MIN(config->servoLimit[0], state->servoPosition[0] + config->servoRate[0]);
-            state->servoPosition[1] = MIN(config->servoLimit[1], state->servoPosition[1] + config->servoRate[1]);
-        }
-        else
-        {
-            i |= GPOUT1_MAIN_GATES_UP_MASK; 
-            state->servoPosition[0] = MAX(config->servoLimit[4], state->servoPosition[0] - config->servoRate[0]);
-            state->servoPosition[1] = MAX(config->servoLimit[5], state->servoPosition[1] - config->servoRate[1]);
-        }
+        servoStep(state, config, 0, state->mainGatesActive);
+        servoStep(state, config, 1, state->mainGatesActive);            
 
-        if (state->auxGatesActive)
-        {
-            i |= GPOUT1_AUX_GATES_DOWN_MASK;
-            state->servoPosition[2] = MIN(config->servoLimit[2], state->servoPosition[2] + config->servoRate[2]);
-            state->servoPosition[3] = MIN(config->servoLimit[3], state->servoPosition[3] + config->servoRate[3]);
-        }
-        else
-        {
-            i |= GPOUT1_AUX_GATES_UP_MASK; 
-            state->servoPosition[2] = MAX(config->servoLimit[6], state->servoPosition[2] - config->servoRate[2]);
-            state->servoPosition[3] = MAX(config->servoLimit[7], state->servoPosition[3] - config->servoRate[3]);
-        }
+        i |= (state->mainGatesActive)?GPOUT1_MAIN_GATES_DOWN_MASK:GPOUT1_MAIN_GATES_UP_MASK;
+
+        servoStep(state, config, 2, state->auxGatesActive);
+        servoStep(state, config, 3, state->auxGatesActive); 
+
+        i |= (state->auxGatesActive)?GPOUT1_AUX_GATES_DOWN_MASK:GPOUT1_AUX_GATES_UP_MASK;
     }
     audioPump();
 
