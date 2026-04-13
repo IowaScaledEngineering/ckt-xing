@@ -184,7 +184,6 @@ int main(void)
 	isplInitialize();
 	initDebounceState8(&switchDebouncer, getSwitches());
 	loadConfigValues(&globalConfig);
-
 	configureEverything(&globalConfig, &trackA, &trackB, &xingState, &r);
 	initSystemHardwareState(&state);
 
@@ -317,16 +316,6 @@ int main(void)
 					if (configSetting >= CONFIG_SETTING_SERVO_UP_MAIN_1 && configSetting <= CONFIG_SETTING_SERVO_DOWN_AUX_2)
 					{
 						uint8_t servoNum = (configSetting - CONFIG_SETTING_SERVO_UP_MAIN_1);
-
-						if (longPress & SWITCH_UP_MASK)
-						{
-							globalConfig.servoLimit[servoNum] = MIN(SERVO_MAX_DEGREES, MAX(SERVO_MIN_DEGREES, (globalConfig.servoLimit[servoNum] + (10<<4))));
-						} 
-						else if (longPress & SWITCH_DOWN_MASK)
-						{
-							globalConfig.servoLimit[servoNum] = MIN(SERVO_MAX_DEGREES, MAX(SERVO_MIN_DEGREES, (globalConfig.servoLimit[servoNum] - (10<<4))));
-						}
-
 						state.servoPosition[servoNum%4] = globalConfig.servoLimit[servoNum];
 					}
 					configSettingToLamps(&state, configSetting, globalConfig.configValues[configSetting]);
