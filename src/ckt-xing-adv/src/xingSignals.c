@@ -38,8 +38,6 @@ void initCrossingSignals(CrossingSignalState_t* xingState, GateConfiguration_t g
 
 void runCrossingSignalStateMachine(CrossingSignalState_t* xingState, bool active, bool isDecisec)
 {
-	static uint8_t stateTimer = 0;
-
 	bool gatesEnabled = (xingState->gateConfig != GATES_DISABLED)?true:false;
 
 	// stateTimer is in decisecs
@@ -82,7 +80,7 @@ void runCrossingSignalStateMachine(CrossingSignalState_t* xingState, bool active
 				break;
 			}
 			
-			if (0 == stateTimer)
+			if (0 == xingState->stateTimer)
 			{
 				// We've waited for the lights to flash long enough, lower the gates
 				if (!gatesEnabled)
@@ -115,7 +113,7 @@ void runCrossingSignalStateMachine(CrossingSignalState_t* xingState, bool active
 			{
 				// We went inactive while the gates were going down
 				xingState->signalState = SIGNAL_STATE_MAIN_GATE_UP_SETUP;
-			} else if (0 == stateTimer) {
+			} else if (0 == xingState->stateTimer) {
 				// We've now waited long enough for the gates to fall, go either for 4Q gates or active
 				// depending on configuration
 				if (xingState->gateConfig == GATES_4Q_DELAYED_UP || xingState->gateConfig == GATES_4Q_SIMULTANEOUS_UP)
@@ -145,7 +143,7 @@ void runCrossingSignalStateMachine(CrossingSignalState_t* xingState, bool active
 
 			if (!active)
 				xingState->signalState = SIGNAL_STATE_MAIN_GATE_UP_SETUP;
-			else if (0 == stateTimer)
+			else if (0 == xingState->stateTimer)
 				xingState->signalState = SIGNAL_STATE_4Q_GATE_DOWN_SETUP;
 			break;
 
@@ -171,7 +169,7 @@ void runCrossingSignalStateMachine(CrossingSignalState_t* xingState, bool active
 
             if (!active)
 				xingState->signalState = SIGNAL_STATE_4Q_GATE_UP_SETUP;
-			else if (0 == stateTimer)
+			else if (0 == xingState->stateTimer)
 			{
 				xingState->signalState = SIGNAL_STATE_ACTIVE_4Q;
 			}
@@ -227,7 +225,7 @@ void runCrossingSignalStateMachine(CrossingSignalState_t* xingState, bool active
 			{
 				// Go back to active
 				xingState->signalState = SIGNAL_STATE_MAIN_GATE_DOWN_SETUP;
-			} else if (0 == stateTimer) {
+			} else if (0 == xingState->stateTimer) {
 				xingState->signalState = SIGNAL_STATE_MAIN_GATE_UP_SETUP;
 			}
 			break;
@@ -247,7 +245,7 @@ void runCrossingSignalStateMachine(CrossingSignalState_t* xingState, bool active
 		case SIGNAL_STATE_MAIN_GATE_UP:
 			xingState->mainGatesActive = false;
 			xingState->auxGatesActive = false;
-			if (0 == stateTimer)
+			if (0 == xingState->stateTimer)
 				xingState->signalState = SIGNAL_STATE_IDLE;
 			break;
 		
