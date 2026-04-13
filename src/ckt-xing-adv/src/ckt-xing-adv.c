@@ -189,9 +189,10 @@ int main(void)
 
 		uint32_t currentTime = getMillis();
 
-		// Handle Switches
+		// Handle Switches and Menuing
 		if ((uint32_t)(currentTime - lastSwitchTime) > SWITCH_UPDATE_TIME_MS)
 		{
+			static uint8_t increments = 0;
 			lastSwitchTime = currentTime;
 			uint8_t switchesPressed = debounce8(getSwitches(), &switchDebouncer);
 			// Invert the three switch states, since they're active low
@@ -201,10 +202,52 @@ int main(void)
 
 			switch(menuState)
 			{
+				case MENU_RESET_START:
+					state.configModeLamp[7]=true;	
+					for(i=0; i<7; i++)
+						state.configModeLamp[i]=false;
+
+					if (switchState != SWITCH_NEXT_MASK)
+					{
+						increments = 0;
+						menuState = MENU_RESET_CONFIRM;
+					}
+					break;
+
+				case MENU_RESET_CONFIRM:
+					if (longPress == SWITCH_NEXT_MASK)
+					{
+						increments = 0;
+						menuState = MENU_SAVE;
+						break;
+					}
+
+					if (switchState == SWITCH_UP_MASK)
+					{
+						increments++;
+				
+						if (increments > 32)
+						{
+							factoryInitConfiguration(&globalConfig);
+							while(1); // Loop and let the WDT get us
+						} else {
+							if (increments % 8 == 7)
+								state.configValueLamp = (0x01 | (state.configValueLamp<<1));
+						}
+
+					} else {
+						increments = 0;
+					}
+
+					break;
+
+
 				case MENU_OFF:
 					// Configuration is current off, system is running normally
 					if (SWITCH_NEXT_MASK == longPress)
 						menuState = MENU_START;
+					else if ((SWITCH_NEXT_MASK | SWITCH_DOWN_MASK) == longPress)
+						menuState = MENU_RESET_START;
 					break;
 
 				case MENU_START:

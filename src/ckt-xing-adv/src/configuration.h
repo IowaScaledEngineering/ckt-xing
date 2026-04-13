@@ -32,6 +32,8 @@ typedef enum
 	MENU_START,
 	MENU_RUN,
 	MENU_SAVE,
+	MENU_RESET_START,
+	MENU_RESET_CONFIRM,
 	MENU_END
 } MenuState_t;
 
