@@ -114,6 +114,17 @@ uint8_t getLongPress(uint8_t switchState)
 	return retval;
 }
 
+void configureEverything(Configuration_t* config, CrossingTrack_t* trackA, CrossingTrack_t* trackB, CrossingSignalState_t* xingState, AudioAssetRecord* r)
+{
+	initCrossingSignals(xingState, config->configValues[CONFIG_SETTING_GATE_MODE], config->configValues[CONFIG_SETTING_BELL_MODE]==BELL_MODE_ONLY_ON_GATE_DROP);
+	uint8_t approachTimeout = getApproachTimeoutDecisecs(config);
+	uint8_t islandTimeout = getIslandTimeoutDecisecs(config);
+	initializeCrossingTrack(trackA, approachTimeout, islandTimeout);
+	initializeCrossingTrack(trackB, approachTimeout, islandTimeout);
+	lightConfigSet(config->configValues[CONFIG_SETTING_LED_VS_LAMP] == LED_VS_LAMP_LED_MODE);
+	isplAudioAssetLoad(config->configValues[CONFIG_SETTING_BELL_TYPE]-1, r);
+}
+
 
 int main(void)
 {
@@ -174,13 +185,9 @@ int main(void)
 	initDebounceState8(&switchDebouncer, getSwitches());
 	loadConfigValues(&globalConfig);
 
-	initializeCrossingTrack(&trackA, getApproachTimeoutDecisecs(&globalConfig), getIslandTimeoutDecisecs(&globalConfig));
-	initializeCrossingTrack(&trackB, getApproachTimeoutDecisecs(&globalConfig), getIslandTimeoutDecisecs(&globalConfig));
-	initCrossingSignals(&xingState, globalConfig.configValues[CONFIG_SETTING_GATE_MODE], globalConfig.configValues[CONFIG_SETTING_BELL_MODE]==BELL_MODE_ONLY_ON_GATE_DROP);
-
+	configureEverything(&globalConfig, &trackA, &trackB, &xingState, &r);
 	initSystemHardwareState(&state);
 
-	isplAudioAssetLoad(globalConfig.configValues[CONFIG_SETTING_BELL_TYPE]-1, &r);
 
 	while(1)
 	{
@@ -207,7 +214,7 @@ int main(void)
 					for(i=0; i<7; i++)
 						state.configModeLamp[i]=false;
 
-					if (switchState != SWITCH_NEXT_MASK)
+					if (switchState == 0)
 					{
 						increments = 0;
 						menuState = MENU_RESET_CONFIRM;
@@ -237,6 +244,7 @@ int main(void)
 
 					} else {
 						increments = 0;
+						state.configValueLamp = 0;
 					}
 
 					break;
@@ -244,10 +252,10 @@ int main(void)
 
 				case MENU_OFF:
 					// Configuration is current off, system is running normally
-					if (SWITCH_NEXT_MASK == longPress)
-						menuState = MENU_START;
-					else if ((SWITCH_NEXT_MASK | SWITCH_DOWN_MASK) == longPress)
+					if ((SWITCH_NEXT_MASK & longPress) && (SWITCH_DOWN_MASK & switchState))
 						menuState = MENU_RESET_START;
+					else if (SWITCH_NEXT_MASK == longPress)
+						menuState = MENU_START;
 					break;
 
 				case MENU_START:
@@ -328,8 +336,7 @@ int main(void)
 					configSetting = CONFIG_SETTING_NONE;  // 0 is essentially "run normally"
 
 					saveConfigValues(&globalConfig);
-					initCrossingSignals(&xingState, globalConfig.configValues[CONFIG_SETTING_GATE_MODE], globalConfig.configValues[CONFIG_SETTING_BELL_MODE]==BELL_MODE_ONLY_ON_GATE_DROP);
-					isplAudioAssetLoad(globalConfig.configValues[CONFIG_SETTING_BELL_TYPE]-1, &r);
+					configureEverything(&globalConfig, &trackA, &trackB, &xingState, &r);
 					configSettingToLamps(&state, configSetting, 0);
 					if (switchState != SWITCH_NEXT_MASK)
 						menuState = MENU_OFF;
@@ -355,7 +362,6 @@ int main(void)
 			readInputs(&state);
 
 			// Each run through the loop is 50mS apart, so a decisec is 2 runs
-
 			ticks = (ticks+1) % 2;
 
 			// The state machines should only run every 100mS, because all of the timeouts

@@ -47,8 +47,8 @@ void factoryInitConfiguration(Configuration_t* config)
 {
 	// FIXME - factory reset here
 	config->configValues[CONFIG_SETTING_BELL_TYPE] = 1; 
-	config->configValues[CONFIG_SETTING_APPROACH_TIMEOUT] = 1; 
-	config->configValues[CONFIG_SETTING_ISLAND_TIMEOUT] = 1; 
+	config->configValues[CONFIG_SETTING_APPROACH_TIMEOUT] = 5; 
+	config->configValues[CONFIG_SETTING_ISLAND_TIMEOUT] = 3; 
 	config->configValues[CONFIG_SETTING_LED_VS_LAMP] = 1; 
 	config->configValues[CONFIG_SETTING_BELL_MODE] = 1; 
 	config->configValues[CONFIG_SETTING_GATE_MODE] = GATES_2Q_ONLY; 

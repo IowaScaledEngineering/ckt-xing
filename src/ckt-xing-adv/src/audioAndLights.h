@@ -48,6 +48,7 @@ LICENSE:
 
 void activateLights();
 void deactivateLights();
+void lightConfigSet(bool ledMode);
 void stopAudioRepeat();
 
 typedef struct

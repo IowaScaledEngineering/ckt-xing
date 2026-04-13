@@ -60,6 +60,9 @@ typedef enum
 #define BELL_MODE_ALWAYS_ON          1
 #define BELL_MODE_ONLY_ON_GATE_DROP  2
 
+#define LED_VS_LAMP_LAMP_MODE        1
+#define LED_VS_LAMP_LED_MODE         2
+
 #define SERVO_MAIN_1_LIMIT_UP   0
 #define SERVO_MAIN_2_LIMIT_UP   1
 #define SERVO_AUX_1_LIMIT_UP    2

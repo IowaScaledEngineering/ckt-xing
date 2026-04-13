@@ -142,6 +142,14 @@ ISR(TIMER0_COMPA_vect)
 
 }
 
+void lightConfigSet(bool ledMode)
+{
+	if (ledMode)
+		lightControl |= (LIGHT_NOFADE);
+	else
+		lightControl &= ~(LIGHT_NOFADE);
+}
+
 uint32_t getMillis()
 {
 	uint32_t retmillis;
