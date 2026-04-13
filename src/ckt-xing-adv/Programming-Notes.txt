@@ -1,0 +1,10 @@
+1) ispltools must be installed somewhere, and it assumes at the same level as
+the ckt-xing project
+
+2) Activate the venv associated with the ispltools
+
+3) ./program and listen to the prompts as to which way the switch should be
+thrown on the programmer jig
+
+4) Before programming a ckt-xing-basic, be sure to set all the dip switches
+off or it won't work
