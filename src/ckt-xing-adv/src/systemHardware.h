@@ -213,7 +213,7 @@ typedef struct
 
 bool initPCA9685();
 bool initTCA9555();
-bool initSystemHardwareState(SystemHardwareState_t* state);
+bool initSystemHardwareState(SystemHardwareState_t* state, Configuration_t* config);
 void readInputs(SystemHardwareState_t* state);
 uint8_t getTrackAState(SystemHardwareState_t* state);
 uint8_t getTrackBState(SystemHardwareState_t* state);

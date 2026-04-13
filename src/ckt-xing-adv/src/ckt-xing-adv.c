@@ -185,8 +185,7 @@ int main(void)
 	initDebounceState8(&switchDebouncer, getSwitches());
 	loadConfigValues(&globalConfig);
 	configureEverything(&globalConfig, &trackA, &trackB, &xingState, &r);
-	initSystemHardwareState(&state);
-
+	initSystemHardwareState(&state, &globalConfig);
 
 	while(1)
 	{
@@ -248,11 +247,44 @@ int main(void)
 
 					break;
 
+				case MENU_DIAGNOSTIC_START:
+					increments = 0;
+					for(i=0; i<8; i++)
+						state.configModeLamp[i] = false;
+					xingState.lightsActive = true;
+
+				case MENU_DIAGNOSTIC:
+					increments++;
+					menuState = MENU_DIAGNOSTIC;
+					trackA.active = (PINB & _BV(PB6));
+					trackA.ledState = trackB.ledState = LIGHT_SLOW_BLINK;
+					state.configValueLamp = (trackA.active)?0x0A:0x05;
+					// Turn off the mode lamp 
+
+					for(i=0; i<8; i++)
+						state.configModeLamp[i] = (1<<i) & getDebouncedState(&state.trackSensorDebouncer);
+
+					xingState.bellActive = switchState & SWITCH_DOWN_MASK;
+
+					if (trackA.active)
+					{
+						xingState.mainGatesActive = true;
+						xingState.auxGatesActive = false;
+					} else {
+						xingState.mainGatesActive = false;
+						xingState.auxGatesActive = true;
+					}
+					
+
+
+					break;
 
 				case MENU_OFF:
 					// Configuration is current off, system is running normally
 					if ((SWITCH_NEXT_MASK & longPress) && (SWITCH_DOWN_MASK & switchState))
 						menuState = MENU_RESET_START;
+					else if ((SWITCH_NEXT_MASK & longPress) && (SWITCH_UP_MASK & switchState))
+						menuState = MENU_DIAGNOSTIC_START;
 					else if (SWITCH_NEXT_MASK == longPress)
 						menuState = MENU_START;
 					break;
@@ -369,14 +401,16 @@ int main(void)
 				runCrossingSignalStateMachine(&xingState, activeCrossing, 0 == ticks);
 			}
 
-			if(xingState.lightsActive && MENU_OFF == menuState)
+			bool activateOutputs = (MENU_OFF == menuState || MENU_DIAGNOSTIC == menuState);
+
+			if(xingState.lightsActive && activateOutputs )
 				activateLights();
 			else
 				deactivateLights();
 
 			audioPump();
 
-			if(xingState.bellActive && MENU_OFF == menuState)
+			if(xingState.bellActive && activateOutputs)
 			{
 				if(!audioIsPlaying())
 					audioPlay(r.addr, r.size, r.sampleRate, true);
@@ -389,7 +423,7 @@ int main(void)
 			state.trkStatusA = trackA.ledState;
 			state.trkStatusB = trackB.ledState;
 			// Run outputs every time.  
-			setOutputs(&state, &globalConfig, MENU_OFF == menuState);
+			setOutputs(&state, &globalConfig, activateOutputs);
 		}
 	}
 }

@@ -82,7 +82,7 @@ bool initPCA9685()
 }
 
 
-bool initSystemHardwareState(SystemHardwareState_t* state)
+bool initSystemHardwareState(SystemHardwareState_t* state, Configuration_t* config)
 {
     bool retval = false;
 	for(uint8_t i=0; i<CONFIG_LEDS; i++)
@@ -96,7 +96,7 @@ bool initSystemHardwareState(SystemHardwareState_t* state)
 	retval &= initPCA9685();
 
 	for(uint8_t i=0; i<4; i++)
-        state->servoPosition[i] = SERVO_180_DEGREES<<4;
+        state->servoPosition[i] = config->servoLimit[i];
     return retval;
 }
 
