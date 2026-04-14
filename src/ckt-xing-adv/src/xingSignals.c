@@ -64,7 +64,7 @@ void runCrossingSignalStateMachine(CrossingSignalState_t* xingState, bool active
             xingState->mainGatesActive = false;
             xingState->auxGatesActive = false;
 			// If gates are enabled at all
-			xingState->stateTimer = (gatesEnabled)?DECISECS_SIGNAL_MAIN_GATE_DELAY:0;
+			xingState->stateTimer = (gatesEnabled && (GATES_2Q_NO_DELAY != xingState->gateConfig))?DECISECS_SIGNAL_MAIN_GATE_DELAY:0;
 			xingState->signalState = SIGNAL_STATE_START;
 			break;
 

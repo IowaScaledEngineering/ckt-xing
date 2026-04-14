@@ -30,8 +30,9 @@ typedef enum
 {
 	GATES_DISABLED            = 1,
 	GATES_2Q_ONLY             = 2,
-	GATES_4Q_SIMULTANEOUS_UP  = 3,
-	GATES_4Q_DELAYED_UP       = 4,
+	GATES_2Q_NO_DELAY         = 3,
+	GATES_4Q_SIMULTANEOUS_UP  = 4,
+	GATES_4Q_DELAYED_UP       = 5,
     GATES_END
 } GateConfiguration_t;
 
