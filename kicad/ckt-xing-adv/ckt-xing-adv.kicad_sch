@@ -4833,6 +4833,305 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Transistor_FET:BSS138"
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "Q"
+				(at 5.08 1.905 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "BSS138"
+				(at 5.08 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+				(at 5.08 -1.905 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+						(italic yes)
+					)
+					(justify left)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://www.onsemi.com/pub/Collateral/BSS138-D.PDF"
+				(at 5.08 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+					(hide yes)
+				)
+			)
+			(property "Description" "50V Vds, 0.22A Id, N-Channel MOSFET, SOT-23"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "N-Channel MOSFET"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "SOT?23*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "BSS138_0_1"
+				(polyline
+					(pts
+						(xy 0.254 1.905) (xy 0.254 -1.905)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.254 0) (xy -2.54 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 2.286) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 0.508) (xy 0.762 -0.508)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 -1.27) (xy 0.762 -2.286)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 -1.778) (xy 3.302 -1.778) (xy 3.302 1.778) (xy 0.762 1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.016 0) (xy 2.032 0.381) (xy 2.032 -0.381) (xy 1.016 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(circle
+					(center 1.651 0)
+					(radius 2.794)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 2.54) (xy 2.54 1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 2.54 1.778)
+					(radius 0.254)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(circle
+					(center 2.54 -1.778)
+					(radius 0.254)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 -2.54) (xy 2.54 0) (xy 0.762 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.921 0.381) (xy 3.683 0.381)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 3.302 0.381) (xy 2.921 -0.254) (xy 3.683 -0.254) (xy 3.302 0.381)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "BSS138_1_1"
+				(pin input line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "G"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 5.08 270)
+					(length 2.54)
+					(name "D"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(name "S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Transistor_FET:ZXM61N02F"
 			(pin_names
 				(hide yes)
@@ -6646,6 +6945,12 @@
 		(uuid "150d385a-11c2-4f06-858a-8d5c8a1d2171")
 	)
 	(junction
+		(at 207.01 116.84)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "15e84824-996a-48ec-b3ad-341664d336ad")
+	)
+	(junction
 		(at 232.41 109.22)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6910,6 +7215,12 @@
 		(uuid "6e07bbae-1805-4bfb-8a53-34bfbdce3b27")
 	)
 	(junction
+		(at 212.09 127)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "6e4d7114-e50f-47fb-aebd-e22363a68872")
+	)
+	(junction
 		(at 157.48 173.99)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6950,6 +7261,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "7b2f7848-8b34-4d86-b709-5fdcaf75964c")
+	)
+	(junction
+		(at 212.09 109.22)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7bb68ab7-7cfe-407b-bf95-75813b127e3a")
 	)
 	(junction
 		(at 50.8 44.45)
@@ -7264,6 +7581,12 @@
 		(uuid "d214aa36-71a2-4a5a-875b-3b546c694517")
 	)
 	(junction
+		(at 226.06 109.22)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "d500b736-b3cb-4298-85a6-cc1095bc5fdf")
+	)
+	(junction
 		(at 292.1 138.43)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -7354,6 +7677,12 @@
 		(uuid "f244ba30-4eec-46f4-a560-85b1a27401c2")
 	)
 	(junction
+		(at 196.85 109.22)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "f24f680e-e91a-4bd5-8abc-aa4209998c95")
+	)
+	(junction
 		(at 50.8 26.67)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -7410,6 +7739,16 @@
 			(type default)
 		)
 		(uuid "0058689d-d597-4511-9156-a537560c0674")
+	)
+	(wire
+		(pts
+			(xy 186.69 116.84) (xy 191.77 116.84)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "00fbb2d4-7c80-4eff-a089-c2cee3a7c309")
 	)
 	(wire
 		(pts
@@ -8043,6 +8382,16 @@
 	)
 	(wire
 		(pts
+			(xy 198.12 127) (xy 190.5 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1943bd02-f4b0-4532-8b5c-2e33ca7d9ac2")
+	)
+	(wire
+		(pts
 			(xy 232.41 171.45) (xy 212.09 171.45)
 		)
 		(stroke
@@ -8080,6 +8429,16 @@
 			(type default)
 		)
 		(uuid "19fc7547-ce41-4a7a-bb76-af4f637955c1")
+	)
+	(wire
+		(pts
+			(xy 203.2 109.22) (xy 203.2 119.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1ae20b79-9e34-4ae8-9576-63c0ce095dbf")
 	)
 	(wire
 		(pts
@@ -8200,6 +8559,16 @@
 			(type default)
 		)
 		(uuid "1f8b10ac-dfa1-4614-ad5d-b61251e5f9d9")
+	)
+	(wire
+		(pts
+			(xy 207.01 109.22) (xy 212.09 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "203f0f83-a4e2-44ce-ab5d-5a5da0035af1")
 	)
 	(wire
 		(pts
@@ -8430,16 +8799,6 @@
 			(type default)
 		)
 		(uuid "2c66ee96-9a25-4de3-83c0-1a6a865c459b")
-	)
-	(wire
-		(pts
-			(xy 214.63 127) (xy 204.47 127)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2ce460f3-06b1-4193-946b-80d28826daec")
 	)
 	(wire
 		(pts
@@ -9130,6 +9489,16 @@
 			(type default)
 		)
 		(uuid "4b1fe274-303d-4bd6-af88-8e35a8a28a97")
+	)
+	(wire
+		(pts
+			(xy 207.01 116.84) (xy 207.01 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4b70b4a1-5ec2-49a6-b576-70ee0aee44d5")
 	)
 	(wire
 		(pts
@@ -9883,6 +10252,16 @@
 	)
 	(wire
 		(pts
+			(xy 208.28 127) (xy 212.09 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "730d7cfb-a60d-476b-8a09-2b3fc2161c1f")
+	)
+	(wire
+		(pts
 			(xy 331.47 121.92) (xy 328.93 121.92)
 		)
 		(stroke
@@ -10313,6 +10692,16 @@
 	)
 	(wire
 		(pts
+			(xy 201.93 116.84) (xy 207.01 116.84)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "88247365-4459-4662-ba06-4defa61cb4e9")
+	)
+	(wire
+		(pts
 			(xy 60.96 26.67) (xy 60.96 19.05)
 		)
 		(stroke
@@ -10683,6 +11072,16 @@
 	)
 	(wire
 		(pts
+			(xy 212.09 127) (xy 214.63 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9a398a78-afae-4efa-bdd2-5bfdc417e308")
+	)
+	(wire
+		(pts
 			(xy 298.45 162.56) (xy 260.35 162.56)
 		)
 		(stroke
@@ -11033,7 +11432,7 @@
 	)
 	(wire
 		(pts
-			(xy 214.63 124.46) (xy 204.47 124.46)
+			(xy 214.63 124.46) (xy 207.01 124.46)
 		)
 		(stroke
 			(width 0)
@@ -11373,6 +11772,16 @@
 	)
 	(wire
 		(pts
+			(xy 212.09 109.22) (xy 226.06 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bf6d93f5-a0b0-4a99-9a20-d85eb989a996")
+	)
+	(wire
+		(pts
 			(xy 278.13 74.93) (xy 278.13 96.52)
 		)
 		(stroke
@@ -11480,6 +11889,16 @@
 			(type default)
 		)
 		(uuid "c3952d92-08ea-4985-89bf-64621a44e5b3")
+	)
+	(wire
+		(pts
+			(xy 212.09 116.84) (xy 212.09 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c3aba87f-1366-4b4d-99dc-71906a4dde86")
 	)
 	(wire
 		(pts
@@ -11640,6 +12059,16 @@
 			(type default)
 		)
 		(uuid "cbe2f88d-d5b2-400c-abc3-8b74ebdf0ddd")
+	)
+	(wire
+		(pts
+			(xy 203.2 109.22) (xy 196.85 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cd421cfa-9eaf-45a4-86f4-7cd99c4342ce")
 	)
 	(wire
 		(pts
@@ -12791,16 +13220,6 @@
 		)
 		(uuid "1c5e5006-aca0-4774-9405-4365c4da5ece")
 	)
-	(label "SCL"
-		(at 204.47 124.46 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "263c20c9-cf5e-4f6d-92f2-e16984e2a0dd")
-	)
 	(label "SW_UP"
 		(at 60.96 92.71 180)
 		(effects
@@ -12810,16 +13229,6 @@
 			(justify right bottom)
 		)
 		(uuid "2bf3c819-fa77-4bb0-951d-8d840d2e413f")
-	)
-	(label "SDA"
-		(at 204.47 127 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "2cde9cf9-c019-4db1-af24-9b34e3ef50b8")
 	)
 	(label "AVR_MISO"
 		(at 83.82 107.95 180)
@@ -12870,6 +13279,16 @@
 			(justify right bottom)
 		)
 		(uuid "301c67a1-0373-4fc0-bf53-e0a4fd93d782")
+	)
+	(label "SDA"
+		(at 190.5 127 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "3bcededf-0cbd-4028-a0db-9e6410456a08")
 	)
 	(label "AVR_MOSI"
 		(at 83.82 105.41 180)
@@ -13241,6 +13660,16 @@
 		)
 		(uuid "d1ba3cbd-dde1-419b-9146-0e2c7774ae1e")
 	)
+	(label "SCL"
+		(at 186.69 116.84 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d29e3947-5f43-4d18-a81d-338081edcd2d")
+	)
 	(label "OUT_R"
 		(at 297.18 36.83 0)
 		(effects
@@ -13489,7 +13918,7 @@
 			(uuid "38b226ab-64a7-4f1b-9ef0-fdb1c768fafa")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "D1")
 					(unit 1)
@@ -13554,7 +13983,7 @@
 			(uuid "3219ecd0-3c03-442f-aa45-989c3db50336")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR017")
 					(unit 1)
@@ -13815,7 +14244,7 @@
 			(uuid "cbacd4b3-af2f-4c71-b923-e53e78b4899a")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR046")
 					(unit 1)
@@ -13892,7 +14321,7 @@
 			(uuid "a7de70ad-7be8-4cd4-8689-ff66a392b784")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "C26")
 					(unit 1)
@@ -13956,7 +14385,7 @@
 			(uuid "fdb315cf-480e-4011-bff2-27d910610c8b")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR037")
 					(unit 1)
@@ -14022,7 +14451,7 @@
 			(uuid "391d6957-7274-4024-8c55-50304c23b89a")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "TP3")
 					(unit 1)
@@ -14173,7 +14602,7 @@
 			(uuid "4d886181-c987-444c-a8aa-b99d8ef5fb97")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "Q1")
 					(unit 1)
@@ -14241,7 +14670,7 @@
 			(uuid "44e6981f-f226-4a5b-849d-28df2e6f5604")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "D6")
 					(unit 1)
@@ -14452,7 +14881,7 @@
 			(uuid "f89e365c-90ed-42a8-a328-a848a1c45142")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "TP2")
 					(unit 1)
@@ -14604,7 +15033,7 @@
 			(uuid "fa3eeb4a-1d8b-4cd3-b0db-dffaf4afd1a0")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "Q2")
 					(unit 1)
@@ -14797,7 +15226,7 @@
 			(uuid "67b074f8-5997-4e09-8d0f-e9b192088fa2")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR045")
 					(unit 1)
@@ -15198,7 +15627,7 @@
 			(uuid "5f64b55c-9a9a-4982-8dd8-471c941cf284")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "D8")
 					(unit 1)
@@ -15275,7 +15704,7 @@
 			(uuid "ad1d7d18-39cf-4a7b-801c-55ce1c6f87d4")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "C24")
 					(unit 1)
@@ -15486,7 +15915,7 @@
 			(uuid "d14b9789-e601-44de-84d8-7b803d7432ad")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "R22")
 					(unit 1)
@@ -15566,7 +15995,7 @@
 			(uuid "d0cfef7e-8e85-4932-bf54-ba7608ea66c2")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "J13")
 					(unit 1)
@@ -15994,7 +16423,7 @@
 			(uuid "8dce5141-6143-44d2-840b-50e9e76adaa1")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR018")
 					(unit 1)
@@ -16124,9 +16553,75 @@
 			(uuid "c045c058-2bf5-41ab-8968-b767b3b0f11d")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR05")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_US")
+		(at 207.01 113.03 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "3b18a11b-a340-400f-a037-6f1740b691b2")
+		(property "Reference" "R34"
+			(at 206.375 105.791 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10k"
+			(at 207.01 107.696 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
+			(at 205.994 112.776 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 207.01 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 207.01 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "66f241cc-a22c-4092-94ea-cbf7abe610f3")
+		)
+		(pin "2"
+			(uuid "f26453d3-a50f-4725-a77b-014e38e656c4")
+		)
+		(instances
+			(project "ckt-xing-adv"
+				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
+					(reference "R34")
 					(unit 1)
 				)
 			)
@@ -16269,7 +16764,7 @@
 			(uuid "5c1c25da-16e1-487c-ac71-813e478883e2")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "D5")
 					(unit 1)
@@ -16346,7 +16841,7 @@
 			(uuid "9c5a2cbd-471a-4aa4-b33f-b1c425b3e9ca")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "J16")
 					(unit 1)
@@ -16978,7 +17473,7 @@
 			(uuid "cc06f33e-2b2c-439f-b0d5-b47e3b609705")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "H2")
 					(unit 1)
@@ -17111,7 +17606,7 @@
 			(uuid "4c2d516a-c82a-4a17-a9f7-c170d5bd6db4")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "H1")
 					(unit 1)
@@ -17234,7 +17729,7 @@
 			(uuid "9ca721bb-390b-4512-a6b7-194b43db59d1")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "U4")
 					(unit 1)
@@ -17304,6 +17799,72 @@
 			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "D12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_US")
+		(at 212.09 113.03 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "561b460c-6923-4383-afe3-567f3e43c898")
+		(property "Reference" "R35"
+			(at 211.455 105.791 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10k"
+			(at 212.09 107.696 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
+			(at 211.074 112.776 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 212.09 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 212.09 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "7b42fd0b-0179-4196-9352-cfdd629bec8a")
+		)
+		(pin "2"
+			(uuid "4c3ecf5f-f6fb-48c3-a64e-ef706db300e0")
+		)
+		(instances
+			(project "ckt-xing-adv"
+				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
+					(reference "R35")
 					(unit 1)
 				)
 			)
@@ -17382,7 +17943,7 @@
 			(uuid "d1b4b00f-81d7-4506-b45b-466691e3360e")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "U7")
 					(unit 1)
@@ -17451,7 +18012,7 @@
 			(uuid "fc07632f-443d-4446-9b1b-48116ff32fb0")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "R32")
 					(unit 1)
@@ -17648,9 +18209,73 @@
 			(uuid "a2cbf104-b9e5-4e85-b448-17142953d0ba")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR06")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3.3V")
+		(at 196.85 109.22 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "581d5445-8541-4b52-b781-cd63da676a08")
+		(property "Reference" "#PWR065"
+			(at 196.85 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3.3V"
+			(at 196.85 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 196.85 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 196.85 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 196.85 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f85f2c01-2da4-4d84-b01c-e95a89f32f54")
+		)
+		(instances
+			(project "ckt-xing-adv"
+				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
+					(reference "#PWR065")
 					(unit 1)
 				)
 			)
@@ -17714,7 +18339,7 @@
 			(uuid "cf9d05f0-e30e-49fe-abd4-63f1ff6ddfbe")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "R8")
 					(unit 1)
@@ -17910,7 +18535,7 @@
 			(uuid "142f400f-d7c8-4762-9c9c-dafbdf253fc1")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR050")
 					(unit 1)
@@ -18050,7 +18675,7 @@
 			(uuid "427d3dce-0195-47b5-9253-e9ed854a6304")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "C25")
 					(unit 1)
@@ -18251,7 +18876,7 @@
 			(uuid "7d1ef7cf-5f0d-4594-b9a2-1343372b0992")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "J2")
 					(unit 1)
@@ -18743,7 +19368,7 @@
 			(uuid "185921a9-1807-4708-bd78-a102967af5a8")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "R27")
 					(unit 1)
@@ -18808,7 +19433,7 @@
 			(uuid "c2c01718-abe1-4ec0-bbcd-475eeab0a526")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR034")
 					(unit 1)
@@ -18872,7 +19497,7 @@
 			(uuid "3a85f13c-db6c-465d-8a7e-c8ed96cc32f0")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR020")
 					(unit 1)
@@ -19661,7 +20286,7 @@
 			(uuid "97cdf5c9-5665-4c7c-a016-3068fe0264b0")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "C10")
 					(unit 1)
@@ -19859,7 +20484,7 @@
 			(uuid "19a218b8-99e4-4540-9bc4-afdaabb79c07")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "H3")
 					(unit 1)
@@ -20198,7 +20823,7 @@
 			(uuid "25e6c373-84f5-4f88-b6ed-87af0f9ac13a")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "H4")
 					(unit 1)
@@ -20262,7 +20887,7 @@
 			(uuid "a0dc142c-ab39-423f-b2a2-47d3c1996a5d")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR013")
 					(unit 1)
@@ -20663,7 +21288,7 @@
 			(uuid "d8929668-dbf3-4815-b3f0-07955c20ab4a")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR09")
 					(unit 1)
@@ -20941,7 +21566,7 @@
 			(uuid "5df4502a-3454-4bc6-9e8f-bbc0e975c205")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "U6")
 					(unit 1)
@@ -21007,7 +21632,7 @@
 			(uuid "a946f61c-8890-491a-9f04-62d21a9ea6d9")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "R19")
 					(unit 1)
@@ -21072,7 +21697,7 @@
 			(uuid "909ef325-b32d-441b-8ef7-34a59c94221e")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR038")
 					(unit 1)
@@ -21164,7 +21789,7 @@
 			(uuid "a80a92be-5ce9-48dd-9dfa-b509d6899003")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "J15")
 					(unit 1)
@@ -21606,7 +22231,7 @@
 			(uuid "618069c0-c3a1-4a1a-8edc-a575e42fc11f")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "R18")
 					(unit 1)
@@ -21673,7 +22298,7 @@
 			(uuid "b99cbbc9-3b0b-4f03-80f7-db37a13f64d7")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "D23")
 					(unit 1)
@@ -22079,7 +22704,7 @@
 			(uuid "8a8b6b3a-33d1-4d6a-bc2f-99ff2b290183")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR024")
 					(unit 1)
@@ -22143,7 +22768,7 @@
 			(uuid "a8e5f19b-8867-45e5-811f-204f4d4af8c3")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR033")
 					(unit 1)
@@ -22208,7 +22833,7 @@
 			(uuid "dc6d38f2-8343-4202-b3c4-93039c4e50ca")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR039")
 					(unit 1)
@@ -22486,7 +23111,7 @@
 			(uuid "0231fff6-1db9-4e4b-9947-1c02b842c4c4")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "R9")
 					(unit 1)
@@ -22842,7 +23467,7 @@
 			(uuid "a13d1b5a-596e-4892-9971-a6dd889ba02b")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR044")
 					(unit 1)
@@ -23106,7 +23731,7 @@
 			(uuid "56fd6132-be82-4ef7-a992-a47015c3e975")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "D2")
 					(unit 1)
@@ -23197,7 +23822,7 @@
 			(uuid "fe0209f1-3c81-4398-ad43-3c0f0f3ca3b4")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "U8")
 					(unit 1)
@@ -23263,7 +23888,7 @@
 			(uuid "686a7dc8-eaf8-40b2-a60b-b5e71bdb2514")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "TP1")
 					(unit 1)
@@ -23614,7 +24239,7 @@
 			(uuid "90eb4db7-0ab5-4e61-a49b-41492db20338")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR08")
 					(unit 1)
@@ -23783,7 +24408,7 @@
 			(uuid "625f3e9a-cb35-41ff-9c99-44418fc28ee9")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "C22")
 					(unit 1)
@@ -24366,7 +24991,7 @@
 			(uuid "b73e918a-4d63-4d2e-a14b-8ec9aaf19df8")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "U5")
 					(unit 1)
@@ -24430,7 +25055,7 @@
 			(uuid "176a7500-7ec1-46a2-8c88-e7647339085f")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR07")
 					(unit 1)
@@ -24496,7 +25121,7 @@
 			(uuid "d27f57b0-ba6e-45c6-a7c3-6220e497aae7")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "R26")
 					(unit 1)
@@ -24703,7 +25328,7 @@
 			(uuid "3a208656-05bf-4b4d-81e7-76a1b1b540e0")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "C23")
 					(unit 1)
@@ -24771,7 +25396,7 @@
 			(uuid "1ad2941c-53ae-4ae8-b46e-db19d5a0732a")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "R3")
 					(unit 1)
@@ -25590,7 +26215,7 @@
 			(uuid "1d7ebb3e-4985-4bad-ad13-40c0dd15c22e")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "U3")
 					(unit 1)
@@ -25655,7 +26280,7 @@
 			(uuid "74c31a92-021d-4fe2-91b1-67faef0981b4")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR048")
 					(unit 1)
@@ -25992,7 +26617,7 @@
 			(uuid "13a3a40f-92d5-4122-bcb3-10b8c1772f0b")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR047")
 					(unit 1)
@@ -26057,7 +26682,7 @@
 			(uuid "58374336-6ec3-42df-9f79-963fc9d60cb8")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR022")
 					(unit 1)
@@ -26211,7 +26836,7 @@
 			(uuid "7ff1c12e-dbaf-41f0-bc53-68287201d4d8")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "C13")
 					(unit 1)
@@ -26351,7 +26976,7 @@
 			(uuid "df62a7d1-9840-4074-bd39-6d9277b35d45")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "Q3")
 					(unit 1)
@@ -26628,7 +27253,7 @@
 			(uuid "0d8ae0de-79f8-4808-acbf-1fcdd294a498")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "D25")
 					(unit 1)
@@ -26911,6 +27536,152 @@
 		)
 	)
 	(symbol
+		(lib_id "Transistor_FET:BSS138")
+		(at 196.85 114.3 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ead54439-652b-451f-9301-878dfaacde93")
+		(property "Reference" "Q4"
+			(at 189.992 110.49 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "BSS138"
+			(at 189.992 113.03 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+			(at 194.945 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.onsemi.com/pub/Collateral/BSS138-D.PDF"
+			(at 193.04 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Description" "50V Vds, 0.22A Id, N-Channel MOSFET, SOT-23"
+			(at 196.85 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "e19c4ca9-dbf1-4903-a9c7-ca2863e95b2d")
+		)
+		(pin "3"
+			(uuid "2afd94cf-8aa8-4dc0-b6db-1bc18f6dc0b8")
+		)
+		(pin "1"
+			(uuid "7bb5f47c-9431-46ad-8c90-9b6ecbe20636")
+		)
+		(instances
+			(project "ckt-xing-adv"
+				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
+					(reference "Q4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Transistor_FET:BSS138")
+		(at 203.2 124.46 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "edb0315b-1d7b-482b-917f-4eff91c87e83")
+		(property "Reference" "Q5"
+			(at 196.342 120.65 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "BSS138"
+			(at 196.342 123.19 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+			(at 201.295 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.onsemi.com/pub/Collateral/BSS138-D.PDF"
+			(at 199.39 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Description" "50V Vds, 0.22A Id, N-Channel MOSFET, SOT-23"
+			(at 203.2 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "55a39034-703b-427b-8202-99fc0116303c")
+		)
+		(pin "3"
+			(uuid "71e3c01a-1a38-4a22-a722-4fbf66bac812")
+		)
+		(pin "1"
+			(uuid "9a1df86c-473d-4fce-8a91-1acc35c69a83")
+		)
+		(instances
+			(project "ckt-xing-adv"
+				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
+					(reference "Q5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:LED")
 		(at 139.7 38.1 90)
 		(unit 1)
@@ -27101,7 +27872,7 @@
 			(uuid "0ea57480-6b5b-4b52-826e-be311a30eb1c")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR029")
 					(unit 1)
@@ -27297,7 +28068,7 @@
 			(uuid "33f5aaaf-b419-4150-bf0b-4cfc06995658")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "#PWR040")
 					(unit 1)
@@ -27365,7 +28136,7 @@
 			(uuid "5860917a-7978-40bf-b03c-277946ef0ae4")
 		)
 		(instances
-			(project ""
+			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "D7")
 					(unit 1)
