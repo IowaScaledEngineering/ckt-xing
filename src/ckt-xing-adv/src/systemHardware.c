@@ -258,8 +258,8 @@ void setOutputs(SystemHardwareState_t* state, Configuration_t* config , bool dri
 		currentLEDs[i] = state->configModeLamp[i];
 	}
 
-    if (++ledPhase >=20)
-    ledPhase = 0;
+    if (++ledPhase >=40)
+        ledPhase = 0;
 
     if (currentLEDs[8] != ledPulser(state->trkStatusA, ledPhase))
     {
