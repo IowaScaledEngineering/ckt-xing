@@ -257,7 +257,8 @@ int main(void)
 					increments++;
 					menuState = MENU_DIAGNOSTIC;
 					trackA.active = (PINB & _BV(PB6));
-					trackA.ledState = trackB.ledState = LIGHT_SLOW_BLINK;
+					trackA.ledState = trackA.active?LIGHT_ON:LIGHT_OFF;
+					trackB.ledState = trackA.active?LIGHT_OFF:LIGHT_ON;
 					state.configValueLamp = (trackA.active)?0x0A:0x05;
 					// Turn off the mode lamp 
 
@@ -328,7 +329,7 @@ int main(void)
 						else if (configSetting < CONFIG_SETTING_NONE) 
 						{
 							// Do Servo Upper Limit
-							globalConfig.servoLimit[configSetting - CONFIG_SETTING_SERVO_UP_MAIN_1] = globalConfig.servoLimit[configSetting - CONFIG_SETTING_SERVO_UP_MAIN_1] + (10<<4);//MIN(SERVO_MAX_DEGREES, MAX(SERVO_MIN_DEGREES, (globalConfig.servoLimit[configSetting - CONFIG_SETTING_SERVO_UP_MAIN_1] + (1<<4))));
+							globalConfig.servoLimit[configSetting - CONFIG_SETTING_SERVO_UP_MAIN_1] = globalConfig.servoLimit[configSetting - CONFIG_SETTING_SERVO_UP_MAIN_1] + (10<<4);
 						}
 					}
 					else if (switchesPressed == SWITCH_DOWN_MASK) 
@@ -341,7 +342,7 @@ int main(void)
 						else if (configSetting < CONFIG_SETTING_NONE) 
 						{
 							// Do Servo Upper Limit
-							globalConfig.servoLimit[configSetting - CONFIG_SETTING_SERVO_UP_MAIN_1] = globalConfig.servoLimit[configSetting - CONFIG_SETTING_SERVO_UP_MAIN_1] - (10<<4);//MIN(SERVO_MAX_DEGREES, MAX(SERVO_MIN_DEGREES, (globalConfig.servoLimit[configSetting - CONFIG_SETTING_SERVO_UP_MAIN_1] - (1<<4))));
+							globalConfig.servoLimit[configSetting - CONFIG_SETTING_SERVO_UP_MAIN_1] = globalConfig.servoLimit[configSetting - CONFIG_SETTING_SERVO_UP_MAIN_1] - (10<<4);
 						}
 					} 
 					
