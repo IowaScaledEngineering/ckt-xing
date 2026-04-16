@@ -48,7 +48,7 @@ void factoryInitConfiguration(Configuration_t* config)
 	// FIXME - factory reset here
 	config->configValues[CONFIG_SETTING_BELL_TYPE] = 1; 
 	config->configValues[CONFIG_SETTING_APPROACH_TIMEOUT] = 5; 
-	config->configValues[CONFIG_SETTING_ISLAND_TIMEOUT] = 3; 
+	config->configValues[CONFIG_SETTING_ISLAND_TIMEOUT] = 4; 
 	config->configValues[CONFIG_SETTING_LED_VS_LAMP] = 1; 
 	config->configValues[CONFIG_SETTING_BELL_MODE] = 1; 
 	config->configValues[CONFIG_SETTING_GATE_MODE] = GATES_2Q_ONLY; 
@@ -87,14 +87,14 @@ void loadConfigValues(Configuration_t* config)
 
 uint16_t getApproachTimeoutDecisecs(Configuration_t* config)
 {
-	const uint16_t approachTimeouts[15] = {50, 75, 100, 125, 150, 175, 200, 250, 300, 350, 400, 450, 500, 550, 600};
+	const uint16_t approachTimeouts[15] = {50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400};
 	uint8_t index = MIN(sizeof(approachTimeouts)/sizeof(approachTimeouts[0]), config->configValues[CONFIG_SETTING_APPROACH_TIMEOUT]-1);
 	return approachTimeouts[index];
 }
 
 uint8_t getIslandTimeoutDecisecs(Configuration_t* config)
 {
-	const uint8_t approachTimeouts[15] = {5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 125, 150, 200, 250};
+	const uint8_t approachTimeouts[15] = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 100, 150};
 	uint8_t index = MIN(sizeof(approachTimeouts)/sizeof(approachTimeouts[0]), config->configValues[CONFIG_SETTING_APPROACH_TIMEOUT]-1);
 	return approachTimeouts[index];
 }
