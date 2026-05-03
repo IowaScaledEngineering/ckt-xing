@@ -6623,17 +6623,6 @@
 		)
 		(uuid "88480828-41db-4c88-bcc7-2cdeef618c2d")
 	)
-	(text "Note: Locate\nnear main 5V\nswitcher"
-		(exclude_from_sim no)
-		(at 314.452 95.25 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "8ac3d8cf-ea7d-4611-9fb0-6285e5385b75")
-	)
 	(text "SCL"
 		(exclude_from_sim no)
 		(at 218.44 41.91 0)
@@ -7701,6 +7690,12 @@
 		(uuid "f4cfff95-9896-4fde-b123-ece09daf2f5d")
 	)
 	(junction
+		(at 311.15 88.9)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "f7d3e47d-692f-429c-a899-97553327c2ca")
+	)
+	(junction
 		(at 129.54 129.54)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -8522,7 +8517,7 @@
 	)
 	(wire
 		(pts
-			(xy 311.15 100.33) (xy 311.15 105.41)
+			(xy 311.15 88.9) (xy 311.15 105.41)
 		)
 		(stroke
 			(width 0)
@@ -12382,6 +12377,16 @@
 	)
 	(wire
 		(pts
+			(xy 302.26 88.9) (xy 311.15 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dd757d6b-e46f-47a0-8cca-aea5bd2743e2")
+	)
+	(wire
+		(pts
 			(xy 73.66 105.41) (xy 83.82 105.41)
 		)
 		(stroke
@@ -16068,6 +16073,75 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C_Polarized_US")
+		(at 302.26 92.71 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "2e8ed1f8-02d5-44a6-8079-c5a5ea207888")
+		(property "Reference" "C29"
+			(at 300.99 90.17 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "220uF 6.3V"
+			(at 300.99 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:CP_Elec_6.3x5.8"
+			(at 302.26 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 302.26 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 302.26 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "154ed036-51af-4e09-9836-b8b234efa241")
+		)
+		(pin "2"
+			(uuid "b32ebd7c-2003-49c9-ac8e-813c05e85210")
+		)
+		(instances
+			(project "ckt-xing-adv"
+				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
+					(reference "C29")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Connector_Generic_MountingPin:Conn_01x04_MountingPin")
 		(at 215.9 35.56 0)
 		(unit 1)
@@ -19709,6 +19783,71 @@
 			(project "ckt-xing-adv"
 				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
 					(reference "J6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 302.26 96.52 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "6d87adbb-77af-45fd-95b2-5201a8c058a8")
+		(property "Reference" "#PWR066"
+			(at 302.26 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 302.26 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 302.26 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 302.26 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 302.26 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "2a7cfa90-5ed0-438d-835b-ec011b4b665d")
+		)
+		(instances
+			(project "ckt-xing-adv"
+				(path "/ee2a1513-8489-42c3-8daf-9d032b383b2d"
+					(reference "#PWR066")
 					(unit 1)
 				)
 			)
@@ -26007,7 +26146,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 311.15 100.33 0)
+		(at 311.15 88.9 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -26015,7 +26154,7 @@
 		(dnp no)
 		(uuid "da2e2a96-6eb1-42de-96f7-71b5e364bb9e")
 		(property "Reference" "#PWR028"
-			(at 311.15 104.14 0)
+			(at 311.15 92.71 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -26024,7 +26163,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 311.404 96.266 0)
+			(at 311.404 84.836 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -26032,7 +26171,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 311.15 100.33 0)
+			(at 311.15 88.9 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -26041,7 +26180,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 311.15 100.33 0)
+			(at 311.15 88.9 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -26050,7 +26189,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 311.15 100.33 0)
+			(at 311.15 88.9 0)
 			(effects
 				(font
 					(size 1.27 1.27)
