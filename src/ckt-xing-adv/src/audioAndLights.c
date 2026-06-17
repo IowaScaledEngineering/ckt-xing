@@ -202,7 +202,7 @@ void audioInitialize()
 	OCR0A = 42;
 	TIMSK = _BV(OCIE0A);
 	
-	audioAmplifierEnable(1);
+	audioAmplifierEnable(0);
 }
 
 bool audioIsPlaying()
@@ -218,9 +218,12 @@ void audioPlay(uint32_t addr, uint32_t len, uint16_t sampleRateHz, bool loop)
 	uint8_t loadBytes = (sizeof(audioBuffer.buffer) - 1) - audioBufferDepth();
 	audioStartIdx = audioReadIdx = addr;
 	audioDataLen = len;
-	
+
+	audioAmplifierEnable(1);
+
 	// 8MHz / prescaler 8:1 / sample frequency
 	OCR0A = (uint8_t)(((8000000UL / 8UL) + ((uint32_t)sampleRateHz - 1)) / sampleRateHz);
+
 	spiflashReadToRingBuffer(audioReadIdx, loadBytes);
 	audioReadIdx += loadBytes;
 	audioEndIdx = audioStartIdx + audioDataLen;
@@ -245,6 +248,10 @@ void audioPump()
 		spiflashReadToRingBuffer(audioReadIdx, bytesToRead);
 		audioReadIdx += bytesToRead;
 	}
+
+	if (!audioIsPlaying())
+		audioAmplifierEnable(0);
+
 }
 
 void audioBufferInitialize()
