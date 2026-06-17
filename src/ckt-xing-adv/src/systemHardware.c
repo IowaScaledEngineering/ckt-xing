@@ -281,7 +281,8 @@ bool isExtInActive(SystemHardwareState_t* state)
 
 void writeServoPosition(uint8_t servoNum, uint16_t servoPosition)
 {
-	servoPosition = servoPosition >> 4;
+    // Divide and round the servo position
+  	servoPosition = (servoPosition >> 4) + ((servoPosition & 0x0008)?1:0);
 
     if (servoNum > 3)
         return;

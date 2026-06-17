@@ -378,7 +378,13 @@ int main(void)
 		if (((uint32_t)currentTime - lastUpdateTime) > LOOP_UPDATE_TIME_MS)
 		{
 			static uint8_t ticks = 0;
+			bool activateOutputs = (MENU_OFF == menuState || MENU_DIAGNOSTIC == menuState);
 			lastUpdateTime = currentTime;
+
+			// Run outputs every time and first to avoid servo jitter
+			setOutputs(&state, &globalConfig, activateOutputs);
+
+
 
 			// Read inputs should run every 50mS
 			readInputs(&state);
@@ -402,8 +408,6 @@ int main(void)
 				runCrossingSignalStateMachine(&xingState, activeCrossing, 0 == ticks);
 			}
 
-			bool activateOutputs = (MENU_OFF == menuState || MENU_DIAGNOSTIC == menuState);
-
 			if(xingState.lightsActive && activateOutputs )
 				activateLights();
 			else
@@ -423,8 +427,7 @@ int main(void)
 			state.auxGatesActive = xingState.auxGatesActive;
 			state.trkStatusA = trackA.ledState;
 			state.trkStatusB = trackB.ledState;
-			// Run outputs every time.  
-			setOutputs(&state, &globalConfig, activateOutputs);
+
 		}
 	}
 }

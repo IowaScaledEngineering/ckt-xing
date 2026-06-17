@@ -36,9 +36,6 @@ LICENSE:
 
 // Timings
 
-#define LOOP_UPDATE_TIME_MS       50
-#define SWITCH_UPDATE_TIME_MS     25
-#define SWITCH_LONG_PRESS_THRESHOLD_MS 2000UL
 
 // PORT A
 //  PA7 - Output - /SHUTDOWN to amplifier
