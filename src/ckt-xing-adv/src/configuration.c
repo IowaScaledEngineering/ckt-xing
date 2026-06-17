@@ -45,7 +45,6 @@ void saveConfigValues(Configuration_t* config)
 
 void factoryInitConfiguration(Configuration_t* config)
 {
-	// FIXME - factory reset here
 	config->configValues[CONFIG_SETTING_BELL_TYPE] = 1; 
 	config->configValues[CONFIG_SETTING_APPROACH_TIMEOUT] = 5; 
 	config->configValues[CONFIG_SETTING_ISLAND_TIMEOUT] = 4; 
@@ -54,7 +53,7 @@ void factoryInitConfiguration(Configuration_t* config)
 	config->configValues[CONFIG_SETTING_GATE_MODE] = GATES_2Q_ONLY; 
 	for (uint8_t i=0; i<8; i++)
 	{
-		config->servoLimit[i] = (i<4)?SERVO_180_DEGREES<<4:SERVO_0_DEGREES<<4;
+		config->servoLimit[i] = (SERVO_180_DEGREES<<4);
 	}
 	saveConfigValues(config);
 }
@@ -94,7 +93,7 @@ uint16_t getApproachTimeoutDecisecs(Configuration_t* config)
 
 uint8_t getIslandTimeoutDecisecs(Configuration_t* config)
 {
-	const uint8_t approachTimeouts[15] = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 100, 150};
-	uint8_t index = MIN(sizeof(approachTimeouts)/sizeof(approachTimeouts[0]), config->configValues[CONFIG_SETTING_APPROACH_TIMEOUT]-1);
-	return approachTimeouts[index];
+	const uint8_t islandTimeouts[15] = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 100, 150};
+	uint8_t index = MIN(sizeof(islandTimeouts)/sizeof(islandTimeouts[0]), config->configValues[CONFIG_SETTING_ISLAND_TIMEOUT]-1);
+	return islandTimeouts[index];
 }

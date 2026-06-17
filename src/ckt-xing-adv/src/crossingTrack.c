@@ -28,7 +28,7 @@ void initializeCrossingTrack(CrossingTrack_t* t, uint16_t timeApproachTimeout, u
 	t->active = false;
 	t->stateTimer = 0;
 	t->trackState = DETECTION_STATE_IDLE;
-	t->timeIslandTimeout = timeApproachTimeout;
+	t->timeIslandTimeout = timeIslandTimeout;
 	t->timeApproachReset = 30;
 	t->ledState = LIGHT_OFF;
 	t->timeApproachTimeout = timeApproachTimeout;
