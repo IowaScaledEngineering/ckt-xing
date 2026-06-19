@@ -1,0 +1,84 @@
+** Drc report for ckt-xing-adv.kicad_pcb **
+** Created on 2026-03-17T19:45:26-0600 **
+
+** Found 19 DRC violations **
+[silk_overlap]: Silkscreen overlap
+    ; warning (excluded)
+    @(30.3694 mm, 45.4854 mm): Segment of J1 on F.Silkscreen
+    @(30.3694 mm, 55.7238 mm): Segment of J3 on F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    ; warning (excluded)
+    @(29.6494 mm, 55.7238 mm): Segment of J3 on F.Silkscreen
+    @(30.3694 mm, 45.4854 mm): Segment of J1 on F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    ; warning (excluded)
+    @(30.9694 mm, 45.4854 mm): Segment of J1 on F.Silkscreen
+    @(30.9694 mm, 55.7238 mm): Segment of J3 on F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    ; warning (excluded)
+    @(30.9694 mm, 45.4854 mm): Segment of J1 on F.Silkscreen
+    @(29.6494 mm, 55.7238 mm): Segment of J3 on F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    ; warning (excluded)
+    @(35.6694 mm, 45.4854 mm): Segment of J1 on F.Silkscreen
+    @(35.6694 mm, 55.7238 mm): Segment of J3 on F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    ; warning (excluded)
+    @(35.6694 mm, 45.4854 mm): Segment of J1 on F.Silkscreen
+    @(29.6494 mm, 55.7238 mm): Segment of J3 on F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    ; warning (excluded)
+    @(37.4894 mm, 45.4854 mm): Segment of J1 on F.Silkscreen
+    @(37.4894 mm, 55.7238 mm): Segment of J3 on F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    ; warning (excluded)
+    @(37.4894 mm, 45.4854 mm): Segment of J1 on F.Silkscreen
+    @(29.6494 mm, 55.7238 mm): Segment of J3 on F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    ; warning (excluded)
+    @(29.6494 mm, 55.7238 mm): Segment of J3 on F.Silkscreen
+    @(29.6494 mm, 55.7254 mm): Segment of J1 on F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    ; warning (excluded)
+    @(29.6494 mm, 58.0438 mm): Segment of J3 on F.Silkscreen
+    @(29.6494 mm, 55.7254 mm): Segment of J1 on F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    ; warning (excluded)
+    @(37.4894 mm, 55.7254 mm): Segment of J1 on F.Silkscreen
+    @(30.3694 mm, 55.7238 mm): Segment of J3 on F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    ; warning (excluded)
+    @(30.9694 mm, 55.7238 mm): Segment of J3 on F.Silkscreen
+    @(37.4894 mm, 55.7254 mm): Segment of J1 on F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    ; warning (excluded)
+    @(37.4894 mm, 55.7254 mm): Segment of J1 on F.Silkscreen
+    @(35.6694 mm, 55.7238 mm): Segment of J3 on F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    ; warning (excluded)
+    @(37.4894 mm, 55.7254 mm): Segment of J1 on F.Silkscreen
+    @(37.4894 mm, 55.7238 mm): Segment of J3 on F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    ; warning (excluded)
+    @(37.4894 mm, 55.7254 mm): Segment of J1 on F.Silkscreen
+    @(29.6494 mm, 55.7238 mm): Segment of J3 on F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    ; warning (excluded)
+    @(29.6494 mm, 58.0438 mm): Segment of J3 on F.Silkscreen
+    @(37.4894 mm, 55.7254 mm): Segment of J1 on F.Silkscreen
+[silk_over_copper]: Silkscreen clipped by solder mask
+    ; warning (excluded)
+    @(81.27 mm, 70.62 mm): Segment of U1 on F.Silkscreen
+[silk_over_copper]: Silkscreen clipped by solder mask
+    ; warning (excluded)
+    @(84.68 mm, 70.62 mm): Segment of U1 on F.Silkscreen
+[courtyards_overlap]: Courtyards overlap
+    ; warning (excluded)
+    @(33.2694 mm, 58.3438 mm): Footprint J3
+    @(33.2694 mm, 48.1054 mm): Footprint J1
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** End of Report **
