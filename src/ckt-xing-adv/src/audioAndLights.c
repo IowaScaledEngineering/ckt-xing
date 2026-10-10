@@ -123,7 +123,7 @@ ISR(TIMER0_COMPA_vect)
 						leftLightPWMSetting += LIGHT_RATE;
 				} else {
 					if (leftLightPWMSetting > 0)
-						leftLightPWMSetting -= min(leftLightPWMSetting, LIGHT_RATE);
+						leftLightPWMSetting -= MIN(leftLightPWMSetting, LIGHT_RATE);
 				}
 
 				// Do light things
@@ -134,7 +134,7 @@ ISR(TIMER0_COMPA_vect)
 
 				} else {
 					if (rightLightPWMSetting > 0)
-						rightLightPWMSetting -= min(rightLightPWMSetting, LIGHT_RATE);
+						rightLightPWMSetting -= MIN(rightLightPWMSetting, LIGHT_RATE);
 				}
 			}
 		}
@@ -244,7 +244,7 @@ void audioPump()
 
 	if ((bytesRemaining) && bufferFree > 32)
 	{
-		uint8_t bytesToRead = min(bufferFree-1, bytesRemaining);
+		uint8_t bytesToRead = MIN(bufferFree-1, bytesRemaining);
 		spiflashReadToRingBuffer(audioReadIdx, bytesToRead);
 		audioReadIdx += bytesToRead;
 	}

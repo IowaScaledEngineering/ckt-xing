@@ -37,9 +37,6 @@ LICENSE:
 
 #define AUDIO_BUFFER_SZ  128
 
-#define max(a,b) ((a)>(b)?(a):(b))
-#define min(a,b) ((a)<(b)?(a):(b))
-
 #define LIGHT_LEFT_ON   0x01
 #define LIGHT_RIGHT_ON  0x02
 #define LIGHT_ACTIVE    0x04

@@ -31,8 +31,8 @@ LICENSE:
 #include "configuration.h"
 #include "crossingTrack.h"
 
-#define MIN(a,b) ((a)<(b)?(a):(b))
-#define MAX(a,b) ((a)>(b)?(a):(b))
+#define MIN(a,b) ({ __typeof__((a)+(b)) _a = (a); __typeof__((a)+(b)) _b = (b); _a < _b ? _a : _b; })
+#define MAX(a,b) ({ __typeof__((a)+(b)) _a = (a); __typeof__((a)+(b)) _b = (b); _a > _b ? _a : _b; })
 
 // Timings
 
