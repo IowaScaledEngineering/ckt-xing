@@ -64,6 +64,21 @@ uint8_t spiTransferByte(uint8_t txData)
 	USISR = 0;
 
 	// Faster than a loop is just to run this 16x to create all the clock edges
+	for(uint8_t i=0; i<16; i++)
+	{
+		USICR |= _BV(USITC);
+	}
+
+/*	USICR |= _BV(USITC);
+	USICR |= _BV(USITC);
+	USICR |= _BV(USITC);
+	USICR |= _BV(USITC);
+
+	USICR |= _BV(USITC);
+	USICR |= _BV(USITC);
+	USICR |= _BV(USITC);
+	USICR |= _BV(USITC);	
+
 	USICR |= _BV(USITC);
 	USICR |= _BV(USITC);
 	USICR |= _BV(USITC);
@@ -72,17 +87,7 @@ uint8_t spiTransferByte(uint8_t txData)
 	USICR |= _BV(USITC);
 	USICR |= _BV(USITC);
 	USICR |= _BV(USITC);
-	USICR |= _BV(USITC);
-	
-	USICR |= _BV(USITC);
-	USICR |= _BV(USITC);
-	USICR |= _BV(USITC);
-	USICR |= _BV(USITC);
-	
-	USICR |= _BV(USITC);
-	USICR |= _BV(USITC);
-	USICR |= _BV(USITC);
-	USICR |= _BV(USITC);
+	USICR |= _BV(USITC);*/
 	
 	return USIDR;
 }
