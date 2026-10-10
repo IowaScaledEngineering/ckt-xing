@@ -15,7 +15,7 @@ FUSE_E ?= 0xFE
 
 PROGRAMMER_TYPE ?= iseavrprog
 PROGRAMMER_PORT ?= usb
-FIRMWARE_IMG ?= ./release-firmware/ckt-xing-adv-38607ac-10Oct2026.hex
+FIRMWARE_IMG ?= ./release-firmware/ckt-xing-adv-111f64f-10Oct2026.hex
 AVRDUDE := avrdude
 ISPL_TOOLS := ../../../ispltools/tools/
 PYTHON ?= python3

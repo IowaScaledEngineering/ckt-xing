@@ -2,8 +2,8 @@
 ISPL_TOOLS=../../../ispltools/tools/
 PYTHON=python3
 AUDIO_IMG=rele
-FIRMWARE_IMG=release-firmware/ckt-xing-adv-111f64f-10Oct2026.hex
-AUDIO_IMG=release-firmware/ckt-xing-adv-111f64f-10Oct2026.sbp
+AVR_IMG=./release-firmware/ckt-xing-adv-111f64f-10Oct2026.hex
+AUDIO_IMG=./release-firmware/ckt-xing-adv-111f64f-10Oct2026.sbp
 
 # if less than two arguments supplied, display usage 
 if [  $# -ge 1 ] 
@@ -17,8 +17,8 @@ while [ true ]
 do
 	read -p "Set switch to AVR and press any key to program..."
 	echo -e "\n\033[1;33mProgramming AVR\033[0m\n"
-	make -C . fuse
-	make -C . flash
+	make -C . fuse FIRMWARE_IMG="$AVR_IMG"
+	make -C . flash FIRMWARE_IMG="$AVR_IMG"
 	if [ $? -eq 0 ]
 	then 
 		echo -e "\033[0;32mSuccess\033[0m\n"
