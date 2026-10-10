@@ -4,6 +4,7 @@
 *.cmd
 *.net
 *.o
+*.d
 *.elf
 *.hex
 *#
