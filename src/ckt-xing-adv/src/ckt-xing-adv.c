@@ -252,7 +252,8 @@ int main(void)
 					for(i=0; i<8; i++)
 						state.configModeLamp[i] = false;
 					xingState.lightsActive = true;
-
+					__attribute__((fallthrough));
+					
 				case MENU_DIAGNOSTIC:
 					increments++;
 					menuState = MENU_DIAGNOSTIC;
