@@ -328,8 +328,9 @@ int main(void)
 						}
 						else if (configSetting < CONFIG_SETTING_NONE) 
 						{
-							// Do Servo Upper Limit
-							globalConfig.servoLimit[configSetting - CONFIG_SETTING_SERVO_UP_MAIN_1] = globalConfig.servoLimit[configSetting - CONFIG_SETTING_SERVO_UP_MAIN_1] + (10<<4);
+							uint8_t servoLimitIndex = configSetting - CONFIG_SETTING_SERVO_UP_MAIN_1;
+							if (globalConfig.servoLimit[servoLimitIndex] <= SERVO_MAX_DEGREES - (10 << 4))
+								globalConfig.servoLimit[servoLimitIndex] += (10 << 4);
 						}
 					}
 					else if (switchesPressed == SWITCH_DOWN_MASK) 
@@ -341,8 +342,9 @@ int main(void)
 						}
 						else if (configSetting < CONFIG_SETTING_NONE) 
 						{
-							// Do Servo Upper Limit
-							globalConfig.servoLimit[configSetting - CONFIG_SETTING_SERVO_UP_MAIN_1] = globalConfig.servoLimit[configSetting - CONFIG_SETTING_SERVO_UP_MAIN_1] - (10<<4);
+							uint8_t servoLimitIndex = configSetting - CONFIG_SETTING_SERVO_UP_MAIN_1;
+							if (globalConfig.servoLimit[servoLimitIndex] >= SERVO_MIN_DEGREES + (10 << 4))
+								globalConfig.servoLimit[servoLimitIndex] -= (10 << 4);
 						}
 					} 
 					
@@ -431,7 +433,6 @@ int main(void)
 		}
 	}
 }
-
 
 
 
