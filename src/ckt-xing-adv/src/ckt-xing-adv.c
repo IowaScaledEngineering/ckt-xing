@@ -253,7 +253,7 @@ int main(void)
 						state.configModeLamp[i] = false;
 					xingState.lightsActive = true;
 					__attribute__((fallthrough));
-					
+
 				case MENU_DIAGNOSTIC:
 					increments++;
 					menuState = MENU_DIAGNOSTIC;
@@ -354,7 +354,9 @@ int main(void)
 						uint8_t servoNum = (configSetting - CONFIG_SETTING_SERVO_UP_MAIN_1);
 						state.servoPosition[servoNum%4] = globalConfig.servoLimit[servoNum];
 					}
-					configSettingToLamps(&state, configSetting, globalConfig.configValues[configSetting]);
+					// Note - turn off lamps while the "NEXT" switch is still down.  This helps prevent confusion when the user does a long press to save
+					//  and it increments to the next setting and shows different configuration lamps
+					configSettingToLamps(&state, configSetting, (switchState & SWITCH_NEXT_MASK)?0:globalConfig.configValues[configSetting]);
 					break;
 
 				case MENU_SAVE:
