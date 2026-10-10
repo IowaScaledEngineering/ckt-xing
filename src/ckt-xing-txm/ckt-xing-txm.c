@@ -68,10 +68,10 @@ void initializeTimer()
 // Island timeouts
 
 // XY
-// 00  - 0.5s
-// 01  - 1s
-// 10  - 2s
-// 11  - 5s
+// 00  - 1s
+// 01  - 2s
+// 10  - 5s
+// 11  - 10s
 
 
 
@@ -83,30 +83,30 @@ uint8_t getIslandTimeoutDecisecs(uint8_t switches)
 	{
 		case 0:
 		default:
-			return 5;
-
-		case 1:
 			return 10;
 
-		case 2:
+		case 1:
 			return 20;
 
-		case 3:
+		case 2:
 			return 50;
+
+		case 3:
+			return 100;
 	}
 }
 
 // Approach timeouts
 
 // ABC
-// 000  - 20s
-// 001  - 25s
-// 010  - 30s
-// 011  - 35s
-// 100  - 40s
-// 101  - 50s
-// 110  - 60s
-// 111  - Test Mode
+// 000  - 10s
+// 001  - 15s
+// 010  - 20s
+// 011  - 25s
+// 100  - 30s
+// 101  - 35s
+// 110  - 40s
+// 111  - 50s
 
 uint16_t getApproachTimeoutDecisecs(uint8_t switches)
 {
@@ -117,29 +117,29 @@ uint16_t getApproachTimeoutDecisecs(uint8_t switches)
 	switch(0x07 & (switches>>2))
 	{
 		case 0:
-			return 200;
+			return 100;
 
 		case 1:
-			return 250;
+			return 150;
 
 		case 2:
-			return 300;
+			return 200;
 
 		case 3:
-			return 350;
+			return 250;
 
 		case 4:
-			return 400;
+			return 300;
 
 		case 5:
-			return 500;
+			return 350;
 
 		case 6:
-			return 600;
+			return 400;
 			
-		case 7:  // This is really test mode
+		case 7:
 		default:
-			return 300;
+			return 500;
 	}
 }
 

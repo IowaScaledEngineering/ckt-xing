@@ -86,14 +86,24 @@ void loadConfigValues(Configuration_t* config)
 
 uint16_t getApproachTimeoutDecisecs(Configuration_t* config)
 {
-	const uint16_t approachTimeouts[15] = {50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400};
-	uint8_t index = MIN(sizeof(approachTimeouts)/sizeof(approachTimeouts[0]), config->configValues[CONFIG_SETTING_APPROACH_TIMEOUT]-1);
-	return approachTimeouts[index];
+	const uint16_t approachTimeouts[15] = {100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 450, 500};
+	size_t setting = config->configValues[CONFIG_SETTING_APPROACH_TIMEOUT];
+	size_t maxIndex = sizeof(approachTimeouts) / sizeof(approachTimeouts[0]);
+
+	if (setting == 0 || setting > maxIndex)
+		setting = 1;
+
+	return approachTimeouts[setting - 1U];
 }
 
 uint8_t getIslandTimeoutDecisecs(Configuration_t* config)
 {
 	const uint8_t islandTimeouts[15] = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 100, 150};
-	uint8_t index = MIN(sizeof(islandTimeouts)/sizeof(islandTimeouts[0]), config->configValues[CONFIG_SETTING_ISLAND_TIMEOUT]-1);
-	return islandTimeouts[index];
+	size_t setting = config->configValues[CONFIG_SETTING_ISLAND_TIMEOUT];
+	size_t maxIndex = sizeof(islandTimeouts) / sizeof(islandTimeouts[0]);
+
+	if (setting == 0 || setting > maxIndex)
+		setting = 1;
+
+	return islandTimeouts[setting - 1U];
 }
