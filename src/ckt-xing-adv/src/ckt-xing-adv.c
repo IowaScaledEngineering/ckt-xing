@@ -128,8 +128,8 @@ void configureEverything(Configuration_t* config, CrossingTrack_t* trackA, Cross
 
 int main(void)
 {
-	uint32_t lastUpdateTime = 0xf0000000;
-	uint32_t lastSwitchTime = 0xf0000000;
+	uint16_t lastUpdateTime = 0xF000;
+	uint16_t lastSwitchTime = 0xF000;
 	uint8_t configSetting = 0;
 
 	Configuration_t globalConfig;
@@ -192,10 +192,10 @@ int main(void)
 		wdt_reset();
 		audioPump();
 
-		uint32_t currentTime = getMillis();
+		uint16_t currentTime = getMillis();
 
 		// Handle Switches and Menuing
-		if ((uint32_t)(currentTime - lastSwitchTime) > SWITCH_UPDATE_TIME_MS)
+		if ((uint16_t)(currentTime - lastSwitchTime) > SWITCH_UPDATE_TIME_MS)
 		{
 			static uint8_t increments = 0;
 			lastSwitchTime = currentTime;
@@ -377,7 +377,7 @@ int main(void)
 
 		audioPump();
 
-		if (((uint32_t)currentTime - lastUpdateTime) > LOOP_UPDATE_TIME_MS)
+		if ((uint16_t)(currentTime - lastUpdateTime) > LOOP_UPDATE_TIME_MS)
 		{
 			static uint8_t ticks = 0;
 			bool activateOutputs = (MENU_OFF == menuState || MENU_DIAGNOSTIC == menuState);

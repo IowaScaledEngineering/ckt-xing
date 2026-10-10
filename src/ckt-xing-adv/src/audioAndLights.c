@@ -38,7 +38,7 @@ uint32_t audioDataLen = 0;
 bool audioLoop = false;
 
 // Audio playing ISR
-volatile uint32_t millis = 0;
+volatile uint16_t millis = 0;
 
 void activateLights()
 {
@@ -150,9 +150,9 @@ void lightConfigSet(bool ledMode)
 		lightControl &= ~(LIGHT_NOFADE);
 }
 
-uint32_t getMillis()
+uint16_t getMillis()
 {
-	uint32_t retmillis;
+	uint16_t retmillis;
 
 	ATOMIC_BLOCK(ATOMIC_RESTORESTATE) 
 	{
