@@ -40,6 +40,7 @@ LICENSE:
 #define LIGHT_LEFT_ON   0x01
 #define LIGHT_RIGHT_ON  0x02
 #define LIGHT_ACTIVE    0x04
+#define LIGHT_CENTER_ON 0x08
 #define LIGHT_NOFADE    0x80
 #define LIGHT_RATE      8
 

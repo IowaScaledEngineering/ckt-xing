@@ -103,11 +103,11 @@ ISR(TIMER0_COMPA_vect)
 				if (lightControl & LIGHT_ACTIVE)
 				{
 					if (lightControl & LIGHT_LEFT_ON)
-						lightControl = (lightControl & ~(LIGHT_LEFT_ON)) | LIGHT_RIGHT_ON;
+						lightControl = (lightControl & ~(LIGHT_LEFT_ON)) | LIGHT_RIGHT_ON | LIGHT_CENTER_ON;
 					else
-						lightControl = (lightControl & ~(LIGHT_RIGHT_ON)) | LIGHT_LEFT_ON;
+						lightControl = (lightControl & ~(LIGHT_RIGHT_ON)) | LIGHT_LEFT_ON | LIGHT_CENTER_ON;
 				} else {
-					lightControl &= ~(LIGHT_LEFT_ON | LIGHT_RIGHT_ON);
+					lightControl &= ~(LIGHT_LEFT_ON | LIGHT_RIGHT_ON | LIGHT_CENTER_ON);
 				}
 			}
 
@@ -115,6 +115,7 @@ ISR(TIMER0_COMPA_vect)
 			{
 				leftLightPWMSetting = (lightControl & LIGHT_LEFT_ON)?0x3F:0;
 				rightLightPWMSetting = (lightControl & LIGHT_RIGHT_ON)?0x3F:0;
+				centerLightPWMSetting = (lightControl & LIGHT_CENTER_ON)?0x3F:0;
 			} else {
 				// Lamp mode, lights fade in/out
 				if (lightControl & LIGHT_LEFT_ON)
@@ -135,6 +136,15 @@ ISR(TIMER0_COMPA_vect)
 				} else {
 					if (rightLightPWMSetting > 0)
 						rightLightPWMSetting -= MIN(rightLightPWMSetting, LIGHT_RATE);
+				}
+
+				if (lightControl & LIGHT_CENTER_ON)
+				{
+					if (centerLightPWMSetting <= 0x3F)
+						centerLightPWMSetting += LIGHT_RATE;
+				} else {
+					if (centerLightPWMSetting > 0)
+						centerLightPWMSetting -= MIN(centerLightPWMSetting, LIGHT_RATE);
 				}
 			}
 		}
