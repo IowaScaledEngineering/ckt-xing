@@ -2,177 +2,99 @@
 #Title:    CKT-XING-ADV Makefile
 #Authors:  Michael Petersen <railfan@drgw.net>
 #          Nathan Holmes <maverick@drgw.net>
-#File:     CKT-DINGDONG Makefile
 #License:  GNU General Public License v3
-#
-#LICENSE:
-#    Copyright (C) 2026 Nathan Holmes and Michael Petersen
-#
-#    Derived from example WinAVR project Makefile
-#
-#    This program is free software; you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation; either version 3 of the License, or
-#    any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#    
-#    You should have received a copy of the GNU General Public License along 
-#    with this program. If not, see http://www.gnu.org/licenses/
-#    
 #*************************************************************************
 
-BASE_NAME = ckt-xing-adv
+BASE_NAME := ckt-xing-adv
+MCU := attiny861
+F_CPU := 8000000
 
-# ATmega328P 20MHz @ 5.0V
-DEVICE  = attiny861
-F_CPU   = 8000000  # Hz
-FUSE_L  = 0xE2
-FUSE_H  = 0xD6
-FUSE_E  = 0xFE
+FUSE_L ?= 0xE2
+FUSE_H ?= 0xD6
+FUSE_E ?= 0xFE
 
-#PROGRAMMER_TYPE=avrispmkii
-PROGRAMMER_TYPE=iseavrprog
-#PROGRAMMER_TYPE=dragon_isp
-PROGRAMMER_PORT=usb
+PROGRAMMER_TYPE ?= iseavrprog
+PROGRAMMER_PORT ?= usb
 
-DEFINES = 
-FAST_SRCS = 
-SRCS = debouncer.c i2c.c crossingTrack.c systemHardware.c xingSignals.c configuration.c spiflash.c audioAndLights.c ispl.c ckt-xing-adv.c
-INCS = ispl.h spiflash.h audioAndLights.h debouncer.h i2c.h crossingTrack.h systemHardware.h xingSignals.h configuration.h
+CPPFLAGS := -DF_CPU=$(F_CPU) -I.
+DEPFLAGS := -MMD -MP
+CFLAGS := -Wall -Wextra -Os -std=gnu99 -ffunction-sections -fdata-sections -flto -mmcu=$(MCU)
+LDFLAGS := -Wl,--gc-sections -mmcu=$(MCU)
 
-AVRDUDE = avrdude -P $(PROGRAMMER_PORT) -c $(PROGRAMMER_TYPE) -p $(DEVICE) -B8 -F
-AVRDUDE_SLOW = avrdude -P $(PROGRAMMER_PORT) -c $(PROGRAMMER_TYPE) -p $(DEVICE) -B32
+CC := avr-gcc
+OBJCOPY := avr-objcopy
+SIZE := avr-size
+OBJDUMP := avr-objdump
+AVRDUDE := avrdude
 
-OBJS = ${FAST_SRCS:.c=.o} ${SRCS:.c=.o} ${ASM_SRC:.S=.o}
-INCLUDES = -I. 
-CFLAGS  = $(INCLUDES) -Wall -Os -std=gnu99 -ffunction-sections -fdata-sections
-CFLAGS_FAST  = $(INCLUDES) -Wall -O2 -std=gnu99
-ASFLAGS = -ffunction-sections -fdata-sections
-LDFLAGS = -Wl,--gc-sections
+SRCS := $(wildcard *.c)
+OBJS := $(SRCS:.c=.o)
+DEPS := $(OBJS:.o=.d)
+TARGET := $(BASE_NAME).elf
+HEX := $(BASE_NAME).hex
 
-COMPILE = avr-gcc $(DEFINES) -DF_CPU=$(F_CPU) $(CFLAGS) $(LDFLAGS) -mmcu=$(DEVICE)
-COMPILE_FAST = avr-gcc $(DEFINES) -DF_CPU=$(F_CPU) $(CFLAGS_FAST) $(LDFLAGS) -mmcu=$(DEVICE)
+-include $(DEPS)
 
+AVRDUDE_CMD = $(AVRDUDE) -P $(PROGRAMMER_PORT) -c $(PROGRAMMER_TYPE) -p $(MCU) -B2 -F
+AVRDUDE_SLOW = $(AVRDUDE) -P $(PROGRAMMER_PORT) -c $(PROGRAMMER_TYPE) -p $(MCU) -B32
+
+.PHONY: all clean help hex flash fuse program read size terminal disasm firmware
+
+all: hex
 
 help:
-	@echo "make hex ....... build $(BASE_NAME).hex"
-	@echo "make flash ..... flash the firmware"
-	@echo "make fuse ...... flash the fuses"
-	@echo "make program ... flash fuses and firmware"
-	@echo "make firmware .. flash firmware from file"
-	@echo "make read ...... read the fuses"
-	@echo "make size ...... memory usage"
-	@echo "make clean ..... delete objects and hex file"
-	@echo "make release.... produce release tarball"
-	@echo "make terminal... open up avrdude terminal"
+	@echo "make hex ........ build $(HEX)"
+	@echo "make flash ...... flash the firmware"
+	@echo "make fuse ....... flash the fuses"
+	@echo "make program .... flash fuses and firmware"
+	@echo "make firmware ... flash firmware from a previously built .hex file"
+	@echo "make read ....... read fuse settings"
+	@echo "make size ....... memory usage"
+	@echo "make clean ...... delete objects and build artifacts"
+	@echo "make terminal ... open avrdude terminal"
 
-hex: $(BASE_NAME).hex
+%.o: %.c
+	$(CC) $(CPPFLAGS) $(DEPFLAGS) $(CFLAGS) -c $< -o $@
+
+$(TARGET): $(OBJS)
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJS)
+
+$(HEX): $(TARGET)
+	@rm -f $(HEX) $(BASE_NAME).eep.hex
+	$(OBJCOPY) -j .text -j .data -O ihex $< $(HEX)
+	$(SIZE) --format=avr --mcu=$(MCU) $<
+
+hex: $(HEX)
+
+fuse:
+	@[ "$(FUSE_H)" != "" ] && [ "$(FUSE_L)" != "" ] && [ "$(FUSE_E)" != "" ] || \
+		{ echo "*** Invalid fuse values."; exit 1; }
+	$(AVRDUDE_SLOW) -U hfuse:w:$(FUSE_H):m -U lfuse:w:$(FUSE_L):m -U efuse:w:$(FUSE_E):m
+
+flash: $(HEX)
+	$(AVRDUDE_CMD) -U flash:w:$(HEX):i
 
 program: fuse flash
+
+firmware:
+	@echo "Usage: make firmware HEX=/path/to/file.hex"
+	@test -n "$(HEX)" || { echo "HEX must be set."; exit 1; }
+	$(AVRDUDE_CMD) -U flash:w:$(HEX):i
+
+read:
+	$(AVRDUDE_CMD) -v
+
+size:
+	$(SIZE) --format=avr --mcu=$(MCU) $(TARGET)
 
 terminal:
 	$(AVRDUDE_SLOW) -t
 
-# rule for programming fuse bits:
-fuse:
-	@[ "$(FUSE_H)" != "" -a "$(FUSE_L)" != "" -a "$(FUSE_E)" != "" ] || \
-		{ echo "*** Invalid Fuse values."; exit 1; }
-	$(AVRDUDE_SLOW) -U hfuse:w:$(FUSE_H):m -U lfuse:w:$(FUSE_L):m -U efuse:w:$(FUSE_E):m
-
-read:
-	$(AVRDUDE) -v
-
-size:
-	avr-size -C --mcu=$(DEVICE) $(BASE_NAME).elf
-
-# rule for uploading firmware:
-flash: $(BASE_NAME).hex
-	$(AVRDUDE) -U flash:w:$(BASE_NAME).hex:i
-
-firmware:
-	$(AVRDUDE) -U flash:w:$(HEX):i
-
-# rule for deleting dependent files (those which can be built by Make):
 clean:
-	rm -f $(BASE_NAME).hex $(BASE_NAME).lst $(BASE_NAME).obj $(BASE_NAME).cof $(BASE_NAME).list $(BASE_NAME).map $(BASE_NAME).eep.hex $(BASE_NAME).elf $(BASE_NAME).s $(OBJS) *.o *.tgz *~
+	rm -f $(BASE_NAME).hex $(BASE_NAME).elf $(BASE_NAME).eep.hex $(BASE_NAME).map $(BASE_NAME).lst *.o *~
 
-# Generic rule for compiling C files:
-.c.o: $(INCS)
-	$(COMPILE) -c $< -o $@
-
-# Generic rule for assembling Assembler source files:
-.S.o:
-	$(COMPILE) -x assembler-with-cpp $(ASFLAGS) -c $< -o $@
-# "-x assembler-with-cpp" should not be necessary since this is the default
-# file type for the .S (with capital S) extension. However, upper case
-# characters are not always preserved on Windows. To ensure WinAVR
-# compatibility define the file type manually.
-
-# Generic rule for compiling C to assembler, used for debugging only.
-.c.s:
-	$(COMPILE) -S $< -o $@
-
-# file targets:
-
-$(BASE_NAME).elf: $(OBJS)
-	$(COMPILE) -o $(BASE_NAME).elf $(OBJS)
-
-$(BASE_NAME).hex: $(BASE_NAME).elf
-	rm -f $(BASE_NAME).hex $(BASE_NAME).eep.hex
-	avr-objcopy -j .text -j .data -O ihex $(BASE_NAME).elf $(BASE_NAME).hex
-	avr-size $(BASE_NAME).hex
-
-# debugging targets:
-
-disasm:	$(BASE_NAME).elf
-	avr-objdump -d $(BASE_NAME).elf
-
-PWD := $(shell pwd)
+disasm: $(TARGET)
+	$(OBJDUMP) -d $(TARGET)
 
 release: hex
-	@echo -n "Creating temporary build directories..."
-	@$(eval BTMPDIR := $(shell mktemp -d))
-	@$(eval TMPDIR := $(BTMPDIR)/$(BASE_NAME))
-	@$(eval BOILERPLATE_FILES := $(shell find ../../docs/release-boilerplate -type f -name *.txt -print))
-	@$(eval RELEASE_TIME := $(shell date +"%d%b%Y-%H%Mh"))
-	@mkdir -p $(TMPDIR)/mrbus/src
-	@mkdir -p $(TMPDIR)/$(BASE_NAME)/src
-	@echo "  [done]"
-
-	@echo -n "Copying boilerplate files..."
-	@cp $(BOILERPLATE_FILES) $(TMPDIR)
-	@echo "  [done]"
-
-	@echo -n "Copying Makefile..."
-	@cp Makefile $(TMPDIR)/$(BASE_NAME)/src/Makefile
-
-	@echo -n "Copying object..."
-	@cp $(BASE_NAME).hex $(TMPDIR)/$(BASE_NAME)/src/$(BASE_NAME).hex
-	@echo "  [done]"
-
-	@echo -n "Copying source files..."
-	@tar cPf - $(INCS) | tar xPf - -C $(TMPDIR)/$(BASE_NAME)/src/
-	@echo "  [done]"
-
-	@echo -n "Copying include files..."
-	@tar cPf - $(SRCS) | tar xPf - -C $(TMPDIR)/$(BASE_NAME)/src/
-	@echo "  [done]"
-
-	@echo -n "Writing file SVN statuses..."
-	@echo "### Archive built at $(RELEASE_TIME)" > $(TMPDIR)/$(BASE_NAME)/src/FILE_SVN_VERSIONS
-	@svn status -v $(BOILERPLATE_FILES) >> $(TMPDIR)/$(BASE_NAME)/src/FILE_SVN_VERSIONS
-	@svn status -v Makefile >> $(TMPDIR)/$(BASE_NAME)/src/FILE_SVN_VERSIONS
-	@svn status -v $(INCS) >> $(TMPDIR)/$(BASE_NAME)/src/FILE_SVN_VERSIONS
-	@svn status -v $(SRCS) >> $(TMPDIR)/$(BASE_NAME)/src/FILE_SVN_VERSIONS
-	@echo "  [done]"
-	
-
-	@echo -n "Creating tarball..."
-	@tar zcf $(BASE_NAME)-$(RELEASE_TIME).tgz -C $(BTMPDIR) $(BASE_NAME)
-	@echo "  [done]"
-
-	@echo "Release in $(BASE_NAME)-$(RELEASE_TIME).tgz"
+	@echo "Release artifacts are not active for this minimal build; use the generated $(HEX) file as the release binary."
