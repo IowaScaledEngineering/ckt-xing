@@ -116,7 +116,7 @@ void spiflashReadUUID(uint8_t* destPtr, uint8_t len)
 	for(i=0; i<4; i++)
 		spiTransferByte(0xFF);
 
-	len = min(len, 8);
+	len = MIN(len, 8);
 
 	for(i=0; i<len; i++)
 	{
