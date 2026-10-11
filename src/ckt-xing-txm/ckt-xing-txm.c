@@ -203,13 +203,14 @@ int main(void)
 		currentTime = getMillis();
 
 		// Because debouncing and such is built into option reading and the MSS library, only 
-		//  run the updates every 10mS or so.
+		//  run the updates every 25mS or so.
 
 		if (((uint32_t)currentTime - lastReadTime) > 25)
 		{
 			uint8_t i = 0;
 			uint16_t j = 0;
 			lastReadTime = currentTime;
+			// Everything else runs off deciseconds, which will happen every 4 ticks of this loop
 			decisecTick = (decisecTick+1) % 4;
 
 			readOptions(&optionsDebouncer);
